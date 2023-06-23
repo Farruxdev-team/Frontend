@@ -21,12 +21,12 @@ export const menu = [
   },
   {
     name: 'Testni boshlash',
-    path: '/subjects',
+    path: '/test',
     icon: 'bx bx-test-tube'
   },
   {
     name: 'Natijalar',
-    path: '/subjects',
+    path: '/results',
     icon: 'bx bx-pie-chart'
   }
 ]
