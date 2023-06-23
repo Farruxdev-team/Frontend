@@ -1,9 +1,9 @@
 <template>
-  <div> 
-    <h1>Salom!</h1>
-  </div>
+  <AddNavbar data="O'qituvchi" />
 </template>
 
-<script setup></script>
+<script setup>
+import AddNavbar from '../components/AddNavbar.vue'
+</script>
 
 <style lang="scss" scoped></style>

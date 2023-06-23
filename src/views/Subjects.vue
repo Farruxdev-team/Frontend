@@ -1,7 +1,9 @@
 <template>
-  <div></div>
+  <AddNavbar data="Fan" />
 </template>
 
-<script setup></script>
+<script setup>
+import AddNavbar from '../components/AddNavbar.vue'
+</script>
 
 <style lang="scss" scoped></style>

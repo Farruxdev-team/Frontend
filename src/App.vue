@@ -8,7 +8,7 @@ import {
   initDismisses,
   initDrawers,
   initDropdowns,
-  initModals,
+  initModals, 
   initPopovers,
   initTabs,
   initTooltips
@@ -31,7 +31,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="dark">
+  <div class="dar">
     <router-view></router-view>
   </div>
 </template>

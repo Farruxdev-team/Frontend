@@ -8,7 +8,7 @@ import { menu } from '@/constants/menu'
     class="fixed top-14 left-0 z-40 w-64 h-screen transition-transform -translate-x-full sm:translate-x-0"
     aria-label="Sidebar"
   >
-    <div class="h-full p-2 py-4 overflow-y-auto bg-gray-50 dark:bg-gray-800">
+    <div class="h-full p-2 py-4 overflow-y-auto bg-gray-100 dark:bg-gray-800">
       <div class="space-y-2 font-medium">
         <router-link
           v-for="el in menu"
