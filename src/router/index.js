@@ -14,19 +14,14 @@ const router = createRouter({
           component: () => import('@/views/Home.vue')
         },
         {
-          path: '/',
-          name: 'add-teacher',
+          path: '/add-teacher',
+          name: 'AddTeacher',
           component: () => import('@/views/AddTeacher.vue')
         },
         {
-          path: '/',
-          name: 'add-student',
+          path: '/add-student',
+          name: 'AddStudent',
           component: () => import('@/views/AddStudent.vue')
-        },
-        {
-          path: '/',
-          name: 'subjects',
-          component: () => import('@/views/Subjects.vue')
         },
         {
           path: '/test',
@@ -34,13 +29,13 @@ const router = createRouter({
           component: () => import('@/views/Test.vue')
         },
         {
-          path: '/add-teacher',
-          name: 'AddTeacher',
-          component: () => import('@/views/AddTeacher.vue')
+          path: '/subjects',
+          name: 'Subjects',
+          component: () => import('@/views/Subjects.vue')
         },
         {
-          path: '/',
-          name: 'results',
+          path: '/results',
+          name: 'Results',
           component: () => import('@/views/Results.vue')
         },
         {
