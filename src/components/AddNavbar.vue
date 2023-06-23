@@ -1,10 +1,12 @@
 <template>
   <nav
-    class="w-full flex justify justify-between items-center bg-white border-b border-gray-200 dark:bg-gray-800 dark:border-gray-700 p-4 rounded-md mb-5"
+    class="w-full flex justify justify-between items-center bg-white border-b border-gray-200 dark:bg-gray-800 dark:border-gray-700 p-4 rounded-md mb-5 pl-10"
   >
     <div class="flex gap-8 items-center">
       <span class="text-lg text-blue-600 font-medium">{{ props.data }}lar</span>
-      <button class="text-base px-4 py-2 text-green-100 rounded-md bg-gradient-to-r from-green-500 to-green-700">
+      <button
+        class="text-base px-4 py-2 text-green-100 rounded-md bg-gradient-to-r from-green-500 to-green-700"
+      >
         {{ props.data }} qo'shish
       </button>
     </div>
