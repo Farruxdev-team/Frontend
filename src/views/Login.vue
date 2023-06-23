@@ -3,7 +3,9 @@
 <template>
   <div>
     <div class="h-screen flex flex-col items-center justify-center px-6 py-8 mx-auto background">
-      <div class="w-full rounded-lg border md:mt-0 md:max-w-md xl:p-0 forma">
+      <div
+        class="w-full rounded-lg border md:mt-0 md:max-w-md xl:p-0 forma bg-white/20 dark:bg-black/20"
+      >
         <div class="p-6 space-y-4 md:space-y-6 sm:p-8">
           <div class="text-center w-full">
             <img
@@ -72,9 +74,13 @@
 .background {
   background-color: #8bc6ec;
   background-image: linear-gradient(135deg, #8bc6ec 0%, #9599e2 100%);
+  background-image: url('https://assets-global.website-files.com/614716f50b4f49202fdd0087/616949393cf90643c1403605_6423.png');
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
 }
 .forma {
-  background: rgba(242, 237, 237, 0.35);
+  /* background: rgba(242, 237, 237, 0.35); */
   border-radius: 16px;
   box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
   backdrop-filter: blur(20px);
