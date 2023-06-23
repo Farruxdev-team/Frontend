@@ -72,6 +72,10 @@
 .background {
   background-color: #8bc6ec;
   background-image: linear-gradient(135deg, #8bc6ec 0%, #9599e2 100%);
+  background-image: url('https://assets-global.website-files.com/614716f50b4f49202fdd0087/616949393cf90643c1403605_6423.png');
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
 }
 .forma {
   background: rgba(242, 237, 237, 0.35);
