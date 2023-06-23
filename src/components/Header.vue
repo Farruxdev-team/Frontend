@@ -1,3 +1,12 @@
+<script setup>
+import { onMounted } from 'vue'
+import { initDropdowns } from 'flowbite'
+
+onMounted(() => {
+  initDropdowns()
+})
+</script>
+
 <template>
   <nav
     class="fixed top-0 z-50 w-full bg-white border-b border-gray-200 dark:bg-gray-800 dark:border-gray-700"
@@ -111,7 +120,5 @@
     </div>
   </nav>
 </template>
-
-<script setup></script>
 
 <style lang="scss" scoped></style>
