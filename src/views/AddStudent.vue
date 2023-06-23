@@ -1,5 +1,7 @@
 <template>
-  <div></div>
+  <div>
+    Azizkhon's Part
+  </div>
 </template>
 
 <script setup></script>
