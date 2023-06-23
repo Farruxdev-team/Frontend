@@ -25,6 +25,7 @@ import { menu } from '@/constants/menu'
 
 <style scoped>
 .router-link-exact-active {
-  background: rgb(51, 51, 51, 0.2);
+  background: rgb(0, 0, 0, 0.3);
+  /* color: white; */
 }
 </style>
