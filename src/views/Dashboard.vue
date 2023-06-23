@@ -10,7 +10,7 @@ import Header from '../components/Header.vue'
       <Sidebar />
       <div class="p-4 sm:ml-64 h-full overflow-y-hidden">
         <div
-          class="p-4 border-2 border-gray-200 border-dashed rounded-lg dark:border-gray-700 h-full"
+          class="p-4 border-2 border-gray-300 border-dashed rounded-lg dark:border-gray-700 h-full shadow-xl"
         >
           <router-view></router-view>
         </div>
