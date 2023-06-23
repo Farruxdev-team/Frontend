@@ -1,15 +1,33 @@
 <script setup>
-import { onMounted } from 'vue'
+import { onMounted, onUpdated, ref } from 'vue'
 import { initDropdowns } from 'flowbite'
+
+const isDark = ref(JSON.parse(localStorage.getItem('mode')))
+const changeMode = () => {
+  isDark.value = !isDark.value
+  localStorage.setItem('mode', isDark.value)
+  writeMode()
+}
+const writeMode = () => {
+  if (
+    isDark.value ||
+    (!('mode' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)
+  ) {
+    document.documentElement.classList.add('dark')
+  } else {
+    document.documentElement.classList.remove('dark')
+  }
+}
 
 onMounted(() => {
   initDropdowns()
+  writeMode()
 })
 </script>
 
 <template>
   <nav
-    class="fixed top-0 z-50 w-full bg-gray-100 border-b border-gray-300 dark:bg-gray-800 dark:border-gray-700 shadow"
+    class="fixed top-0 z-50 w-full bg-gray-100 border-b border-gray-300 dark:bg-gray-800 dark:border-gray-600 shadow"
   >
     <div class="px-3 py-3 lg:px-5 lg:pl-3">
       <div class="flex items-center justify-between">
@@ -74,21 +92,36 @@ onMounted(() => {
                 <p class="text-sm text-gray-900 dark:text-white" role="none">Toshmat Eshmatov</p>
               </div>
               <ul class="py-1" role="none">
-                <li>
-                  <a
-                    href="#"
-                    class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-300 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white rounded-lg"
-                    role="menuitem"
-                    >Settings</a
+                <li
+                  class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-300 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white rounded-lg cursor-pointer"
+                  role="menuitem"
+                >
+                  <label
+                    class="relative inline-flex justify-between items-center cursor-pointer w-full"
                   >
+                    <span class="text-sm font-medium">Dark</span>
+                    <input
+                      type="checkbox"
+                      class="sr-only peer"
+                      @change="changeMode"
+                      :checked="JSON.parse(isDark)"
+                    />
+                    <div
+                      class="w-11 h-6 bg-gray-200 rounded-full peer peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 dark:bg-gray-900 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:right-[22px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600"
+                    ></div>
+                  </label>
                 </li>
-                <li>
-                  <a
-                    href="#"
-                    class="block px-4 py-2 text-sm text-gray-700 hover:bg-red-400 rounded-lg dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white"
-                    role="menuitem"
-                    >Sign out</a
-                  >
+                <li
+                  class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-300 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white rounded-lg cursor-pointer"
+                  role="menuitem"
+                >
+                  Settings
+                </li>
+                <li
+                  class="block px-4 py-2 text-sm text-gray-700 hover:bg-red-400 rounded-lg dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white"
+                  role="menuitem"
+                >
+                  Sign out
                 </li>
               </ul>
             </div>
