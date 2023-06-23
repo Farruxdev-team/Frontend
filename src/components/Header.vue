@@ -29,13 +29,13 @@
           </button>
           <a href="https://flowbite.com" class="flex ml-2 md:mr-24">
             <img
-              src="https://flowbite.com/docs/images/logo.svg"
+              src="https://static.tuit.uz/uploads/1/W73eM8T-hn5cLRoa_rQWKshn3eUutXvm.png"
               class="h-8 mr-3"
               alt="FlowBite Logo"
             />
             <span
               class="self-center text-xl font-semibold sm:text-2xl whitespace-nowrap dark:text-white"
-              >Flowbite</span
+              >TUIT Test</span
             >
           </a>
         </div>

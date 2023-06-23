@@ -4,11 +4,17 @@ import Header from '../components/Header.vue'
 </script>
 
 <template>
-  <div class="antialiased bg-gray-50 dark:bg-gray-900">
+  <div class="antialiased h-screen bg-gray-50 dark:bg-gray-900">
     <Header />
-    <div class="pt-14">
+    <div class="pt-14 h-full">
       <Sidebar />
-      <router-view></router-view>
+      <div class="p-4 sm:ml-64 h-full overflow-y-hidden">
+        <div
+          class="p-4 border-2 border-gray-200 border-dashed rounded-lg dark:border-gray-700 h-full"
+        >
+          <router-view></router-view>
+        </div>
+      </div>
     </div>
   </div>
 </template>
