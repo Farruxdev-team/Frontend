@@ -6,6 +6,7 @@
       <div class="flex items-center justify-between">
         <div class="flex items-center justify-start">
           <button
+            id="logo-sidebar"
             data-drawer-target="logo-sidebar"
             data-drawer-toggle="logo-sidebar"
             aria-controls="logo-sidebar"

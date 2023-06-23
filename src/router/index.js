@@ -12,6 +12,36 @@ const router = createRouter({
           path: '/',
           name: 'Home',
           component: () => import('@/views/Home.vue')
+        },
+        {
+          path: '/',
+          name: 'add-teacher',
+          component: () => import('@/views/AddTeacher.vue')
+        },
+        {
+          path: '/',
+          name: 'add-student',
+          component: () => import('@/views/AddStudent.vue')
+        },
+        {
+          path: '/',
+          name: 'subjects',
+          component: () => import('@/views/Subjects.vue')
+        },
+        {
+          path: '/',
+          name: 'test',
+          component: () => import('@/views/Test.vue')
+        },
+        {
+          path: '/',
+          name: 'results',
+          component: () => import('@/views/Results.vue')
+        },
+        {
+          path: '/:pathMatch(.*)*',
+          name: 'Error',
+          component: () => import('@/views/Error.vue')
         }
       ]
     },
