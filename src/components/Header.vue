@@ -99,7 +99,7 @@ onMounted(() => {
                   <label
                     class="relative inline-flex justify-between items-center cursor-pointer w-full"
                   >
-                    <span class="text-sm font-medium">Dark</span>
+                    <span class="text-sm font-medium"> Dark </span>
                     <input
                       type="checkbox"
                       class="sr-only peer"
