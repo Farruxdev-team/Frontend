@@ -3,9 +3,7 @@
 <template>
   <div>
     <div class="h-screen flex flex-col items-center justify-center px-6 py-8 mx-auto background">
-      <div
-        class="w-full rounded-lg border md:mt-0 md:max-w-md xl:p-0 forma bg-white/20 dark:bg-black/20"
-      >
+      <div class="w-full rounded-lg border md:mt-0 md:max-w-md xl:p-0 forma bg-white/20">
         <div class="p-6 space-y-4 md:space-y-6 sm:p-8">
           <div class="text-center w-full">
             <img
