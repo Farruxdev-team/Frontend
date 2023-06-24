@@ -4,7 +4,7 @@
   <div>
     <div class="h-screen flex flex-col items-center justify-center px-6 py-8 mx-auto background">
       <div
-        class="w-full rounded-lg border md:mt-0 md:max-w-md xl:p-0 forma bg-white/20 bg-gradient-to-t from-black/70"
+        class="w-full rounded-lg border md:mt-0 md:max-w-md xl:p-0 forma border-gray-700 bg-white/20 bg-gradient-to-t from-black/80"
       >
         <div class="p-6 space-y-4 md:space-y-6 sm:p-8">
           <div class="text-center w-full">
@@ -72,7 +72,7 @@
 
 <style scoped>
 .background {
-  background-color: #8bc6ec;
+  background-color: gray;
   background-image: linear-gradient(135deg, #8bc6ec 0%, #9599e2 100%);
   background-image: url('https://wallpapercave.com/wp/wp7335889.jpg');
   background-position: center;
@@ -84,7 +84,6 @@
   box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
-  border: 1px solid rgba(61, 61, 61);
   box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px,
     rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;
 }

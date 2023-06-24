@@ -1,6 +1,6 @@
 import { reactive, computed } from 'vue'
 import { defineStore } from 'pinia'
-import { useAuth } from '../../service/auth/'
+import { useAuth } from '../../service/auth'
 
 export const userStore = defineStore('user', () => {
   const state = reactive({
