@@ -5,7 +5,7 @@ import { menu } from '@/constants/menu'
 <template>
   <aside
     id="sidebar-multi-level-sidebar"
-    class="fixed top-16 left-0 z-40 w-64 h-screen transition-transform -translate-x-full sm:translate-x-0 border-r border-gray-300 shadow-xl"
+    class="fixed top-16 left-0 z-40 w-64 h-screen transition-transform -translate-x-full sm:translate-x-0 border-r border-gray-300 dark:border-gray-600 shadow-xl"
     aria-label="Sidebar"
   >
     <div class="h-full p-2 py-4 overflow-y-auto bg-gray-100 dark:bg-gray-800">
@@ -25,6 +25,7 @@ import { menu } from '@/constants/menu'
 
 <style scoped>
 .router-link-exact-active {
-  background: rgb(51, 51, 51, 0.2);
+  background: rgb(0, 0, 0, 0.3);
+  /* color: white; */
 }
 </style>

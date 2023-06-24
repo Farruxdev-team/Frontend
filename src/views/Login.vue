@@ -3,7 +3,9 @@
 <template>
   <div>
     <div class="h-screen flex flex-col items-center justify-center px-6 py-8 mx-auto background">
-      <div class="w-full rounded-lg border md:mt-0 md:max-w-md xl:p-0 forma">
+      <div
+        class="w-full rounded-lg border md:mt-0 md:max-w-md xl:p-0 forma bg-white/20 dark:bg-black/20"
+      >
         <div class="p-6 space-y-4 md:space-y-6 sm:p-8">
           <div class="text-center w-full">
             <img
@@ -78,7 +80,7 @@
   background-size: cover;
 }
 .forma {
-  background: rgba(242, 237, 237, 0.35);
+  /* background: rgba(242, 237, 237, 0.35); */
   border-radius: 16px;
   box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
   backdrop-filter: blur(20px);
