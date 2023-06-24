@@ -14,7 +14,6 @@ import {
   initTooltips
 } from 'flowbite'
 
-// initialize components based on data attribute selectors
 onMounted(() => {
   initAccordions()
   initCarousels()
@@ -31,7 +30,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="">
+  <div>
     <router-view></router-view>
   </div>
 </template>

@@ -1,9 +1,9 @@
 <template>
-  <div>
-    Azizkhon's Part
-  </div>
+  <AddNavbar data="Talaba" />
 </template>
 
-<script setup></script>
+<script setup>
+import AddNavbar from '../components/AddNavbar.vue'
+</script>
 
 <style lang="scss" scoped></style>
