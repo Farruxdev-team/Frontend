@@ -31,7 +31,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="dark">
+  <div class="">
     <router-view></router-view>
   </div>
 </template>
