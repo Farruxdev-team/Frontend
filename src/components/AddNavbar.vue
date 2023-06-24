@@ -1,11 +1,11 @@
 <template>
   <nav
-    class="w-full flex justify justify-between items-center bg-white border-b border-gray-200 dark:bg-gray-800 dark:border-gray-700 p-4 rounded-md mb-5 pl-10"
+    class="w-full flex justify justify-between items-center bg-white border border-gray-300 dark:bg-gray-800 dark:border-gray-600 p-4 rounded-xl mb-5 pl-10 shadow-xl"
   >
     <div class="flex gap-8 items-center">
       <span class="text-lg text-blue-600 font-medium">{{ props.data }}lar</span>
       <button
-        class="text-base px-4 py-2 text-green-100 rounded-md bg-gradient-to-r from-green-500 to-green-700"
+        class="text-base px-4 py-2 text-green-100 rounded-md bg-gradient-to-r from-green-500 to-green-700 hover:bg-green-500"
       >
         {{ props.data }} qo'shish
       </button>
@@ -36,15 +36,15 @@
       <input
         type="search"
         id="default-search"
-        class="block w-52 p-2 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-        placeholder="Izlash uchun yozing .."
+        class="block w-64 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+        placeholder="Izlash uchun yozing..."
       />
     </div>
   </nav>
 </template>
 
 <script setup>
-const props = defineProps(["data"]);
+const props = defineProps(['data'])
 </script>
 
 <style lang="scss" scoped></style>
