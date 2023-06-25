@@ -1,12 +1,29 @@
 <template>
   <nav
-    class="bg-white border-b border-gray-200 dark:bg-gray-800 dark:border-gray-700 p-4 rounded-md mb-5 pl-6"
+    class="w-full flex justify justify-between items-center bg-white border border-gray-300 dark:bg-gray-800 dark:border-gray-600 p-4 rounded-xl mb-5 pl-10 shadow-xl"
   >
-    <div class="max-w-screen flex flex-wrap items-center justify-between mx-auto md:pl-4">
-      <div class="flex md:gap-8 gap-2 items-center">
-        <span
-          class="md:text-xl text-lg text-blue-600 font-medium self-center whitespace-nowrap dark:text-white"
-          >{{ props.data }}lar</span
+    <div class="flex gap-8 items-center">
+      <span class="text-lg text-blue-600 font-medium">{{ props.data }}lar</span>
+      <button
+        class="text-base px-4 py-2 text-green-100 rounded-md bg-gradient-to-r from-green-500 to-green-700 hover:bg-green-500"
+      >
+        {{ props.data }} qo'shish
+      </button>
+    </div>
+    <label
+      for="default-search"
+      class="mb-2 text-md font-medium text-gray-900 sr-only dark:text-white"
+      >Search</label
+    >
+    <div class="relative">
+      <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+        <svg
+          aria-hidden="true"
+          class="w-5 h-5 text-gray-500 dark:text-gray-400"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+          xmlns="http://www.w3.org/2000/svg"
         >
         <button
           class="text-base md:px-4 md:py-2 px-3 py-1 text-green-100 rounded-md bg-gradient-to-r from-green-500 to-green-700"
@@ -97,12 +114,18 @@
           />
         </div>
       </div>
+      <input
+        type="search"
+        id="default-search"
+        class="block w-64 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+        placeholder="Izlash uchun yozing..."
+      />
     </div>
   </nav>
 </template>
 
 <script setup>
-const props = defineProps(["data"]);
+const props = defineProps(['data'])
 </script>
 
 <style lang="scss" scoped></style>

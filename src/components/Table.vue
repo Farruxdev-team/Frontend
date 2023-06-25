@@ -14,8 +14,8 @@
       </thead>
       <tbody>
         <tr
-          v-for="el in 20"
-          class="bg-white border-b dark:bg-gray-800 dark:border-gray-700"
+          v-for="el in 5"
+          class="bg-white border-b border-gray-300 dark:bg-gray-800 dark:border-gray-700"
         >
           <th
             scope="row"
@@ -26,7 +26,11 @@
           <td class="px-6 py-4">Silver</td>
           <td class="px-6 py-4">Laptop</td>
           <td class="px-6 py-4">$2999</td>
-          <td class="px-6 py-4">$2999</td>
+          <td class="px-6 py-4 text-right">
+            <a href="#" class="font-medium text-blue-600 dark:text-blue-500 hover:underline"
+              >Edit</a
+            >
+          </td>
         </tr>
       </tbody>
     </table>
