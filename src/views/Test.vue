@@ -5,7 +5,7 @@ import AddNavbar from '../components/AddNavbar.vue'
 
 <template>
   <div>
-    <AddNavbar data="O'qituvchi" />
+    <AddNavbar data="Testlar" />
     <Table />
   </div>
 </template>
