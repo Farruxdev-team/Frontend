@@ -5,9 +5,7 @@ const cutText = (str, len) => {
 </script>
 
 <template>
-  <div
-    class="relative overflow-x-auto sm:rounded-xl border border-gray-300 dark:border-gray-600 shadow-xl"
-  >
+  <div class="relative overflow-x-auto">
     <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
       <thead
         class="text-sm text-gray-700 uppercase bg-gray-50 dark:bg-gray-800 dark:text-gray-400 border-b-2 border-gray-300 dark:border-gray-400"
