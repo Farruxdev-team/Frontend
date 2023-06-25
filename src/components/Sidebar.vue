@@ -1,5 +1,5 @@
 <script setup>
-import { menu } from '@/constants/menu'
+import { menu } from "@/constants/menu";
 </script>
 
 <template>
@@ -26,6 +26,5 @@ import { menu } from '@/constants/menu'
 <style scoped>
 .router-link-exact-active {
   background: rgb(0, 0, 0, 0.3);
-  /* color: white; */
 }
 </style>
