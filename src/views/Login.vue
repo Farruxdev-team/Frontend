@@ -1,4 +1,21 @@
-<script setup></script>
+<script setup>
+import { reactive } from 'vue'
+import { userStore } from '@/stores/user/userStore'
+
+const store = userStore()
+
+const user = reactive({
+  login: '',
+  password: ''
+})
+
+const login_user = () => {
+  try {
+    console.log(user)
+    store.LOGIN_USER(user)
+  } catch (error) {}
+}
+</script>
 
 <template>
   <div>
@@ -17,7 +34,7 @@
               Tizimga kirish
             </h1>
           </div>
-          <form class="space-y-4 md:space-y-6" action="#">
+          <form @submit.prevent="login_user" class="space-y-4 md:space-y-6" action="#">
             <div>
               <label for="email" class="block mb-2 text-sm font-medium text-gray-300">Login</label>
               <input
@@ -25,6 +42,7 @@
                 class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-gray-300 block w-full p-2.5 placeholder-gray-400"
                 placeholder="login"
                 required=""
+                v-model="user.login"
               />
             </div>
             <div>
@@ -36,6 +54,7 @@
                 placeholder="••••••••"
                 class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-gray-300 block w-full p-2.5 placeholder-gray-400"
                 required=""
+                v-model="user.password"
               />
             </div>
             <div class="flex items-center justify-between">
@@ -46,7 +65,6 @@
                     aria-describedby="remember"
                     type="checkbox"
                     class="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-gray-300 ring-offset-gray-800"
-                    required=""
                   />
                 </div>
                 <div class="ml-3 text-sm">
