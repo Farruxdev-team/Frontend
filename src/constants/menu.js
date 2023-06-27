@@ -25,7 +25,7 @@ export const menu = [
   },
   {
     name: 'Testlar',
-    path: '/test',
+    path: '/tests',
     icon: 'bx bx-test-tube',
     role: ['ADMIN', 'TEACHER']
   },
@@ -39,6 +39,12 @@ export const menu = [
     name: 'Natijalar',
     path: '/results',
     icon: 'bx bx-pie-chart',
+    role: ['ADMIN', 'TEACHER', 'STUDENT']
+  },
+  {
+    name: 'Settings',
+    path: '/settings',
+    icon: 'bx bx-cog',
     role: ['ADMIN', 'TEACHER', 'STUDENT']
   }
 ]
