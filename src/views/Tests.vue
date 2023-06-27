@@ -1,10 +1,13 @@
 <script setup>
+import Loading from '@/components/Loading.vue'
 import AddNavbar from '../components/AddNavbar.vue'
 import { ref, reactive, onMounted } from 'vue'
 import { testStore } from '@/stores/tests/testStore'
+import { subjectStore } from '@/stores/subjects/subjectStore'
 import { toast } from 'vue3-toastify'
 
 const store = testStore()
+const store_subject = subjectStore()
 
 const addModal = ref(false)
 const changeModal = () => (addModal.value = !addModal.value)
@@ -21,11 +24,26 @@ const addTest = async () => {
     newTest.subject = newTest.subject.trim()
     newTest.question = newTest.question.trim()
     if (newTest.subject.length && newTest.question.length) {
-      await store.add_test({ ...newTest })
+      for (let i in newTest.answers) {
+        newTest.answers[i].text = newTest.answers[i].text.trim()
+        if (!newTest.answers[i].text.length) {
+          toast.error("Variantlarni to'ldiring", {
+            theme: 'dark',
+            autoClose: 2000
+          })
+          return
+        }
+      }
+
+      await store.ADD_LIST({ ...newTest })
       toast.success('Added Successfully', {
         autoClose: 1000
       })
       resetForm()
+    } else {
+      toast.error("Forma to'ldirilishi shart", {
+        autoClose: 1000
+      })
     }
   } catch (error) {}
 }
@@ -58,6 +76,7 @@ const cutText = (str, len) => {
 
 onMounted(() => {
   store.SET_LIST()
+  store_subject.SET_LIST()
 })
 </script>
 
@@ -95,9 +114,10 @@ onMounted(() => {
                   class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                   @change="(e) => (newTest.subject = e.target.value)"
                 >
-                  <option disabled>Fanlardan birini tanlang</option>
-                  <option value="SMM">SMM</option>
-                  <option value="DIZAYN">DIZAYN</option>
+                  <option disabled selected>Fanlardan birini tanlang</option>
+                  <option v-for="subject in store_subject.LIST" :value="subject._id">
+                    {{ subject.name }}
+                  </option>
                 </select>
               </div>
               <div class="">
@@ -109,7 +129,7 @@ onMounted(() => {
                 </div>
                 <textarea
                   id="message"
-                  rows="4"
+                  rows="3"
                   class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-600 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                   placeholder="Savolni yozing..."
                   v-model="newTest.question"
@@ -133,7 +153,7 @@ onMounted(() => {
                     <input
                       type="input"
                       id="default-search"
-                      class="block p-2 px-2 h-full w-full text-sm text-gray-900 border border-gray-300 outline-none bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                      class="block p-2 px-2 h-full w-full text-sm text-gray-900 border border-gray-300 outline-none bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-600 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                       :placeholder="`${alphas[i]} - variant`"
                       v-model="el.text"
                     />
@@ -149,7 +169,7 @@ onMounted(() => {
                         @change="() => (el.isTrue = !el.isTrue)"
                       />
                       <div
-                        class="w-8 h-5 bg-gray-200 rounded-full dark:bg-gray-600 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-2.5 after:left-[6px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-3.5 after:w-3.5 after:transition-all dark:border-gray-600 peer-checked:bg-green-600"
+                        class="w-9 h-5 bg-gray-200 rounded-full dark:bg-gray-600 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-2.5 after:left-[8px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-3.5 after:w-3.5 after:transition-all dark:border-gray-600 peer-checked:bg-green-600"
                       ></div>
                       <span
                         class="w-[70px] text-center ml-2 text-xs font- text-gray-900 dark:text-gray-300 pr-1"
@@ -197,23 +217,23 @@ onMounted(() => {
         Test qo'shish
       </button>
     </AddNavbar>
-
+    <Loading v-if="store.LOAD" />
     <div
-      class="relative overflow-x-auto sm:rounded-xl border border-gray-300 dark:border-gray-600 shadow-xl"
+      v-else
+      class="relative sm:rounded-xl border border-gray-300 dark:border-gray-600 shadow-xl"
+      :class="!store.LIST.length ? 'overflow-x-hidden' : 'overflow-x-auto'"
     >
-      <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
-        <thead
-          class="text-sm text-gray-700 uppercase bg-gray-50 dark:bg-gray-800 dark:text-gray-400 border-b-2 border-gray-300 dark:border-gray-400"
-        >
+      <table class="w-full text-center text-gray-500 dark:text-gray-400 shadow-2xl">
+        <thead class="text-xs text-gray-700 uppercase bg-white dark:bg-gray-700 dark:text-gray-300">
           <tr>
-            <th scope="col" class="px-6 py-3">Test Fani</th>
-            <th scope="col" class="px-6 py-3">Savol matni</th>
-            <th scope="col" class="px-6 py-3 sr-only">Edit</th>
+            <th scope="col" class="py-4 px-10 text-sm uppercase">Test Fani</th>
+            <th scope="col" class="py-4 px-10 text-sm uppercase">Savol matni</th>
+            <th scope="col" class="sr-only">Edit</th>
           </tr>
         </thead>
         <tbody>
           <tr
-            v-for="el in store.TEST"
+            v-for="el in store.LIST"
             class="bg-white border-b border-gray-300 dark:bg-gray-800 dark:border-gray-700"
           >
             <th

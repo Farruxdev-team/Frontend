@@ -2,7 +2,7 @@
 
 <template>
   <section
-    class="bg-white text-center flex items-center mx-auto justify-center w-full h-[70vh]"
+    class="bg-white text-center flex items-center mx-auto justify-center w-full h-[70vh] rounded-2xl"
   >
     <ul class="wave-menu bg-white dark:bg-[#334155]">
       <li class="bg-[#334155] dark:bg-white"></li>

@@ -9,8 +9,6 @@ onMounted(() => {
 
 <template>
   <div
-    data-aos="fade-right"
-    data-aos-delay="500"
     id="sidebar-multi-level-sidebar"
     class="fixed top-16 lg:left-0 md:-left-64 z-40 w-64 h-screen transition-transform -translate-x-full sm:translate-x-0 border-r border-gray-300 dark:border-gray-600 shadow-xl"
     aria-label="Sidebar"
