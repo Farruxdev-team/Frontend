@@ -1,5 +1,5 @@
 <script setup>
-import { reactive, ref, defineProps } from "vue";
+import { reactive } from "vue";
 import { useModeStore } from "@/stores/mode";
 const store = useModeStore();
 
