@@ -1,59 +1,93 @@
 <script setup>
-const cutText = (str, len) => {
-  return str.slice(0, len) + '...'
-}
-</script>
+import Loading from "./Loading.vue";
 
+const props = defineProps(["data", "page", "message"]);
+</script>
 <template>
-  <div class="relative overflow-x-auto">
-    <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+  <section class="relative overflow-x-auto shadow-xl rounded-xl">
+    <Loading v-if="!props.data.length" />
+    <table v-else class="w-full text-center text-gray-500 dark:text-gray-400">
       <thead
-        class="text-sm text-gray-700 uppercase bg-gray-50 dark:bg-gray-800 dark:text-gray-400 border-b-2 border-gray-300 dark:border-gray-400"
+        class="text-xs text-gray-700 uppercase bg-gray-200 dark:bg-gray-700 dark:text-gray-300"
       >
         <tr>
-          <th scope="col" class="px-6 py-3">Test Fani</th>
-          <th scope="col" class="px-6 py-3">Savol matni</th>
-          <!-- <th scope="col" class="px-6 py-3">A variant</th>
-          <th scope="col" class="px-6 py-3">B variant</th>
-          <th scope="col" class="px-6 py-3">C variant</th> -->
-          <th scope="col" class="px-6 py-3 sr-only">Edit</th>
+          <th scope="col" class="py-4 px-10 text-sm uppercase">
+            {{ props.message[0] }}
+          </th>
+          <th scope="col" class="py-4 px-10 text-sm uppercase">
+            {{ props.message[1] }}
+          </th>
+          <th scope="col" class="py-4 px-10 text-sm uppercase">
+            {{ props.message[2] }}
+          </th>
+          <th scope="col" class="py-4 px-10 text-sm uppercase">holati</th>
+          <th scope="col" class="py-4 px-10 text-sm uppercase">batafsil</th>
         </tr>
       </thead>
       <tbody>
         <tr
-          v-for="el in 5"
-          class="bg-white border-b border-gray-300 dark:bg-gray-800 dark:border-gray-700"
+          v-for="el in props.data"
+          class="bg-white border-b dark:bg-gray-800 dark:border-gray-700"
         >
           <th
             scope="row"
-            class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+            class="py-4 px-10 font-medium text-gray-900 whitespace-nowrap dark:text-white"
           >
-            Apple
+            <span v-if="props.page != 'subjects'">{{ el.full_name }}</span>
+            <span v-else>{{ el.name }}</span>
           </th>
-          <th
-            scope="row"
-            class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
-          >
-            {{
-              cutText(
-                'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Magni natus recusandae corporis sint, dignissimos expedita ab eaque molestiae, quod odit repellendus sed quo sequi labore? Cupiditate sit aperiam quaerat nihil temporibus, debitis dolorem numquam esse totam dolor velit quos dolores sed sunt nesciunt nisi dignissimos! Quia recusandae dignissimos perspiciatis eveniet?',
-                50
-              )
-            }}
-          </th>
-
-          <td class="px-6 py-4 text-right">
-            <button
-              type="button"
-              class="text-white bg-gradient-to-r from-green-400 via-green-500 to-green-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-green-300 dark:focus:ring-green-800 shadow-lg shadow-green-500/50 dark:shadow-lg dark:shadow-green-800/80 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2"
+          <td class="py-4 px-10 text-sm">
+            <span
+              v-if="props.page == 'teacher'"
+              class="bg-indigo-300 py-0.5 dark:bg-indigo-900/50 dark:text-indigo-300 text-indigo-900 font-medium block rounded"
+              >o'qituvchining fani
+            </span>
+            <span
+              v-if="props.page == 'student'"
+              class="bg-indigo-300 py-0.5 dark:bg-indigo-900/50 dark:text-indigo-300 text-indigo-900 font-medium block rounded"
+              >o'quvchining guruhi
+            </span>
+            <span
+              v-if="props.page == 'subjects'"
+              class="bg-indigo-300 py-0.5 dark:bg-indigo-900/50 dark:text-indigo-300 text-indigo-900 font-medium block rounded"
+              >24
+            </span>
+          </td>
+          <td class="py-4 px-10 text-sm">
+            <span
+              v-if="props.page != 'subjects'"
+              class="bg-red-300 py-0.5 dark:bg-red-900/50 dark:text-red-300 text-red-900 font-medium block rounded"
+              >{{ el.phone }}</span
             >
-              Green
+            <span
+              v-else
+              class="bg-red-300 py-0.5 dark:bg-red-900/50 dark:text-red-300 text-red-900 font-medium block rounded"
+              >19</span
+            >
+          </td>
+          <td class="py-4 px-10 text-sm">
+            <span
+              v-if="el.is_active"
+              class="bg-green-300 py-0.5 dark:bg-green-900/50 dark:text-green-300 text-green-900 font-medium block rounded"
+              >active</span
+            >
+            <span
+              v-else
+              class="bg-pink-300 py-0.5 dark:bg-pink-900/50 dark:text-pink-300 text-pink-900 font-medium block rounded"
+              >inactive</span
+            >
+          </td>
+          <td class="py-4 px-10">
+            <button
+              class="px-4 py-2 text-white rounded-md bg-gradient-to-r from-teal-500 to-teal-700"
+            >
+              Kirish
             </button>
           </td>
         </tr>
       </tbody>
     </table>
-  </div>
+  </section>
 </template>
 
 <style lang="scss" scoped></style>
