@@ -2,10 +2,10 @@
 import AddNavbar from '../components/AddNavbar.vue'
 import Table from '../components/Table.vue'
 import { onMounted } from 'vue'
-import { useSubjects } from '../service/subject/index.js'
-import { subjectsStore } from '../stores/subject/subjectStore.js'
+import { useSubjects } from '../service/subjects/index.js'
+import { subjectStore } from '../stores/subjects/subjectStore.js'
 
-const store = subjectsStore()
+const store = subjectStore()
 const heads = ['fan nomi', "fan o'qituvchilari soni", "fan o'tiladigan guruhlar soni"]
 
 const listUpdate = () => {
