@@ -1,12 +1,19 @@
 <script setup>
-import Table from '../components/Table.vue'
-import AddNavbar from '../components/AddNavbar.vue'
+import Back from '../components/Back.vue'
+import { useRoute } from 'vue-router'
+const { id } = useRoute().params
+console.log(id)
 </script>
 
 <template>
   <div>
-    <AddNavbar data="O'qituvchi" />
-    <Table />
+    <Back />
+    <div
+      class="overflow-x-auto rounded-xl text-white p-4 shadow-xl bg-white border border-gray-300 dark:bg-gray-800 dark:border-gray-600"
+    >
+      {{ id }}
+      salom
+    </div>
   </div>
 </template>
 

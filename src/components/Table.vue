@@ -24,7 +24,6 @@ const props = defineProps(["data", "page", "message"]);
           <th scope="col" class="py-4 px-10 text-sm uppercase">batafsil</th>
         </tr>
       </thead>
-      {{}}
       <tbody>
         <tr
           v-for="el in props.data"

@@ -1,27 +1,12 @@
 <script setup>
 import { onMounted, onUpdated, ref } from 'vue'
 import { initDropdowns } from 'flowbite'
-
-const isDark = ref(JSON.parse(localStorage.getItem('mode')))
-const changeMode = () => {
-  isDark.value = !isDark.value
-  localStorage.setItem('mode', isDark.value)
-  writeMode()
-}
-const writeMode = () => {
-  if (
-    isDark.value ||
-    (!('mode' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)
-  ) {
-    document.documentElement.classList.add('dark')
-  } else {
-    document.documentElement.classList.remove('dark')
-  }
-}
+import { useModeStore } from '@/stores/mode'
+const store = useModeStore()
 
 onMounted(() => {
   initDropdowns()
-  writeMode()
+  store.writeMode()
 })
 </script>
 
@@ -103,8 +88,8 @@ onMounted(() => {
                     <input
                       type="checkbox"
                       class="sr-only peer"
-                      @change="changeMode"
-                      :checked="JSON.parse(isDark)"
+                      @change="store.changeMode"
+                      :checked="store.isDark"
                     />
                     <div
                       class="w-11 h-6 bg-gray-200 rounded-full peer peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 dark:bg-gray-900 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:right-[22px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600"

@@ -1,12 +1,19 @@
 <script setup>
-import { menu } from "@/constants/menu";
+import { menu } from '@/constants/menu'
+import { onMounted } from 'vue'
+
+onMounted(() => {
+  AOS.init()
+})
 </script>
 
 <template>
   <aside
     id="sidebar-multi-level-sidebar"
-    class="fixed top-16 left-0 z-40 w-64 h-screen transition-transform -translate-x-full sm:translate-x-0 border-r border-gray-300 dark:border-gray-600 shadow-xl"
+    class="fixed top-16 lg:left-0 md:-left-64 z-40 w-64 h-screen transition-transform -translate-x-full sm:translate-x-0 border-r border-gray-300 dark:border-gray-600 shadow-xl"
     aria-label="Sidebar"
+    data-aos="fade-up"
+    data-aos-delay="500"
   >
     <div class="h-full p-2 py-4 overflow-y-auto bg-gray-100 dark:bg-gray-800">
       <div class="space-y-2 font-medium">
