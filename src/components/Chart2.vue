@@ -10,7 +10,7 @@ const options = reactive({
           animationEnabled: true,
           exportEnabled: true,
           title:{
-            text: "O'zbekistonda etnik guruhlar"
+            text: "O'zbekistonda etnik guruhlar (2021)"
           },
           data: [{
             type: "pie",
