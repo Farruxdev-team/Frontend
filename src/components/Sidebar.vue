@@ -1,5 +1,5 @@
 <script setup>
-import { menu } from "@/constants/menu";
+import { menu } from '@/constants/menu'
 </script>
 
 <template>

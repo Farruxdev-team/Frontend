@@ -1,4 +1,22 @@
-<script setup></script>
+<script setup>
+import { reactive, ref } from 'vue'
+import { userStore } from '@/stores/user/userStore'
+
+const store = userStore()
+const isStudent = ref(true)
+
+const user = reactive({
+  login: '',
+  password: ''
+})
+
+const login_user = () => {
+  try {
+    console.log(user)
+    store.LOGIN_USER(user)
+  } catch (error) {}
+}
+</script>
 
 <template>
   <div>
@@ -6,7 +24,7 @@
       <div
         class="w-full rounded-lg border md:mt-0 md:max-w-md xl:p-0 forma border-gray-700 bg-white/20 bg-gradient-to-t from-black/80"
       >
-        <div class="p-6 space-y-4 md:space-y-6 sm:p-8">
+        <div class="p-6 sm:p-8 pb-0 mb-0">
           <div class="text-center w-full">
             <img
               class="w-32 h-32 mx-auto mb-5"
@@ -17,7 +35,7 @@
               Tizimga kirish
             </h1>
           </div>
-          <form class="space-y-4 md:space-y-6" action="#">
+          <form @submit.prevent="login_user" class="space-y-4">
             <div>
               <label for="email" class="block mb-2 text-sm font-medium text-gray-300">Login</label>
               <input
@@ -25,6 +43,7 @@
                 class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-gray-300 block w-full p-2.5 placeholder-gray-400"
                 placeholder="login"
                 required=""
+                v-model="user.login"
               />
             </div>
             <div>
@@ -36,6 +55,7 @@
                 placeholder="••••••••"
                 class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-gray-300 block w-full p-2.5 placeholder-gray-400"
                 required=""
+                v-model="user.password"
               />
             </div>
             <div class="flex items-center justify-between">
@@ -46,7 +66,6 @@
                     aria-describedby="remember"
                     type="checkbox"
                     class="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-gray-300 ring-offset-gray-800"
-                    required=""
                   />
                 </div>
                 <div class="ml-3 text-sm">
@@ -59,11 +78,27 @@
             </div>
             <button
               type="submit"
-              class="w-full text-white border border-gray-700 bg-gray-500 hover:bg-gray-800 focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center duration-300"
+              class="w-full text-white border border-gray-700 bg-gray-500 hover:bg-gray-600 focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center duration-300"
             >
               Kirish
             </button>
           </form>
+        </div>
+        <div class="flex items-center text-white justify-between">
+          <button
+            class="w-full p-2 rounded-bl-2xl"
+            :class="isStudent ? 'bg-gray-500' : 'bg-inherit hover:bg-gray-950/50'"
+            @click="() => (isStudent = true)"
+          >
+            O'quvchi
+          </button>
+          <button
+            class="w-full p-2 rounded-br-2xl"
+            :class="!isStudent ? 'bg-gray-500' : 'bg-inherit hover:bg-gray-950/50'"
+            @click="() => (isStudent = false)"
+          >
+            O'qituvchi
+          </button>
         </div>
       </div>
     </div>
