@@ -8,12 +8,12 @@ onMounted(() => {
 </script>
 
 <template>
-  <aside
+  <div
+    data-aos="fade-right"
+    data-aos-delay="500"
     id="sidebar-multi-level-sidebar"
     class="fixed top-16 lg:left-0 md:-left-64 z-40 w-64 h-screen transition-transform -translate-x-full sm:translate-x-0 border-r border-gray-300 dark:border-gray-600 shadow-xl"
     aria-label="Sidebar"
-    data-aos="fade-up"
-    data-aos-delay="500"
   >
     <div class="h-full p-2 py-4 overflow-y-auto bg-gray-100 dark:bg-gray-800">
       <div class="space-y-2 font-medium">
@@ -27,7 +27,7 @@ onMounted(() => {
         </router-link>
       </div>
     </div>
-  </aside>
+  </div>
 </template>
 
 <style scoped>
