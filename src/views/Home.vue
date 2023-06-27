@@ -1,45 +1,45 @@
 <script setup>
-import { onMounted, ref } from "vue";
-import Chart1 from "../components/Chart1.vue";
-import Chart2 from "../components/Chart2.vue";
-import Chart3 from "../components/Chart3.vue";
-import { useStaff } from "../service/staff/index";
-import { staffStore } from "../stores/staff/staffStore";
-import { useStudents } from "../service/students/index";
-import { studentStore } from "../stores/students/studentStore";
-import { useSubjects } from "../service/subjects/index";
-import { subjectStore } from "../stores/subjects/subjectStore";
-import { useTests } from "../service/tests/index";
-import { testStore } from "../stores/tests/testStore";
+import { onMounted, ref } from 'vue'
+import Chart1 from '../components/Chart1.vue'
+import Chart2 from '../components/Chart2.vue'
+import Chart3 from '../components/Chart3.vue'
+import { useStaff } from '../service/staff/index'
+import { staffStore } from '../stores/staff/staffStore'
+import { useStudents } from '../service/students/index'
+import { studentStore } from '../stores/students/studentStore'
+import { useSubjects } from '../service/subjects/index'
+import { subjectStore } from '../stores/subjects/subjectStore'
+import { useTests } from '../service/tests/index'
+import { testStore } from '../stores/tests/testStore'
 
-const staff_Store = staffStore();
-const students_Store = studentStore();
-const subjects_Store = subjectStore();
-const test_Store = testStore();
+const staff_Store = staffStore()
+const students_Store = studentStore()
+const subjects_Store = subjectStore()
+const test_Store = testStore()
 
 const listUpdate = () => {
   useStaff.list().then((res) => {
-    staff_Store.SET_LIST(res?.data);
-  });
+    staff_Store.SET_LIST(res?.data)
+  })
 
   useStudents.list().then((res) => {
-    students_Store.SET_LIST(res?.data);
-  });
+    students_Store.SET_LIST(res?.data)
+  })
 
   useSubjects.list().then((res) => {
-    subjects_Store.SET_LIST(res?.data);
-  });
+    subjects_Store.SET_LIST(res?.data)
+  })
 
   useTests.list().then((res) => {
-    test_Store.SET_LIST(res?.data);
-  });
-};
+    test_Store.SET_LIST(res?.data)
+  })
+}
 
 onMounted(() => {
-  AOS.init();
+  AOS.init()
 
-  listUpdate();
-});
+  listUpdate()
+})
 </script>
 
 <template>
@@ -86,7 +86,7 @@ onMounted(() => {
     >
       <div class="grid grid-cols-1 gap-1">
         <h1 class="text-xl font-bold">Testlar</h1>
-        <h1 class="text-2xl font-extrabold">{{ test_Store.LIST.length }}</h1>
+        <h1 class="text-2xl font-extrabold">{{ test_Store.LIST?.length }}</h1>
       </div>
       <div class="w-20 h-20">
         <img src="/test.png" class="h-full rounded-xl w-auto" alt="" />

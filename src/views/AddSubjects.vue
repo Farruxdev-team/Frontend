@@ -1,22 +1,22 @@
 <script setup>
-import AddNavbar from "../components/AddNavbar.vue";
-import Table from "../components/Table.vue";
-import { onMounted } from "vue";
-import { useSubjects } from "../service/subject/index.js";
-import { subjectsStore } from "../stores/subject/subjectStore.js";
+import AddNavbar from '../components/AddNavbar.vue'
+import Table from '../components/Table.vue'
+import { onMounted } from 'vue'
+import { useSubjects } from '../service/subject/index.js'
+import { subjectsStore } from '../stores/subject/subjectStore.js'
 
-const store = subjectsStore();
-const heads = ["fan nomi", "fan o'qituvchilari soni", "fan o'tiladigan guruhlar soni"];
+const store = subjectsStore()
+const heads = ['fan nomi', "fan o'qituvchilari soni", "fan o'tiladigan guruhlar soni"]
 
 const listUpdate = () => {
   useSubjects.list().then((res) => {
-    store.SET_LIST(res?.data);
-  });
-};
+    store.SET_LIST(res?.data)
+  })
+}
 
 onMounted(() => {
-  listUpdate();
-});
+  listUpdate()
+})
 // console.log(store.LIST, "subjects");
 </script>
 

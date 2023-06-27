@@ -1,6 +1,9 @@
 <script setup>
 import { reactive, ref } from 'vue'
 import { userStore } from '@/stores/user/userStore'
+import { useRouter } from 'vue-router'
+
+const router = useRouter()
 
 const store = userStore()
 const isStudent = ref(true)
@@ -13,9 +16,25 @@ const user = reactive({
 const login_user = async () => {
   try {
     if (isStudent.value) {
-      await store.LOGIN_STUDENT(user)
+      try {
+        await store.LOGIN_STUDENT(user)
+        router.push('/')
+      } catch (error) {
+        console.log(error)
+        toast.error(`Bunday o'quvchi topilmadi`, {
+          autoClose: 1000
+        })
+      }
     } else {
-      await store.LOGIN_STAFF(user)
+      try {
+        await store.LOGIN_STAFF(user)
+        router.push('/')
+      } catch (error) {
+        console.log(error)
+        toast.error(`Bunday o'qituvchi topilmadi`, {
+          autoClose: 1000
+        })
+      }
     }
   } catch (error) {}
 }
@@ -29,19 +48,15 @@ const login_user = async () => {
       >
         <div class="flex items-center text-white justify-between">
           <button
-            class="w-full p-2 rounded-2xl"
-            :class="
-              isStudent ? 'bg-gray-500 hover:bg-gray-600 ' : 'bg-inherit hover:bg-gray-950/50'
-            "
+            class="w-full p-2 rounded-tl-2xl"
+            :class="isStudent ? ' ' : 'bg-gray-900/70'"
             @click="() => (isStudent = true)"
           >
             O'quvchi
           </button>
           <button
-            class="w-full p-2 rounded-2xl"
-            :class="
-              !isStudent ? 'bg-gray-500 hover:bg-gray-600 ' : 'bg-inherit hover:bg-gray-950/50'
-            "
+            class="w-full p-2 rounded-tr-2xl"
+            :class="!isStudent ? ' ' : 'bg-gray-900/70'"
             @click="() => (isStudent = false)"
           >
             Xodim
