@@ -1,25 +1,27 @@
-import { computed, reactive } from "vue"
-import { defineStore } from "pinia";
+import { computed, reactive } from 'vue'
+import { defineStore } from 'pinia'
+import { useTests } from '../../service/tests'
 
+export const testStore = defineStore('test', () => {
+  const state = reactive({
+    list: [],
+    oneElement: []
+  })
 
-export const testStore = defineStore("test", () => {
+  const SET_LIST = async () => {
+    state.list = await useTests.list()
+  }
 
-    const state = reactive({
-        list: [],
-        oneElement: []
-    })
-    
-    const SET_LIST = (list) => {
-        state.list = list
-    }
+  const ADD_LIST = async (data) => {
+    state.list = await useTests.create(data)
+  }
 
-    const SET_ONE = (el) => {
-        state.oneElement = el
-    }
-    
-    const LIST = computed(() => state.list)
-    const ELEMENT = computed(() => state.oneElement)
+  const SET_ONE = (el) => {
+    state.oneElement = el
+  }
 
-    return {LIST, ELEMENT, SET_LIST, SET_ONE}
+  const LIST = computed(() => state.list)
+  const ELEMENT = computed(() => state.oneElement)
 
+  return { LIST, ELEMENT, SET_LIST, SET_ONE, ADD_LIST }
 })

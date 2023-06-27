@@ -1,7 +1,7 @@
 <script setup>
 import AddNavbar from '../components/AddNavbar.vue'
-import { ref, reactive } from 'vue'
-import { testStore } from '@/stores/test/testStore'
+import { ref, reactive, onMounted } from 'vue'
+import { testStore } from '@/stores/tests/testStore'
 import { toast } from 'vue3-toastify'
 
 const store = testStore()
@@ -55,6 +55,10 @@ const cutText = (str, len) => {
     return str
   }
 }
+
+onMounted(() => {
+  store.SET_LIST()
+})
 </script>
 
 <template>

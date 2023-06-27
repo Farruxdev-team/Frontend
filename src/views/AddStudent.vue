@@ -1,23 +1,23 @@
 <script setup>
-import AddNavbar from "../components/AddNavbar.vue";
-import Table from "../components/Table.vue";
-import { onMounted, ref } from "vue";
-import { useStudent } from "../service/student/index";
-import { studentStore } from "../stores/student/studentStore";
+import AddNavbar from '../components/AddNavbar.vue'
+import Table from '../components/Table.vue'
+import { onMounted, ref } from 'vue'
+import { useStudents } from '../service/students/index'
+import { studentStore } from '../stores/students/studentStore'
 
-const store = studentStore();
-const heads = ["i.f.o", "guruh talabasi", "tel: raqami"];
+const store = studentStore()
+const heads = ['i.f.o', 'guruh talabasi', 'tel: raqami']
 // const path = ["full_name", "group_id", "phone", "name"];
 
 const listUpdate = () => {
-  useStudent.list().then((res) => {
-    store.SET_LIST(res?.data);
-  });
-};
+  useStudents.list().then((res) => {
+    store.SET_LIST(res?.data)
+  })
+}
 
 onMounted(() => {
-  listUpdate();
-});
+  listUpdate()
+})
 // console.log(store.LIST);
 </script>
 
