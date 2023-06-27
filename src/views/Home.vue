@@ -56,7 +56,7 @@ onMounted(() => {
         <h1 class="text-2xl font-extrabold">{{ staff_Store.LIST.length }}</h1>
       </div>
       <div class="w-20 h-20">
-        <img src="teacher.svg" class="rounded-xl h-full w-auto" alt="" />
+        <img src="/teacher.svg" class="rounded-xl h-full w-auto" alt="" />
       </div>
     </div>
     <div
@@ -67,7 +67,7 @@ onMounted(() => {
         <h1 class="text-2xl font-extrabold">{{ students_Store.LIST.length }}</h1>
       </div>
       <div class="w-20 h-20">
-        <img src="student.png" class="rounded-xl h-full w-auto" alt="" />
+        <img src="/student.png" class="rounded-xl h-full w-auto" alt="" />
       </div>
     </div>
     <div
@@ -78,7 +78,7 @@ onMounted(() => {
         <h1 class="text-2xl font-extrabold">{{ subjects_Store.LIST.length }}</h1>
       </div>
       <div class="w-20 h-20">
-        <img src="subjects.jpeg" class="rounded-xl h-full w-auto" alt="" />
+        <img src="/subjects.jpeg" class="rounded-xl h-full w-auto" alt="" />
       </div>
     </div>
     <div
@@ -89,7 +89,7 @@ onMounted(() => {
         <h1 class="text-2xl font-extrabold">{{ test_Store.LIST.length }}</h1>
       </div>
       <div class="w-20 h-20">
-        <img src="test.png" class="h-full rounded-xl w-auto" alt="" />
+        <img src="/test.png" class="h-full rounded-xl w-auto" alt="" />
       </div>
     </div>
   </div>

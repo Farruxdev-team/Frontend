@@ -10,10 +10,13 @@ const user = reactive({
   password: ''
 })
 
-const login_user = () => {
+const login_user = async () => {
   try {
-    console.log(user)
-    store.LOGIN_USER(user)
+    if (isStudent.value) {
+      await store.LOGIN_STUDENT(user)
+    } else {
+      await store.LOGIN_STAFF(user)
+    }
   } catch (error) {}
 }
 </script>
@@ -24,6 +27,26 @@ const login_user = () => {
       <div
         class="w-full rounded-lg border md:mt-0 md:max-w-md xl:p-0 forma border-gray-700 bg-white/20 bg-gradient-to-t from-black/80"
       >
+        <div class="flex items-center text-white justify-between">
+          <button
+            class="w-full p-2 rounded-2xl"
+            :class="
+              isStudent ? 'bg-gray-500 hover:bg-gray-600 ' : 'bg-inherit hover:bg-gray-950/50'
+            "
+            @click="() => (isStudent = true)"
+          >
+            O'quvchi
+          </button>
+          <button
+            class="w-full p-2 rounded-2xl"
+            :class="
+              !isStudent ? 'bg-gray-500 hover:bg-gray-600 ' : 'bg-inherit hover:bg-gray-950/50'
+            "
+            @click="() => (isStudent = false)"
+          >
+            Xodim
+          </button>
+        </div>
         <div class="p-6 sm:p-8 pb-0 mb-0">
           <div class="text-center w-full">
             <img
@@ -83,22 +106,6 @@ const login_user = () => {
               Kirish
             </button>
           </form>
-        </div>
-        <div class="flex items-center text-white justify-between">
-          <button
-            class="w-full p-2 rounded-bl-2xl"
-            :class="isStudent ? 'bg-gray-500' : 'bg-inherit hover:bg-gray-950/50'"
-            @click="() => (isStudent = true)"
-          >
-            O'quvchi
-          </button>
-          <button
-            class="w-full p-2 rounded-br-2xl"
-            :class="!isStudent ? 'bg-gray-500' : 'bg-inherit hover:bg-gray-950/50'"
-            @click="() => (isStudent = false)"
-          >
-            O'qituvchi
-          </button>
         </div>
       </div>
     </div>
