@@ -29,7 +29,12 @@ const router = createRouter({
           component: () => import('@/views/Subjects.vue')
         },
         {
-          path: '/test',
+          path: '/tests',
+          name: 'tests',
+          component: () => import('@/views/Tests.vue')
+        },
+        {
+          path: '/tests/:id',
           name: 'test',
           component: () => import('@/views/Test.vue')
         },
@@ -37,6 +42,11 @@ const router = createRouter({
           path: '/results',
           name: 'results',
           component: () => import('@/views/Results.vue')
+        },
+        {
+          path: '/settings',
+          name: 'settings',
+          component: () => import('@/views/Settings.vue')
         },
         {
           path: '/:pathMatch(.*)*',

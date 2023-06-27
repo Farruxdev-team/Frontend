@@ -1,14 +1,9 @@
 <template>
   <nav
-    class="w-full flex justify justify-between items-center bg-white border border-gray-300 dark:bg-gray-800 dark:border-gray-600 p-4 rounded-xl mb-5 pl-10 shadow-xl"
+    class="w-full flex justify justify-between items-center bg-white border border-gray-300 dark:bg-gray-800 dark:border-gray-600 p-4 rounded-xl mb-5 pl-5 shadow-xl"
   >
-    <div class="flex gap-8 items-center">
-      <span class="text-lg text-blue-600 font-medium">{{ props.data }}lar</span>
-      <button
-        class="text-base px-4 py-2 text-green-100 rounded-md bg-gradient-to-r from-green-500 to-green-700 hover:bg-green-500"
-      >
-        {{ props.data }} qo'shish
-      </button>
+    <div class="flex gap-5 items-center">
+      <slot />
     </div>
     <label
       for="default-search"
