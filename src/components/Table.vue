@@ -2,14 +2,13 @@
 import Loading from "./Loading.vue";
 
 const props = defineProps(["data", "page", "message"]);
-console.log(props.data);
 </script>
 <template>
   <section class="relative overflow-x-auto shadow-xl rounded-xl">
     <Loading v-if="!props.data.length" />
     <table v-else class="w-full text-center text-gray-500 dark:text-gray-400">
       <thead
-        class="text-xs text-gray-700 uppercase bg-gray-200 dark:bg-gray-700 dark:text-gray-300"
+        class="text-xs text-gray-700 uppercase bg-white border-b border-gray-400 dark:bg-gray-700 dark:text-gray-300"
       >
         <tr>
           <th scope="col" class="py-4 px-10 text-sm uppercase">
