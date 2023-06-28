@@ -1,62 +1,61 @@
 <script setup>
-import Loading from '@/components/Loading.vue'
-import AddNavbar from '../components/AddNavbar.vue'
-import { ref, reactive, onMounted } from 'vue'
-import { testStore } from '@/stores/tests/testStore'
-import { subjectStore } from '@/stores/subjects/subjectStore'
-import { toast } from 'vue3-toastify'
-import moment from 'moment'
+import Loading from "@/components/Loading.vue";
+import AddNavbar from "../components/AddNavbar.vue";
+import { ref, reactive, onMounted } from "vue";
+import { testStore } from "@/stores/tests/testStore";
+import { subjectStore } from "@/stores/subjects/subjectStore";
+import { toast } from "vue3-toastify";
+import moment from "moment";
 
-const store = testStore()
-const store_subject = subjectStore()
+const store = testStore();
+const store_subject = subjectStore();
 
-const addTestModal = ref(false)
-const addTestsModal = ref(false)
-const changeModalTest = () => (addTestModal.value = !addTestModal.value)
-const changeModalTests = () => (addTestsModal.value = !addTestsModal.value)
+const addTestModal = ref(false);
+const addTestsModal = ref(false);
+const changeModalTest = () => (addTestModal.value = !addTestModal.value);
+const changeModalTests = () => (addTestsModal.value = !addTestsModal.value);
 
-const alphas = 'ABCDEFGHJKLMNOPQRSTUVWXYZ'
+const alphas = "ABCDEFGHJKLMNOPQRSTUVWXYZ";
 
 const newTests = reactive({
-  name: '',
-  subject: '',
-  start_date: '',
-  start_time: '',
-  test_time: ''
-})
+  name: "",
+  subject: "",
+  start_date: "",
+  start_time: "",
+  test_time: "",
+});
 
 const newTest = reactive({
-  question: '',
-  answers: [{ text: '', isTrue: true }]
-})
->>>>>>> origin/main
+  question: "",
+  answers: [{ text: "", isTrue: true }],
+});
 
 const addTests = async () => {
   try {
     for (let i in newTests) {
-      newTests[i] = newTests[i].toString().trim()
+      newTests[i] = newTests[i].toString().trim();
     }
     if (!newTests.name.length || !newTests.test_time.length) {
       toast.error("Forma to'ldirilish shart", {
-        autoClose: 1000
-      })
-      return
+        autoClose: 1000,
+      });
+      return;
     }
     const addTest = {
       subject_id: newTests.subject,
       tests_count: 0,
       name: newTests.name,
       test_time: newTests.test_time,
-      started: `${moment(newTests.start_date + 'T' + newTests.start_time).format()}`
-    }
-    store.ADD_LIST(addTest)
+      started: `${moment(newTests.start_date + "T" + newTests.start_time).format()}`,
+    };
+    store.ADD_LIST(addTest);
   } catch (error) {
-    console.log(error)
-    toast.error('Xatolik', {
-      autoClose: 1000
-    })
+    console.log(error);
+    toast.error("Xatolik", {
+      autoClose: 1000,
+    });
   }
-}
+};
 
 const addTest = async () => {
   try {
@@ -64,44 +63,44 @@ const addTest = async () => {
     newTest.question = newTest.question.trim();
     if (newTest.subject.length && newTest.question.length) {
       for (let i in newTest.answers) {
-        newTest.answers[i].text = newTest.answers[i].text.trim()
+        newTest.answers[i].text = newTest.answers[i].text.trim();
         if (!newTest.answers[i].text.length) {
           toast.error("Variantlarni to'ldiring", {
-            theme: 'dark',
-            autoClose: 2000
-          })
-          return
+            theme: "dark",
+            autoClose: 2000,
+          });
+          return;
         }
       }
 
-      await store.ADD_LIST({ ...newTest })
-      toast.success('Added Successfully', {
-        autoClose: 1000
-      })
-      resetFormTest()
+      await store.ADD_LIST({ ...newTest });
+      toast.success("Added Successfully", {
+        autoClose: 1000,
+      });
+      resetFormTest();
     } else {
       toast.error("Forma to'ldirilishi shart", {
-        autoClose: 1000
-      })
+        autoClose: 1000,
+      });
     }
   } catch (error) {}
 };
 
 const resetFormTests = () => {
-  newTests.name = ''
-  newTests.subject = ''
-  newTests.start_date = ''
-  newTests.start_time = ''
-  newTests.test_time = ''
-  changeModalTests()
-}
+  newTests.name = "";
+  newTests.subject = "";
+  newTests.start_date = "";
+  newTests.start_time = "";
+  newTests.test_time = "";
+  changeModalTests();
+};
 
 const resetFormTest = () => {
-  newTest.subject = ''
-  newTest.question = ''
-  newTest.answers = [{ text: '', isTrue: true }]
-  changeModalTest()
-}
+  newTest.subject = "";
+  newTest.question = "";
+  newTest.answers = [{ text: "", isTrue: true }];
+  changeModalTest();
+};
 
 const addAnswer = () => {
   if (newTest.answers.length < 25) {
@@ -123,9 +122,9 @@ const cutText = (str, len) => {
 };
 
 onMounted(() => {
-  store.SET_LIST()
-  store_subject.SET_LIST()
-})
+  store.SET_LIST();
+  store_subject.SET_LIST();
+});
 </script>
 
 <template>
