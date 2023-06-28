@@ -19,6 +19,18 @@ export const testStore = defineStore('test', () => {
     SET_LIST()
   }
 
+  const GET_ONE = async (id) => {
+    await SET_LIST()
+    for (let i in state.list) {
+      console.log(state.list[i]._id, id)
+      if (state.list[i]._id == id) {
+        console.log(state.list[i])
+        return state.list[i]
+      }
+    }
+    return 'THIS ID NOT FOUND'
+  }
+
   const SET_ONE = (el) => {
     state.oneElement = el
   }
@@ -27,5 +39,5 @@ export const testStore = defineStore('test', () => {
   const LOAD = computed(() => state.load)
   const ELEMENT = computed(() => state.oneElement)
 
-  return { LIST, LOAD, ELEMENT, SET_LIST, SET_ONE, ADD_LIST }
+  return { LIST, LOAD, ELEMENT, SET_LIST, GET_ONE, SET_ONE, ADD_LIST }
 })
