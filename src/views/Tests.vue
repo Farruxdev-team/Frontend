@@ -59,8 +59,8 @@ const addTests = async () => {
 
 const addTest = async () => {
   try {
-    newTest.subject = newTest.subject.trim()
-    newTest.question = newTest.question.trim()
+    newTest.subject = newTest.subject.trim();
+    newTest.question = newTest.question.trim();
     if (newTest.subject.length && newTest.question.length) {
       for (let i in newTest.answers) {
         newTest.answers[i].text = newTest.answers[i].text.trim()
@@ -84,7 +84,7 @@ const addTest = async () => {
       })
     }
   } catch (error) {}
-}
+};
 
 const resetFormTests = () => {
   newTests.name = ''
@@ -104,22 +104,22 @@ const resetFormTest = () => {
 
 const addAnswer = () => {
   if (newTest.answers.length < 25) {
-    newTest.answers.push({ text: '', isTrue: false })
+    newTest.answers.push({ text: "", isTrue: false });
   }
-}
+};
 const removeAnswer = (i) => {
   if (newTest.answers.length > 1) {
-    newTest.answers.splice(i, 1)
+    newTest.answers.splice(i, 1);
   }
-}
+};
 
 const cutText = (str, len) => {
   if (str.length > len) {
-    return str.slice(0, len) + '...'
+    return str.slice(0, len) + "...";
   } else {
-    return str
+    return str;
   }
-}
+};
 
 onMounted(() => {
   store.SET_LIST()
@@ -444,7 +444,7 @@ onMounted(() => {
         </tbody>
       </table>
     </div>
-  </div>
+  </section>
 </template>
 
 <style lang="scss" scoped></style>
