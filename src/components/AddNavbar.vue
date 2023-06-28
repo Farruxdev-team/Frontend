@@ -4,7 +4,7 @@ const props = defineProps(['data'])
 
 <template>
   <nav
-    class="w-full flex justify justify-between items-center bg-white border-b border-gray-300 dark:bg-gray-800 dark:border-gray-600 p-4 rounded-xl mb-5 pl-10 shadow-xl"
+    class="w-full flex justify justify-between items-center bg-white border-b border-gray-300 dark:bg-gray-800 dark:border-gray-600 p-4 rounded-xl mb-5 shadow-xl"
   >
     <div class="flex gap-5 items-center">
       <slot />

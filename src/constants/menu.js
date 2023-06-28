@@ -14,13 +14,19 @@ export const menu = [
   {
     name: "O'quvchi qo'shish",
     path: '/add-student',
-    icon: 'bx bxs-user-plus',
+    icon: 'bx bx-user-plus',
+    role: ['ADMIN', 'TEACHER']
+  },
+  {
+    name: 'Guruhlar',
+    path: '/groups',
+    icon: 'bx bx-group',
     role: ['ADMIN', 'TEACHER']
   },
   {
     name: 'Fanlar',
     path: '/subjects',
-    icon: 'bx bxs-book-bookmark',
+    icon: 'bx bx-book-bookmark',
     role: ['ADMIN', 'TEACHER']
   },
   {

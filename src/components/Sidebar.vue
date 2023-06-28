@@ -3,6 +3,8 @@ import { menu } from '@/constants/menu'
 import { onMounted } from 'vue'
 import { userStore } from '../stores/user/userStore'
 
+const store = userStore()
+
 onMounted(() => {
   AOS.init()
 })
@@ -20,6 +22,7 @@ onMounted(() => {
           v-for="el in menu"
           :to="el.path"
           class="flex items-center p-2 pl-3 text-gray-900 rounded-lg dark:text-white hover:bg-gray-300 dark:hover:bg-gray-700"
+          :class="el.role.includes(store.USER.role) ? '' : 'hidden'"
         >
           <i :class="el.icon" class="text-xl"></i>
           <span class="ml-3">{{ el.name }}</span>
