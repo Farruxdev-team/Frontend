@@ -2,6 +2,7 @@
 import Loading from "./Loading.vue";
 
 const props = defineProps(["data", "page", "message"]);
+console.log(props.data);
 </script>
 <template>
   <section class="relative overflow-x-auto shadow-xl rounded-xl">

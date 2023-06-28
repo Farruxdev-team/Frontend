@@ -1,68 +1,68 @@
 <script setup>
-import AddNavbar from '../components/AddNavbar.vue'
-import { ref, reactive, onMounted } from 'vue'
-import { testStore } from '@/stores/tests/testStore'
-import { toast } from 'vue3-toastify'
+import AddNavbar from "../components/AddNavbar.vue";
+import { ref, reactive, onMounted } from "vue";
+import { testStore } from "@/stores/tests/testStore";
+import { toast } from "vue3-toastify";
 
-const store = testStore()
+const store = testStore();
 
-const addModal = ref(false)
-const changeModal = () => (addModal.value = !addModal.value)
-const alphas = 'ABCDEFGHJKLMNOPQRSTUVWXYZ'
+const addModal = ref(false);
+const changeModal = () => (addModal.value = !addModal.value);
+const alphas = "ABCDEFGHJKLMNOPQRSTUVWXYZ";
 
 const newTest = reactive({
-  subject: '',
-  question: '',
-  answers: [{ text: '', isTrue: true }]
-})
+  subject: "",
+  question: "",
+  answers: [{ text: "", isTrue: true }],
+});
 
 const addTest = async () => {
   try {
-    newTest.subject = newTest.subject.trim()
-    newTest.question = newTest.question.trim()
+    newTest.subject = newTest.subject.trim();
+    newTest.question = newTest.question.trim();
     if (newTest.subject.length && newTest.question.length) {
-      await store.add_test({ ...newTest })
-      toast.success('Added Successfully', {
-        autoClose: 1000
-      })
-      resetForm()
+      await store.add_test({ ...newTest });
+      toast.success("Added Successfully", {
+        autoClose: 1000,
+      });
+      resetForm();
     }
   } catch (error) {}
-}
+};
 
 const resetForm = () => {
-  newTest.subject = ''
-  newTest.question = ''
-  newTest.answers = [{ text: '', isTrue: true }]
-  changeModal()
-}
+  newTest.subject = "";
+  newTest.question = "";
+  newTest.answers = [{ text: "", isTrue: true }];
+  changeModal();
+};
 
 const addAnswer = () => {
   if (newTest.answers.length < 25) {
-    newTest.answers.push({ text: '', isTrue: false })
+    newTest.answers.push({ text: "", isTrue: false });
   }
-}
+};
 const removeAnswer = (i) => {
   if (newTest.answers.length > 1) {
-    newTest.answers.splice(i, 1)
+    newTest.answers.splice(i, 1);
   }
-}
+};
 
 const cutText = (str, len) => {
   if (str.length > len) {
-    return str.slice(0, len) + '...'
+    return str.slice(0, len) + "...";
   } else {
-    return str
+    return str;
   }
-}
+};
 
 onMounted(() => {
-  store.SET_LIST()
-})
+  store.SET_LIST();
+});
 </script>
 
 <template>
-  <div>
+  <section>
     <!-- ADD MODAL -->
     <div
       class="fixed top-0 left-0 right-0 z-50 w-full overflow-x-hidden overflow-y-auto md:inset-0 h-full max-h-full flex items-center justify-center bg-black/50 p-3"
@@ -241,7 +241,7 @@ onMounted(() => {
         </tbody>
       </table>
     </div>
-  </div>
+  </section>
 </template>
 
 <style lang="scss" scoped></style>
