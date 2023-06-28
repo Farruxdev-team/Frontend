@@ -6,7 +6,7 @@ const store = useModeStore()
 const props = defineProps(['data'])
 import * as CanvasJS from '@canvasjs/charts'
 CanvasJS.addColorSet('colors1', ['#BA68C8', '#7986CB', '#4FC3F7', '#4DB6AC', '#DCE775', '#FFB74D'])
-console.log(store.isDark)
+
 const options = reactive({
   theme: store.isDark ? 'dark2' : 'light2',
   exportEnabled: true,

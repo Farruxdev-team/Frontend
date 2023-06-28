@@ -1,4 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router'
+import { userStore } from '../stores/user/userStore'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -69,6 +70,14 @@ const router = createRouter({
 })
 
 router.beforeEach((to, from, next) => {
+  try {
+    userStore().CHECK_USER()
+  } catch (error) {
+    console.log(error)
+    localStorage.clear()
+    next('/login')
+  }
+
   if (to.name != 'Login' && !localStorage.getItem('token')) {
     next('/login')
   } else if (to.name == 'Login' && localStorage.getItem('token')) {

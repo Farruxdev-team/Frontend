@@ -36,12 +36,6 @@ export const menu = [
     role: ['STUDENT']
   },
   {
-    name: 'Testni boshlash',
-    path: '/start',
-    icon: 'bx bxs-hourglass',
-    role: ['STUDENT']
-  },
-  {
     name: 'Natijalar',
     path: '/results',
     icon: 'bx bx-pie-chart',
