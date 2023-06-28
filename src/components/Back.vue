@@ -4,19 +4,13 @@ const router = useRouter()
 </script>
 
 <template>
-  <div
-    class="w-full flex justify justify-between items-center bg-white border border-gray-300 dark:bg-gray-800 dark:border-gray-600 p-4 rounded-xl mb-5   shadow-xl"
+  <button
+    @click="() => router.go(-1)"
+    class="dark:bg-blue-600 bg-blue-300 dark:text-white flex items-center gap-2 px-5 p-2 rounded-lg"
   >
-    <div class="flex gap-8 items-center">
-      <button
-        @click="() => router.go(-1)"
-        class="bg-blue-500 flex items-center gap-2 px-6 p-2 rounded-lg"
-      >
-        <i class="bx bx-arrow-left text-2xl"></i>
-        BACK
-      </button>
-    </div>
-  </div>
+    <i class="bx bx-left-arrow-alt text-xl"></i>
+    BACK
+  </button>
 </template>
 
 <style lang="scss" scoped></style>

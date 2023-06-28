@@ -13,7 +13,6 @@ CanvasJS.addColorSet("colors1", [
   "#DCE775",
   "#FFB74D",
 ]);
-console.log(store.isDark);
 const options = reactive({
   theme: store.isDark ? "dark2" : "light2",
   exportEnabled: true,

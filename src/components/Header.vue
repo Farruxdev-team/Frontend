@@ -2,7 +2,17 @@
 import { onMounted, onUpdated, ref } from 'vue'
 import { initDropdowns } from 'flowbite'
 import { useModeStore } from '@/stores/mode'
+import { userStore } from '../stores/user/userStore'
+import { useRouter } from 'vue-router'
+
 const store = useModeStore()
+const store_user = userStore()
+const router = useRouter()
+
+const signOut = () => {
+  localStorage.clear()
+  router.push('/login')
+}
 
 onMounted(() => {
   initDropdowns()
@@ -41,11 +51,7 @@ onMounted(() => {
             </svg>
           </button>
           <router-link to="/" class="flex ml-2 md:mr-24">
-            <img
-              src="https://static.tuit.uz/uploads/1/W73eM8T-hn5cLRoa_rQWKshn3eUutXvm.png"
-              class="h-8 mr-3"
-              alt="FlowBite Logo"
-            />
+            <img src="/tatu.png" class="h-8 mr-3" alt="FlowBite Logo" />
             <span
               class="self-center text-xl font-semibold sm:text-2xl whitespace-nowrap dark:text-white"
               >TUIT-TEST</span
@@ -62,9 +68,16 @@ onMounted(() => {
                 data-dropdown-toggle="dropdown-user"
               >
                 <span class="sr-only">Open user menu</span>
+                <div
+                  v-if="store_user.LOAD"
+                  class="w-10 h-10 rounded-full flex items-center justify-normal animate-pulse text-center dark:bg-gray-500/50 bg-gray-200/50"
+                >
+                  <i class="mx-auto bx bxs-image text-2xl text-white"></i>
+                </div>
                 <img
+                  v-else
                   class="w-10 h-10 rounded-full"
-                  src="https://img.freepik.com/free-icon/arab_318-198038.jpg"
+                  :src="store_user?.USER?.user?.image"
                   alt="user photo"
                 />
               </button>
@@ -74,9 +87,11 @@ onMounted(() => {
               id="dropdown-user"
             >
               <div class="px-4 py-3" role="none">
-                <p class="text-sm text-gray-900 dark:text-white" role="none">Toshmat Eshmatov</p>
+                <p class="text-sm text-gray-900 dark:text-white" role="none">
+                  {{ store_user?.USER?.user?.full_name }}
+                </p>
               </div>
-              <ul class="py-1" role="none">
+              <div class="py-1" role="none">
                 <li
                   class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-300 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white rounded-lg cursor-pointer"
                   role="menuitem"
@@ -96,19 +111,21 @@ onMounted(() => {
                     ></div>
                   </label>
                 </li>
-                <li
+                <router-link
+                  to="/"
                   class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-300 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white rounded-lg cursor-pointer"
                   role="menuitem"
                 >
                   Settings
-                </li>
-                <li
-                  class="block px-4 py-2 text-sm text-gray-700 hover:bg-red-400 rounded-lg dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white"
+                </router-link>
+                <div
+                  class="block px-4 py-2 text-sm text-gray-700 hover:bg-red-400 rounded-lg dark:text-gray-300 dark:hover:bg-red-500 dark:hover:text-white cursor-pointer"
                   role="menuitem"
+                  @click="signOut"
                 >
                   Sign out
-                </li>
-              </ul>
+                </div>
+              </div>
             </div>
           </div>
         </div>
