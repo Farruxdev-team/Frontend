@@ -2,22 +2,14 @@
 import AddNavbar from '../components/AddNavbar.vue'
 import Table from '../components/Table.vue'
 import { onMounted } from 'vue'
-import { useSubjects } from '../service/subjects/index.js'
 import { subjectStore } from '../stores/subjects/subjectStore.js'
 
 const store = subjectStore()
 const heads = ['fan nomi', "fan o'qituvchilari soni", "fan o'tiladigan guruhlar soni"]
 
-const listUpdate = () => {
-  useSubjects.list().then((res) => {
-    store.SET_LIST(res?.data)
-  })
-}
-
 onMounted(() => {
-  listUpdate()
+  store.SET_LIST()
 })
-// console.log(store.LIST, "subjects");
 </script>
 
 <template>

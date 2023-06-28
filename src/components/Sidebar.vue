@@ -1,6 +1,9 @@
 <script setup>
 import { menu } from '@/constants/menu'
 import { onMounted } from 'vue'
+import { userStore } from '../stores/user/userStore'
+
+const store = userStore()
 
 onMounted(() => {
   AOS.init()
@@ -9,8 +12,6 @@ onMounted(() => {
 
 <template>
   <div
-    data-aos="fade-right"
-    data-aos-delay="500"
     id="sidebar-multi-level-sidebar"
     class="fixed top-16 lg:left-0 md:-left-64 z-40 w-64 h-screen transition-transform -translate-x-full sm:translate-x-0 border-r border-gray-300 dark:border-gray-600 shadow-xl"
     aria-label="Sidebar"
@@ -21,6 +22,7 @@ onMounted(() => {
           v-for="el in menu"
           :to="el.path"
           class="flex items-center p-2 pl-3 text-gray-900 rounded-lg dark:text-white hover:bg-gray-300 dark:hover:bg-gray-700"
+          :class="el.role.includes(store.USER.role) ? '' : 'hidden'"
         >
           <i :class="el.icon" class="text-xl"></i>
           <span class="ml-3">{{ el.name }}</span>

@@ -1,5 +1,6 @@
 import { computed, reactive } from 'vue'
 import { defineStore } from 'pinia'
+import { useSubjects } from '@/service/subjects'
 
 export const subjectStore = defineStore('subject', () => {
   const state = reactive({
@@ -7,8 +8,8 @@ export const subjectStore = defineStore('subject', () => {
     oneElement: []
   })
 
-  const SET_LIST = (list) => {
-    state.list = list
+  const SET_LIST = async () => {
+    state.list = (await useSubjects.list()).data
   }
 
   const SET_ONE = (el) => {

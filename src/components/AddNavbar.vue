@@ -4,7 +4,7 @@ const props = defineProps(['data'])
 
 <template>
   <nav
-    class="w-full flex justify justify-between items-center bg-white border-b border-gray-300 dark:bg-gray-800 dark:border-gray-600 p-4 rounded-xl mb-5 pl-10 shadow-xl"
+    class="w-full flex justify justify-between items-center bg-white border-b border-gray-300 dark:bg-gray-800 dark:border-gray-600 p-4 rounded-xl mb-5 shadow-xl"
   >
     <div class="flex gap-5 items-center">
       <slot />
@@ -70,8 +70,8 @@ const props = defineProps(['data'])
           <input
             type="text"
             id="search-navbar"
-            class="block w-52 p-2 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-            placeholder="Izlash uchun yozing ..."
+            class="block w-60 p-2 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+            placeholder="Izlash uchun yozing..."
           />
         </div>
       </div>
