@@ -276,7 +276,7 @@ onMounted(() => {
         </tbody>
       </table>
     </div>
-  </div>
+  </section>
 </template>
 
 <style lang="scss" scoped></style>
