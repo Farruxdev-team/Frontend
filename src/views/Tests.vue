@@ -1,6 +1,6 @@
 <script setup>
 import Loading from "@/components/Loading.vue";
-import AddNavbar from "../components/AddNavbar.vue";
+import AddNavbar from "@/components/AddNavbar.vue";
 import { ref, reactive, onMounted } from "vue";
 import { testStore } from "@/stores/tests/testStore";
 import { subjectStore } from "@/stores/subjects/subjectStore";
@@ -376,7 +376,7 @@ onMounted(() => {
       </button>
     </AddNavbar>
     <Loading v-if="store.LOAD" />
-    <div
+    <section
       v-else
       class="relative sm:rounded-xl border border-gray-300 dark:border-gray-600 shadow-xl"
       :class="!store.LIST.length ? 'overflow-x-hidden' : 'overflow-x-auto'"
@@ -457,7 +457,7 @@ onMounted(() => {
           </tr>
         </tbody>
       </table>
-    </div>
+    </section>
   </section>
 </template>
 

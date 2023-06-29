@@ -1,12 +1,22 @@
 <script setup>
-import Loading from "./Loading.vue";
+import { staffsStore } from "../stores/teacher/staffStore.js";
+import { studentStore } from "../stores/students/studentStore";
+import { subjectStore } from "../stores/subjects/subjectStore.js";
 
 const props = defineProps(["data", "page", "message"]);
+
+let store;
+
+if (props.page == "teacher") store = staffsStore();
+else if (props.page == "student") store = studentStore();
+else store = subjectStore();
 </script>
 <template>
-  <section class="relative overflow-x-auto shadow-xl rounded-xl">
-    <Loading v-if="!props.data.length" />
-    <table v-else class="w-full text-center text-gray-500 dark:text-gray-400">
+  <section
+    :class="!store.LIST.length ? 'overflow-x-hidden' : 'overflow-x-auto'"
+    class="relative shadow-xl rounded-xl"
+  >
+    <table class="w-full text-center text-gray-500 dark:text-gray-400">
       <thead
         class="text-xs text-gray-700 uppercase bg-white border-b border-gray-400 dark:bg-gray-700 dark:text-gray-300"
       >
