@@ -1,5 +1,6 @@
 import { computed, reactive } from 'vue'
 import { defineStore } from 'pinia'
+import { useStaff } from '@/service/teacher'
 
 export const staffStore = defineStore('staff', () => {
   const state = reactive({
@@ -7,8 +8,8 @@ export const staffStore = defineStore('staff', () => {
     oneElement: []
   })
 
-  const SET_LIST = (list) => {
-    state.list = list
+  const SET_LIST = async () => {
+    state.list = (await useStaff.list()).data
   }
 
   const SET_ONE = (el) => {
