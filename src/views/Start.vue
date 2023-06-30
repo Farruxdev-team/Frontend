@@ -19,7 +19,7 @@ const fromNow = (time, space) => {
   const isAgo = new Date().getTime() < new Date(time).getTime()
   if (!isAgo && new Date().getTime() < new Date(time).getTime() + space) {
     return {
-      color: 'dark:text-blue-200 text-blue-800 bg-blue-600/50 cursor-pointer p-2',
+      color: 'dark:text-blue-200 text-blue-800 bg-blue-600/50 cursor-pointer',
       msg: 'BOSHLASH'
     }
   }
@@ -90,7 +90,7 @@ onMounted(() => {
             </th>
             <td class="px-6 py-4 text-center">
               <span
-                class="relative gap-2 p-1 px-4 rounded-md"
+                class="relative gap-2 p-2 px-4 text-sm rounded-md"
                 :class="fromNow(el.started, el.test_time).color"
               >
                 {{ fromNow(el.started, el.test_time).msg }}
