@@ -30,20 +30,22 @@ const newTest = reactive({
 const addTest = async () => {
   const correct_answers = newTest.answers.filter((i) => i.isTrue)
   try {
+    console.log(newTest)
     const res = await store_question.ADD_LIST({
       test_group_id: id,
       question: newTest.question,
       correct_answers: correct_answers.length
     })
-    console.log(res)
     try {
-      for (let i in newTest) {
-        await store_answers.ADD_LIST({
+      for (let i in newTest.answers) {
+        const result = await store_answers.ADD_LIST({
           answer: newTest.answers[i].text,
           is_true: newTest.answers[i].isTrue,
           question_id: res._id
         })
       }
+      await store_question.SET_ANSWER(store_question.LIST.length - 1, result)
+      await setAnswers()
       resetFormTest()
     } catch (error) {
       console.log(error)
@@ -54,7 +56,6 @@ const addTest = async () => {
 }
 
 const resetFormTest = () => {
-  newTest.subject = ''
   newTest.question = ''
   newTest.answers = [{ text: '', isTrue: true }]
   changeModalTest()
@@ -74,7 +75,7 @@ const removeAnswer = (i) => {
 const setAnswers = async () => {
   for (let i in store_question.LIST) {
     const res = await store_answers.GET_QUESTIONS(store_question.LIST[i]._id)
-    store_question.SET_ANSWER(i, res)
+    await store_question.SET_ANSWER(i, res)
   }
 }
 
@@ -218,11 +219,14 @@ onMounted(async () => {
             <i class="bx bx-notepad text-lg"></i>
             <span> TEST: {{ store.ELEMENT?.name }} - {{ store.ELEMENT?.subject_id?.name }} </span>
             <span
-              class="flex items-center bg-gray-800 border border-gray-500 shadow-xl dark:text-white text-gray-900 rounded-full px-2 gap-1 text-sm"
+              class="flex items-center dark:bg-gray-800 bg-white border border-gray-500 shadow-xl dark:text-white text-gray-900 rounded-full px-2 gap-1 text-sm"
             >
               <i class="bx bx-timer text-xl"></i> {{ store.ELEMENT?.test_time }}
             </span>
           </h4>
+          <i
+            class="bx bx-pencil text-xl bg-green-500 px-2 p-1 rounded-full text-white cursor-pointer"
+          ></i>
         </div>
         <h4
           class="px-2 p-1 rounded-lg flex items-center gap-2"
@@ -261,7 +265,7 @@ onMounted(async () => {
                 {{ el?.question }}
               </th>
               <th scope="row" class="font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                {{ el?.answer }}
+                {{ el?.answer?.length }}
               </th>
               <th scope="row" class="font-medium text-gray-900 whitespace-nowrap dark:text-white">
                 {{ el?.answer?.filter((i) => i.is_true)?.length }}

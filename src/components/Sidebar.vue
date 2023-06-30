@@ -4,10 +4,6 @@ import { onMounted } from 'vue'
 import { userStore } from '../stores/user/userStore'
 
 const store = userStore()
-
-onMounted(() => {
-  AOS.init()
-})
 </script>
 
 <template>
