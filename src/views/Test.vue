@@ -11,20 +11,32 @@ import AddNavbar from '../components/AddNavbar.vue'
 import { testStore } from '../stores/tests/testStore'
 import { questionStore } from '../stores/questions/questionStore'
 import { answerStore } from '../stores/answers/answerStore'
+import { subjectStore } from '@/stores/subjects/subjectStore'
 
 const store = testStore()
 const store_question = questionStore()
 const store_answers = answerStore()
+const store_subject = subjectStore()
 
 const { id } = useRoute().params
 const addTestModal = ref(false)
+const editTestsModal = ref(false)
 const changeModalTest = () => (addTestModal.value = !addTestModal.value)
+const changeModalTests = () => (editTestsModal.value = !editTestsModal.value)
 
 const alphas = 'ABCDEFGHJKLMNOPQRSTUVWXYZ'
 
 const newTest = reactive({
   question: '',
   answers: [{ text: '', isTrue: true }]
+})
+
+const newEditTests = reactive({
+  name: '',
+  subject: '',
+  start_date: '',
+  start_time: '',
+  test_time: ''
 })
 
 const addTest = async () => {
@@ -55,10 +67,21 @@ const addTest = async () => {
   }
 }
 
+const editTests = () => {}
+
 const resetFormTest = () => {
   newTest.question = ''
   newTest.answers = [{ text: '', isTrue: true }]
   changeModalTest()
+}
+
+const resetFormTests = () => {
+  newEditTests.name = ''
+  newEditTests.subject = ''
+  newEditTests.start_date = ''
+  newEditTests.start_time = ''
+  newEditTests.test_time = ''
+  changeModalTests()
 }
 
 const addAnswer = () => {
@@ -83,12 +106,142 @@ onMounted(async () => {
   await store.GET_ONE(id)
   await store_question.SET_LIST()
   await store_answers.SET_LIST()
+  await store_subject.SET_LIST()
   await setAnswers()
 })
 </script>
 
 <template>
   <div>
+    <!-- ADD TESTS MODAL -->
+    <div
+      class="fixed top-0 left-0 right-0 z-50 w-full overflow-x-hidden overflow-y-auto md:inset-0 h-full max-h-full flex items-center justify-center bg-black/50 p-3"
+      :class="editTestsModal ? '' : 'hidden'"
+    >
+      <div class="relative w-full max-w-2xl max-h-full">
+        <!-- Modal content -->
+        <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+          <button
+            class="absolute top-3 right-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-800 dark:hover:text-white"
+            @click="resetFormTests"
+          >
+            <i class="bx bx-x text-2xl px-1"></i>
+            <span class="sr-only">Close modal</span>
+          </button>
+          <div class="px-6 py-6 lg:px-8">
+            <h3 class="mb-4 text-xl font-medium text-gray-900 dark:text-white">
+              Testni o'zgartirish
+            </h3>
+            <form @submit.prevent="" class="space-y-6" action="#">
+              <div class="grid grid-cols-2 gap-5">
+                <div class="col-span-2">
+                  <label
+                    for="countries"
+                    class="block mb-2 text-sm font-medium text-blue-900 dark:text-blue-300 dark:bg-blue-500/50 bg-blue-300 rounded-md text-center p-1"
+                  >
+                    Test nomi
+                  </label>
+                  <input
+                    type="text"
+                    id="first_name"
+                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    placeholder="O'tilganlarni mustahkamlash"
+                    required
+                    v-model="newEditTests.name"
+                  />
+                </div>
+                <div>
+                  <label
+                    for="countries"
+                    class="block mb-2 text-sm font-medium text-blue-900 dark:text-blue-300 dark:bg-blue-500/50 bg-blue-300 rounded-md text-center p-1"
+                  >
+                    Test fani
+                  </label>
+                  <select
+                    id="countries"
+                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    @change="(e) => (newEditTests.subject = e.target.value)"
+                  >
+                    <option disabled selected>Fanlardan birini tanlang</option>
+                    <option v-for="subject in store_subject.LIST" :value="subject._id">
+                      {{ subject.name }}
+                    </option>
+                  </select>
+                </div>
+
+                <div>
+                  <label
+                    for="countries"
+                    class="block mb-2 text-sm font-medium text-blue-900 dark:text-blue-300 dark:bg-blue-500/50 bg-blue-300 rounded-md text-center p-1"
+                  >
+                    Boshlanish kuni
+                  </label>
+                  <input
+                    type="date"
+                    :min="moment().format('yyyy-MM-DD')"
+                    id="first_name"
+                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    placeholder="O'tilganlarni
+                  mustahkamlash"
+                    required
+                    v-model="newEditTests.start_date"
+                  />
+                </div>
+                <div>
+                  <label
+                    for="countries"
+                    class="block mb-2 text-sm font-medium text-blue-900 dark:text-blue-300 dark:bg-blue-500/50 bg-blue-300 rounded-md text-center p-1"
+                  >
+                    Boshlanish vaqti
+                  </label>
+                  <input
+                    type="time"
+                    id="first_name"
+                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    placeholder="O'tilganlarni mustahkamlash"
+                    required
+                    v-model="newEditTests.start_time"
+                  />
+                </div>
+                <div>
+                  <label
+                    for="countries"
+                    class="block mb-2 text-sm font-medium text-blue-900 dark:text-blue-300 dark:bg-blue-500/50 bg-blue-300 rounded-md text-center p-1"
+                  >
+                    Qancha vaqt beriladi (min)
+                  </label>
+                  <input
+                    type="number"
+                    id="first_name"
+                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    placeholder="60"
+                    required
+                    v-model="newEditTests.test_time"
+                  />
+                </div>
+              </div>
+              <div class="flex items-center justify-between">
+                <button
+                  type="reset"
+                  class="w-40 text-white bg-gray-700 hover:bg-gray-800 font-medium rounded-lg text-sm px-5 py-2 text-center dark:bg-gray-600 dark:hover:bg-gray-800"
+                  @click="resetFormTests"
+                >
+                  Bekor qilish
+                </button>
+                <button
+                  type="submit"
+                  class="w-40 text-white bg-blue-700 hover:bg-blue-800 font-medium rounded-lg text-sm px-5 py-2 text-center dark:bg-blue-600 dark:hover:bg-blue-700"
+                  @click="editTests"
+                >
+                  Qo'shish
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <!-- ADD TEST MODAL -->
     <div
       class="fixed top-0 left-0 right-0 z-50 w-full overflow-x-hidden overflow-y-auto md:inset-0 h-full max-h-full flex items-center justify-center bg-black/50 p-3"
@@ -214,7 +367,7 @@ onMounted(async () => {
       >
         <div class="flex items-center gap-2">
           <h4
-            class="dark:text-blue-100 dark:bg-blue-500/50 text-blue-900 bg-blue-500/50 px-2 rounded-lg flex items-center gap-2 p-1 pl-4"
+            class="dark:text-blue-100 dark:bg-blue-500/50 text-blue-900 bg-blue-500/50 px-6 rounded-lg flex items-center gap-2 p-1 pl-4"
           >
             <i class="bx bx-notepad text-lg"></i>
             <span> TEST: {{ store.ELEMENT?.name }} - {{ store.ELEMENT?.subject_id?.name }} </span>
@@ -226,6 +379,7 @@ onMounted(async () => {
           </h4>
           <i
             class="bx bx-pencil text-xl bg-green-500 px-2 p-1 rounded-full text-white cursor-pointer"
+            @click="resetFormTests"
           ></i>
         </div>
         <h4

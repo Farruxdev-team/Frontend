@@ -1,6 +1,5 @@
 <script setup>
 import { menu } from '@/constants/menu'
-import { onMounted } from 'vue'
 import { userStore } from '../stores/user/userStore'
 
 const store = userStore()

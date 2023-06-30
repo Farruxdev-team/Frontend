@@ -43,6 +43,7 @@ const addTests = async () => {
       started: `${moment(newTests.start_date + 'T' + newTests.start_time).format()}`
     }
     store.ADD_LIST(addTest)
+    resetFormTests()
   } catch (error) {
     console.log(error)
     toast.error('Xatolik', {

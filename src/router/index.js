@@ -50,6 +50,11 @@ const router = createRouter({
           component: () => import('@/views/Results.vue')
         },
         {
+          path: '/start',
+          name: 'Start',
+          component: () => import('@/views/Start.vue')
+        },
+        {
           path: '/settings',
           name: 'settings',
           component: () => import('@/views/Settings.vue')
