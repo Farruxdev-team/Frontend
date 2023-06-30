@@ -19,7 +19,7 @@ const fromNow = (time, space) => {
   const isAgo = new Date().getTime() < new Date(time).getTime()
   if (!isAgo && new Date().getTime() < new Date(time).getTime() + space) {
     return {
-      color: 'dark:text-blue-200 text-blue-800 bg-blue-600/50 cursor-pointer',
+      color: 'dark:text-blue-200 text-blue-800 bg-blue-700/50 cursor-pointer',
       msg: 'BOSHLASH'
     }
   }
@@ -32,12 +32,12 @@ const fromNow = (time, space) => {
   }
   if (isAgo) {
     return {
-      color: 'dark:text-green-200 text-green-800 bg-green-600/50',
+      color: 'dark:text-green-200 text-green-800 bg-green-700/50',
       msg: format(deadline, now)
     }
   } else {
     return {
-      color: 'dark:text-red-200 text-red-800 bg-red-600/50',
+      color: 'dark:text-red-200 text-red-800 bg-red-700/50',
       msg: format(now, deadline, '-')
     }
   }
@@ -55,7 +55,7 @@ onMounted(() => {
     <Loading v-if="store.LOAD" />
     <section
       v-else
-      class="relative sm:rounded-xl border border-gray-300 dark:border-gray-600 shadow-xl"
+      class="relative rounded-lg border border-gray-300 dark:border-gray-600 shadow-xl"
       :class="!store.LIST.length ? 'overflow-x-hidden' : 'overflow-x-auto'"
     >
       <table class="w-full text-center text-gray-500 dark:text-gray-400">
@@ -89,12 +89,13 @@ onMounted(() => {
               </span>
             </th>
             <td class="px-6 py-4 text-center">
-              <span
+              <router-link
                 class="relative gap-2 p-2 px-4 text-sm rounded-md"
                 :class="fromNow(el.started, el.test_time).color"
+                :to="fromNow(el.started, el.test_time).msg == 'BOSHLASH' ? `start/${el._id}` : ''"
               >
                 {{ fromNow(el.started, el.test_time).msg }}
-              </span>
+              </router-link>
             </td>
           </tr>
         </tbody>

@@ -363,7 +363,7 @@ onMounted(async () => {
     <Loading v-if="store.EL_LOAD" />
     <div v-else class="">
       <div
-        class="w-full flex justify-between gap-5 items-center bg-white border-gray-300 dark:bg-gray-800 border dark:border-gray-600 p-4 px-5 rounded-xl mb-5 shadow-xl"
+        class="w-full flex justify-between gap-5 items-center bg-white border-gray-300 dark:bg-gray-800 border dark:border-gray-600 p-4 px-5 rounded-lg mb-5 shadow-xl"
       >
         <div class="flex items-center gap-2">
           <h4
@@ -395,7 +395,7 @@ onMounted(async () => {
       </div>
 
       <div
-        class="relative sm:rounded-xl border border-gray-300 dark:border-gray-600 shadow-xl"
+        class="relative rounded-xl border border-gray-300 dark:border-gray-600 shadow-xl"
         :class="!store.LIST.length ? 'overflow-x-hidden' : 'overflow-x-auto'"
       >
         <table class="w-full text-center text-gray-500 dark:text-gray-400 shadow-2xl">
