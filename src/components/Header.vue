@@ -10,7 +10,7 @@ const store_user = userStore()
 const router = useRouter()
 
 const signOut = () => {
-  localStorage.clear()
+  localStorage.removeItem('token')
   router.push('/login')
 }
 
@@ -76,14 +76,17 @@ onMounted(() => {
                 </div>
                 <img
                   v-else
-                  class="w-10 h-10 rounded-full"
-                  :src="store_user?.USER?.user?.image"
+                  class="w-10 h-10 rounded-full bg-white"
+                  :src="
+                    store_user?.USER?.user?.image ||
+                    'https://cdn.icon-icons.com/icons2/2468/PNG/512/user_kids_avatar_user_profile_icon_149314.png'
+                  "
                   alt="user photo"
                 />
               </button>
             </div>
             <div
-              class="z-50 hidden my-4 text-base list-none bg-white divide-y divide-gray-100 rounded shadow dark:bg-gray-700 dark:divide-gray-600"
+              class="z-50 hidden min-w-40 my-4 text-base list-none bg-white divide-y divide-gray-100 rounded shadow dark:bg-gray-700 dark:divide-gray-600"
               id="dropdown-user"
             >
               <div class="px-4 py-3" role="none">
