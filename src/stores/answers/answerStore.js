@@ -16,8 +16,9 @@ export const answerStore = defineStore('answer', () => {
   }
 
   const ADD_LIST = async (data) => {
-    await useAnswers.create(data)
+    const res = await useAnswers.create(data)
     SET_LIST()
+    return res
   }
 
   const GET_ONE = async (id) => {
