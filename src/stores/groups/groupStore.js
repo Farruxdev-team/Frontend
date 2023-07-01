@@ -1,8 +1,8 @@
 import { computed, reactive } from 'vue'
 import { defineStore } from 'pinia'
-import { useStudents } from '@/service/students'
+import { useGroups } from '@/service/groups'
 
-export const studentStore = defineStore('student', () => {
+export const groupStore = defineStore('group', () => {
   const state = reactive({
     list: [],
     load: true,
@@ -10,12 +10,12 @@ export const studentStore = defineStore('student', () => {
   })
 
   const SET_LIST = async () => {
-    state.list = (await useStudents.list()).data
+    state.list = (await useGroups.list()).data
     state.load = false
   }
 
   const ADD_LIST = async (data) => {
-    await useStudents.create(data)
+    await useGroups.create(data)
     SET_LIST()
   }
 
