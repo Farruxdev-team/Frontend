@@ -25,17 +25,13 @@ export const questionStore = defineStore('question', () => {
   }
 
   const GET_ONE = async (id) => {
-    await SET_LIST()
-    for (let i in state.list) {
-      if (state.list[i]._id == id) {
-        return state.list[i]
-      }
-    }
-    return 'THIS ID NOT FOUND'
+    return (await useQuestions.get_one(id)).data
   }
 
   const GET_GROUP = async (id) => {
-    state.oneGroup = (await useQuestions.group(id)).data
+    const res = (await useQuestions.group(id)).data
+    state.oneGroup = res
+    return res
   }
 
   const DELETE = async (id) => {
