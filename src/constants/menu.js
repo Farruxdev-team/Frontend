@@ -7,13 +7,13 @@ export const menu = [
   },
   {
     name: "O'qituvchi qo'shish",
-    path: '/add-teacher',
+    path: '/teachers',
     icon: 'bx bxs-graduation',
     role: ['ADMIN']
   },
   {
     name: "O'quvchi qo'shish",
-    path: '/add-student',
+    path: '/students',
     icon: 'bx bx-user-plus',
     role: ['ADMIN', 'TEACHER']
   },

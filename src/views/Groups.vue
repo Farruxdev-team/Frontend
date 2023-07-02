@@ -1,16 +1,16 @@
 <script setup>
-import AddNavbar from "../components/AddNavbar.vue";
-import Table from "../components/Table.vue";
-import { onMounted } from "vue";
-import { staffsStore } from "../stores/teacher/staffStore.js";
-import Loading from "../components/Loading.vue";
+import AddNavbar from '../components/AddNavbar.vue'
+import Table from '../components/Table.vue'
+import { onMounted } from 'vue'
+import { staffsStore } from '../stores/teacher/staffStore.js'
+import Loading from '../components/Loading.vue'
 
-const store = staffsStore();
-const heads = ["i.f.o", "fan o'qituvchisi", "tel: raqami"];
+const store = staffsStore()
+const heads = ['i.f.o', "fan o'qituvchisi", 'tel: raqami']
 
 onMounted(() => {
-  store.SET_LIST();
-});
+  store.SET_LIST()
+})
 </script>
 
 <template>

@@ -1,21 +1,19 @@
 <script setup>
-import { ref, reactive, onMounted } from "vue";
-import { toast } from "vue3-toastify";
-import moment from "moment";
+import { ref, reactive, onMounted } from 'vue'
+import { toast } from 'vue3-toastify'
+import moment from 'moment'
 
 import Loading from '@/components/Loading.vue'
 import AddNavbar from '../components/AddNavbar.vue'
 import TimeBeauty from '../components/TimeBeauty.vue'
 import { testStore } from '@/stores/tests/testStore'
 import { subjectStore } from '@/stores/subjects/subjectStore'
-import { questionStore } from '@/stores/questions/questionStore'
 
 const store = testStore()
 const store_subject = subjectStore()
 
 const addTestsModal = ref(false)
 const changeModalTests = () => (addTestsModal.value = !addTestsModal.value)
-
 
 const newTests = reactive({
   name: '',
@@ -62,10 +60,10 @@ const resetFormTests = () => {
 }
 
 onMounted(() => {
-  store.SET_LIST();
-  store_subject.SET_LIST(); 
-  store.trueLoad();
-});
+  store.SET_LIST()
+  store_subject.SET_LIST()
+  store.trueLoad()
+})
 </script>
 
 <template>
@@ -200,7 +198,7 @@ onMounted(() => {
     </div>
 
     <AddNavbar>
-      <span class="text-lg text-blue-600 font-bold mx-5">Testlar</span>
+      <span class="text-lg text-blue-600 font-bold">Testlar</span>
       <button
         @click="changeModalTests"
         class="text-base px-4 py-2 text-green-100 rounded-md bg-gradient-to-r from-green-500 to-green-700 hover:bg-green-500"

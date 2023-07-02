@@ -27,9 +27,7 @@ export const questionStore = defineStore('question', () => {
   const GET_ONE = async (id) => {
     await SET_LIST()
     for (let i in state.list) {
-      console.log(state.list[i]._id, id)
       if (state.list[i]._id == id) {
-        console.log(state.list[i])
         return state.list[i]
       }
     }
@@ -38,6 +36,10 @@ export const questionStore = defineStore('question', () => {
 
   const GET_GROUP = async (id) => {
     state.oneGroup = (await useQuestions.group(id)).data
+  }
+
+  const DELETE = async (id) => {
+    state.oneGroup = (await useQuestions.delete(id)).data
   }
 
   const SET_ONE = (el) => {
@@ -57,6 +59,7 @@ export const questionStore = defineStore('question', () => {
     SET_ONE,
     ADD_LIST,
     GET_GROUP,
-    SET_ANSWER
+    SET_ANSWER,
+    DELETE
   }
 })
