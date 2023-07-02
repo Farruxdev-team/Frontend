@@ -1,47 +1,15 @@
 <script setup>
-import { ref, reactive, onMounted } from 'vue'
-import { toast } from 'vue3-toastify'
-import moment from 'moment'
+import { onMounted } from 'vue'
 
 import Loading from '@/components/Loading.vue'
 import { testStore } from '@/stores/tests/testStore'
 import { subjectStore } from '@/stores/subjects/subjectStore'
 import { questionStore } from '@/stores/questions/questionStore'
+import { fromNow } from '../helpers/fromNow'
 
 const store = testStore()
 const store_subject = subjectStore()
 const store_question = questionStore()
-
-const fromNow = (time, space) => {
-  space = new Date(space * 60000).getTime()
-  const now = new Date()
-  const deadline = new Date(time)
-  const isAgo = new Date().getTime() < new Date(time).getTime()
-  if (!isAgo && new Date().getTime() < new Date(time).getTime() + space) {
-    return {
-      color: 'dark:text-blue-200 text-blue-800 bg-blue-700/50 cursor-pointer',
-      msg: 'BOSHLASH'
-    }
-  }
-
-  const plus = (num) => Math.abs(num).toString().padStart(2, '0')
-  const format = (one, two, min = '') => {
-    return `${min}${plus(one.getDay() - two.getDay())}:${plus(
-      one.getHours() - two.getHours()
-    )}:${plus(one.getMinutes() - two.getMinutes())}`
-  }
-  if (isAgo) {
-    return {
-      color: 'dark:text-green-200 text-green-800 bg-green-700/50',
-      msg: format(deadline, now)
-    }
-  } else {
-    return {
-      color: 'dark:text-red-200 text-red-800 bg-red-700/50',
-      msg: format(now, deadline, '-')
-    }
-  }
-}
 
 onMounted(() => {
   store.SET_LIST()
