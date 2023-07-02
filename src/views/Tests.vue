@@ -1,21 +1,19 @@
 <script setup>
-import { ref, reactive, onMounted } from "vue";
-import { toast } from "vue3-toastify";
-import moment from "moment";
+import { ref, reactive, onMounted } from 'vue'
+import { toast } from 'vue3-toastify'
+import moment from 'moment'
 
 import Loading from '@/components/Loading.vue'
 import AddNavbar from '../components/AddNavbar.vue'
 import TimeBeauty from '../components/TimeBeauty.vue'
 import { testStore } from '@/stores/tests/testStore'
 import { subjectStore } from '@/stores/subjects/subjectStore'
-import { questionStore } from '@/stores/questions/questionStore'
 
 const store = testStore()
 const store_subject = subjectStore()
 
 const addTestsModal = ref(false)
 const changeModalTests = () => (addTestsModal.value = !addTestsModal.value)
-
 
 const newTests = reactive({
   name: '',
@@ -62,10 +60,10 @@ const resetFormTests = () => {
 }
 
 onMounted(() => {
-  store.SET_LIST();
-  store_subject.SET_LIST(); 
-  store.trueLoad();
-});
+  store.SET_LIST()
+  store_subject.SET_LIST()
+  store.trueLoad()
+})
 </script>
 
 <template>
@@ -200,7 +198,7 @@ onMounted(() => {
     </div>
 
     <AddNavbar>
-      <span class="text-lg text-blue-600 font-bold mx-5">Testlar</span>
+      <span class="text-lg text-blue-600 font-bold">Testlar</span>
       <button
         @click="changeModalTests"
         class="text-base px-4 py-2 text-green-100 rounded-md bg-gradient-to-r from-green-500 to-green-700 hover:bg-green-500"
@@ -227,19 +225,19 @@ onMounted(() => {
         </thead>
         <tbody>
           <tr
-            v-for="el in store.LIST"
+            v-for="(el, i) in store.LIST"
             class="bg-white border-b border-gray-300 dark:bg-gray-800 dark:border-gray-700"
           >
-            <th scope="row" class="font-medium text-gray-900 whitespace-nowrap dark:text-white">
+            <th class="font-medium text-gray-900 whitespace-nowrap dark:text-white">
               {{ el.name }}
             </th>
-            <th scope="row" class="font-medium text-gray-900 whitespace-nowrap dark:text-white">
+            <th class="font-medium text-gray-900 whitespace-nowrap dark:text-white">
               {{ el.subject_id.name }}
             </th>
-            <th scope="row" class="font-medium text-gray-900 whitespace-nowrap dark:text-white">
+            <th class="font-medium text-gray-900 whitespace-nowrap dark:text-white">
               <TimeBeauty :started="el.started" :test_time="el.test_time" />
             </th>
-            <th scope="row" class="font-medium text-gray-900 whitespace-nowrap dark:text-white">
+            <th class="font-medium text-gray-900 whitespace-nowrap dark:text-white">
               <span
                 class="bg-gray-500/50 gap-2 inline-flex px-3 rounded-md items-center justify-center"
               >
@@ -250,7 +248,7 @@ onMounted(() => {
             <td class="px-6 py-4 text-right">
               <router-link
                 :to="`/tests/${el._id}`"
-                class="text-white bg-blue-500 rounded-lg text-sm px-3.5 py-2 text-center"
+                class="px-3 py-2 text-white rounded-md bg-gradient-to-r from-blue-500 to-blue-700 text-sm"
               >
                 Kirish
               </router-link>

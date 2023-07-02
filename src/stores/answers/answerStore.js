@@ -36,6 +36,11 @@ export const answerStore = defineStore('answer', () => {
     return res
   }
 
+  const DELETE = async (id) => {
+    const res = (await useAnswers.delete(id)).data
+    return res
+  }
+
   const LIST = computed(() => state.list)
   const LOAD = computed(() => state.load)
   const ELEMENT = computed(() => state.oneGroup)
@@ -49,6 +54,7 @@ export const answerStore = defineStore('answer', () => {
     SET_LIST,
     GET_ONE,
     ADD_LIST,
-    GET_QUESTIONS
+    GET_QUESTIONS,
+    DELETE
   }
 })
