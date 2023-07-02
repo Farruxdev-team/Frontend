@@ -1,7 +1,7 @@
 <script setup>
-import { ref, reactive, onMounted } from 'vue'
-import { toast } from 'vue3-toastify'
-import moment from 'moment'
+import { ref, reactive, onMounted } from "vue";
+import { toast } from "vue3-toastify";
+import moment from "moment";
 
 import Loading from '@/components/Loading.vue'
 import AddNavbar from '../components/AddNavbar.vue'
@@ -15,6 +15,7 @@ const store_subject = subjectStore()
 
 const addTestsModal = ref(false)
 const changeModalTests = () => (addTestsModal.value = !addTestsModal.value)
+
 
 const newTests = reactive({
   name: '',
@@ -61,10 +62,10 @@ const resetFormTests = () => {
 }
 
 onMounted(() => {
-  store.SET_LIST()
-  store_subject.SET_LIST()
-  store.trueLoad()
-})
+  store.SET_LIST();
+  store_subject.SET_LIST(); 
+  store.trueLoad();
+});
 </script>
 
 <template>
@@ -86,7 +87,7 @@ onMounted(() => {
           </button>
           <div class="px-6 py-6 lg:px-8">
             <h3 class="mb-4 text-xl font-medium text-gray-900 dark:text-white">
-              Yangi Test qo'shish
+              Yangi test qo'shish
             </h3>
             <form @submit.prevent="" class="space-y-6" action="#">
               <div class="grid grid-cols-2 gap-5">
