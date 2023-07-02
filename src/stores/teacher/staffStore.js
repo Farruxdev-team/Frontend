@@ -7,20 +7,20 @@ export const staffsStore = defineStore('staffs', () => {
     list: [],
     load: true,
     oneElement: []
-  })    
-  
+  })
+
   const SET_LIST = async () => {
-    state.list = (await useStaff.list()).data
+    state.list = (await useStaff.list()).data.filter((i) => i.role_id.name == 'TEACHER')
     state.load = false
   }
-  
+
   const SET_ONE = (el) => {
     state.oneElement = el
   }
-  
+
   const LIST = computed(() => state.list)
   const LOAD = computed(() => state.load)
   const ELEMENT = computed(() => state.oneElement)
-  
+
   return { LIST, LOAD, ELEMENT, SET_LIST, SET_ONE }
 })

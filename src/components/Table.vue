@@ -7,8 +7,8 @@ const props = defineProps(['data', 'page', 'message'])
 
 let store
 
-if (props.page == 'teacher') store = staffsStore()
-else if (props.page == 'student') store = studentStore()
+if (props.page == 'teachers') store = staffsStore()
+else if (props.page == 'students') store = studentStore()
 else store = subjectStore()
 </script>
 <template>
@@ -21,16 +21,9 @@ else store = subjectStore()
         class="text-xs text-gray-700 uppercase bg-white border-b border-gray-400 dark:bg-gray-700 dark:text-gray-300"
       >
         <tr>
-          <th scope="col" class="py-4 text-sm uppercase">
-            {{ props.message[0] }}
+          <th v-for="msg in props.message" scope="col" class="py-4 text-sm uppercase">
+            {{ msg }}
           </th>
-          <th scope="col" class="py-4 text-sm uppercase">
-            {{ props.message[1] }}
-          </th>
-          <th scope="col" class="py-4 text-sm uppercase">
-            {{ props.message[2] }}
-          </th>
-          <th scope="col" class="py-4 text-sm uppercase">holati</th>
           <th scope="col" class="py-4 text-sm uppercase">batafsil</th>
         </tr>
       </thead>
@@ -39,7 +32,7 @@ else store = subjectStore()
           v-for="el in props.data"
           class="bg-white border-b dark:bg-gray-800 dark:border-gray-700"
         >
-          <th scope="row" class="py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+          <th class="py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
             <span v-if="props.page != 'subjects'">{{ el.full_name }}</span>
             <span v-else>{{ el.name }}</span>
           </th>
@@ -85,11 +78,12 @@ else store = subjectStore()
             >
           </td>
           <td class="py-4">
-            <button
-              class="px-4 py-2 text-white rounded-md bg-gradient-to-r from-teal-500 to-teal-700"
+            <router-link
+              :to="`${props.page}/${el._id}`"
+              class="px-3 py-2 text-white rounded-md bg-gradient-to-r from-blue-500 to-blue-700 text-sm"
             >
               Kirish
-            </button>
+            </router-link>
           </td>
         </tr>
       </tbody>

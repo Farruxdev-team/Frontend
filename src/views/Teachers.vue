@@ -6,7 +6,7 @@ import { staffsStore } from '../stores/teacher/staffStore.js'
 import Loading from '../components/Loading.vue'
 
 const store = staffsStore()
-const heads = ['i.f.o', "fan o'qituvchisi", 'tel: raqami']
+const heads = ['i.f.o', "fan o'qituvchisi", 'tel: raqami', 'holati']
 
 onMounted(() => {
   store.SET_LIST()
@@ -24,7 +24,7 @@ onMounted(() => {
     </button>
   </AddNavbar>
   <Loading v-if="store.LOAD" />
-  <Table v-else :message="heads" page="teacher" :data="store.LIST" />
+  <Table v-else :message="heads" page="teachers" :data="store.LIST" />
 </template>
 
 <style lang="scss" scoped></style>

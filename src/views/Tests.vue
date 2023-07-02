@@ -225,19 +225,20 @@ onMounted(() => {
         </thead>
         <tbody>
           <tr
-            v-for="el in store.LIST"
+            v-for="(el, i) in store.LIST"
             class="bg-white border-b border-gray-300 dark:bg-gray-800 dark:border-gray-700"
+            :class="'border-b'"
           >
-            <th scope="row" class="font-medium text-gray-900 whitespace-nowrap dark:text-white">
+            <th class="font-medium text-gray-900 whitespace-nowrap dark:text-white">
               {{ el.name }}
             </th>
-            <th scope="row" class="font-medium text-gray-900 whitespace-nowrap dark:text-white">
+            <th class="font-medium text-gray-900 whitespace-nowrap dark:text-white">
               {{ el.subject_id.name }}
             </th>
-            <th scope="row" class="font-medium text-gray-900 whitespace-nowrap dark:text-white">
+            <th class="font-medium text-gray-900 whitespace-nowrap dark:text-white">
               <TimeBeauty :started="el.started" :test_time="el.test_time" />
             </th>
-            <th scope="row" class="font-medium text-gray-900 whitespace-nowrap dark:text-white">
+            <th class="font-medium text-gray-900 whitespace-nowrap dark:text-white">
               <span
                 class="bg-gray-500/50 gap-2 inline-flex px-3 rounded-md items-center justify-center"
               >
@@ -248,7 +249,7 @@ onMounted(() => {
             <td class="px-6 py-4 text-right">
               <router-link
                 :to="`/tests/${el._id}`"
-                class="text-white bg-blue-500 rounded-lg text-sm px-3.5 py-2 text-center"
+                class="px-3 py-2 text-white rounded-md bg-gradient-to-r from-blue-500 to-blue-700 text-sm"
               >
                 Kirish
               </router-link>

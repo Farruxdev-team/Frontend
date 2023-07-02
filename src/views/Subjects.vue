@@ -1,18 +1,18 @@
 <script setup>
-import AddNavbar from "../components/AddNavbar.vue";
-import Table from "../components/Table.vue";
-import { onMounted, ref } from "vue";
-import { subjectStore } from "../stores/subjects/subjectStore.js";
-import Loading from "../components/Loading.vue";
+import AddNavbar from '../components/AddNavbar.vue'
+import Table from '../components/Table.vue'
+import { onMounted, ref } from 'vue'
+import { subjectStore } from '../stores/subjects/subjectStore.js'
+import Loading from '../components/Loading.vue'
 
-const store = subjectStore();
-const addModal = ref(false);
-const changeModal = () => (addModal.value = !addModal.value);
-const heads = ["fan nomi", "fan o'qituvchilari soni", "fan o'tiladigan guruhlar soni"];
+const store = subjectStore()
+const addModal = ref(false)
+const changeModal = () => (addModal.value = !addModal.value)
+const heads = ['fan nomi', "fan o'qituvchilari soni", "fan o'tiladigan guruhlar soni", 'holati']
 
 onMounted(() => {
-  store.SET_LIST();
-});
+  store.SET_LIST()
+})
 </script>
 
 <template>
