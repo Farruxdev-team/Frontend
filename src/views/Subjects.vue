@@ -8,7 +8,9 @@ import Loading from '../components/Loading.vue'
 const store = subjectStore()
 const addModal = ref(false)
 const changeModal = () => (addModal.value = !addModal.value)
+
 const heads = ['fan nomi', "fan o'qituvchilari soni", "fan o'tiladigan guruhlar soni", 'holati']
+const keys = ['name', '24', '19', 'is_active']
 
 onMounted(() => {
   store.SET_LIST()
@@ -26,7 +28,7 @@ onMounted(() => {
     </button>
   </AddNavbar>
   <Loading v-if="store.LOAD" />
-  <Table v-else :message="heads" page="subjects" :data="store.LIST" />
+  <Table v-else :message="heads" :keys="keys" page="subjects" :data="store.LIST" />
 </template>
 
 <style lang="scss" scoped></style>

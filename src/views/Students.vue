@@ -12,7 +12,9 @@ const student_store = studentStore()
 const group_store = groupStore()
 
 const addStudentsModal = ref(false)
-const heads = ['i.f.o', 'guruh talabasi', 'tel: raqami', 'holati']
+const heads = ['i.f.o', 'guruh talabasi', 'tel raqami', 'holati']
+const keys = ['full_name', 'Bootcamp N7', 'phone', 'is_active']
+
 const changeModalStudents = () => (addStudentsModal.value = !addStudentsModal.value)
 
 const newStudents = reactive({
@@ -208,7 +210,7 @@ onMounted(() => {
     </button>
   </AddNavbar>
   <Loading v-if="student_store.LOAD" />
-  <Table v-else :message="heads" page="students" :data="student_store.LIST" />
+  <Table v-else :message="heads" :keys="keys" page="students" :data="student_store.LIST" />
 </template>
 
 <style lang="scss" scoped></style>

@@ -227,7 +227,6 @@ onMounted(() => {
           <tr
             v-for="(el, i) in store.LIST"
             class="bg-white border-b border-gray-300 dark:bg-gray-800 dark:border-gray-700"
-            :class="'border-b'"
           >
             <th class="font-medium text-gray-900 whitespace-nowrap dark:text-white">
               {{ el.name }}
