@@ -3,16 +3,19 @@ import { ref, reactive, onMounted } from "vue";
 import { toast } from "vue3-toastify";
 import moment from "moment";
 
-import Loading from "@/components/Loading.vue";
-import AddNavbar from "../components/AddNavbar.vue";
-import { testStore } from "@/stores/tests/testStore";
-import { subjectStore } from "@/stores/subjects/subjectStore";
-  
-const store = testStore();
-const store_subject = subjectStore();
+import Loading from '@/components/Loading.vue'
+import AddNavbar from '../components/AddNavbar.vue'
+import TimeBeauty from '../components/TimeBeauty.vue'
+import { testStore } from '@/stores/tests/testStore'
+import { subjectStore } from '@/stores/subjects/subjectStore'
+import { questionStore } from '@/stores/questions/questionStore'
 
-const addTestsModal = ref(false);
-const changeModalTests = () => (addTestsModal.value = !addTestsModal.value);
+const store = testStore()
+const store_subject = subjectStore()
+
+const addTestsModal = ref(false)
+const changeModalTests = () => (addTestsModal.value = !addTestsModal.value)
+
 
 const newTests = reactive({
   name: '',
@@ -205,6 +208,7 @@ onMounted(() => {
         Test qo'shish
       </button>
     </AddNavbar>
+
     <Loading v-if="store.LOAD" />
     <section
       v-else
@@ -233,26 +237,7 @@ onMounted(() => {
               {{ el.subject_id.name }}
             </th>
             <th scope="row" class="font-medium text-gray-900 whitespace-nowrap dark:text-white">
-              <span
-                class="relative pl-8 inline-flex items-center justify-center gap-2 p-1 px-3 rounded-md"
-                :class="
-                  new Date().getTime() < new Date(el.started).getTime()
-                    ? 'dark:text-green-200 text-green-800 bg-green-600/50'
-                    : 'line-through dark:text-red-200 text-red-800 bg-red-600/50'
-                "
-              >
-                <i
-                  class="absolute left-2 top-0.5 bx text-lg"
-                  :class="
-                    new Date().getTime() < new Date(el.started).getTime()
-                      ? 'bxs-calendar-check'
-                      : 'bxs-calendar-x'
-                  "
-                ></i>
-                <span>
-                  {{ moment(el.started).format('YYYY.MM.DD / hh:mm') }}
-                </span>
-              </span>
+              <TimeBeauty :started="el.started" :test_time="el.test_time" />
             </th>
             <th scope="row" class="font-medium text-gray-900 whitespace-nowrap dark:text-white">
               <span

@@ -1,25 +1,29 @@
 <script setup>
 // MODULES
-import { useRoute } from "vue-router";
-import { ref, reactive, onMounted } from "vue";
-import moment from "moment";
+import { useRoute, useRouter } from 'vue-router'
+import { ref, reactive, onMounted } from 'vue'
+import moment from 'moment'
 
 // MY MODULESimport Loading from '@/components/Loading.vue'
 import Back from '../components/Back.vue'
 import AddNavbar from '../components/AddNavbar.vue'
+import TimeBeauty from '../components/TimeBeauty.vue'
 import { testStore } from '../stores/tests/testStore'
 import { questionStore } from '../stores/questions/questionStore'
 import { answerStore } from '../stores/answers/answerStore'
 import { subjectStore } from '@/stores/subjects/subjectStore'
+
+const { id } = useRoute().params
 
 const store = testStore()
 const store_question = questionStore()
 const store_answers = answerStore()
 const store_subject = subjectStore()
 
-const { id } = useRoute().params
 const addTestModal = ref(false)
 const editTestsModal = ref(false)
+const isDeleteTestsModal = ref(false)
+const changeDeleteModalTest = () => (isDeleteTestsModal.value = !isDeleteTestsModal.value)
 const changeModalTest = () => (addTestModal.value = !addTestModal.value)
 const changeModalTests = () => (editTestsModal.value = !editTestsModal.value)
 
@@ -56,7 +60,7 @@ const addTest = async () => {
         });
       }
       await store_question.SET_ANSWER(store_question.LIST.length - 1, result)
-      await setAnswers()
+      await setQuestionsAnswers()
       resetFormTest()
     } catch (error) {
       console.log(error);
@@ -65,6 +69,10 @@ const addTest = async () => {
     console.log(error);
   }
 };
+
+const deleteTests = async () => {
+  store.DELETE_TESTS(id)
+}
 
 const editTests = () => {}
 
@@ -94,7 +102,7 @@ const removeAnswer = (i) => {
   }
 };
 
-const setAnswers = async () => {
+const setQuestionsAnswers = async () => {
   for (let i in store_question.LIST) {
     const res = await store_answers.GET_QUESTIONS(store_question.LIST[i]._id)
     await store_question.SET_ANSWER(i, res)
@@ -106,13 +114,48 @@ onMounted(async () => {
   await store_question.SET_LIST()
   await store_answers.SET_LIST()
   await store_subject.SET_LIST()
-  await setAnswers()
+  await setQuestionsAnswers()
 })
 </script>
 
 <template>
   <div>
-    <!-- ADD TESTS MODAL -->
+    <!-- DELETE TESTS MODAL -->
+    <div
+      class="fixed top-0 left-0 right-0 z-50 p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-full max-h-full flex items-center justify-center bg-black/50"
+      :class="isDeleteTestsModal ? '' : 'hidden'"
+    >
+      <div class="relative w-full max-w-lg max-h-full">
+        <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+          <button
+            class="absolute top-3 right-3 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-800 dark:hover:text-white"
+            @click="changeDeleteModalTest"
+          >
+            <i class="bx bx-x text-2xl px-1"></i>
+            <span class="sr-only">Close modal</span>
+          </button>
+          <div class="p-6 text-center">
+            <i class="bx bxs-trash-alt text-7xl text-gray-500 py-5"></i>
+            <h3 class="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">
+              Rostan o'chirib yubormoqchimisiz ?
+            </h3>
+            <button
+              class="text-white bg-red-600 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center mr-2"
+            >
+              O'chirish
+            </button>
+            <button
+              class="text-gray-500 hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-200 rounded-lg border border-gray-200 text-sm font-medium px-5 py-2.5 hover:text-gray-900 focus:z-10 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-500 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-600"
+              @click="changeDeleteModalTest"
+            >
+              Bekor qilish
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- EDIT TESTS MODAL -->
     <div
       class="fixed top-0 left-0 right-0 z-50 w-full overflow-x-hidden overflow-y-auto md:inset-0 h-full max-h-full flex items-center justify-center bg-black/50 p-3"
       :class="editTestsModal ? '' : 'hidden'"
@@ -241,7 +284,7 @@ onMounted(async () => {
       </div>
     </div>
 
-    <!-- ADD TEST MODAL -->
+    <!-- ADD QUESTION MODAL -->
     <div
       class="fixed top-0 left-0 right-0 z-50 w-full overflow-x-hidden overflow-y-auto md:inset-0 h-full max-h-full flex items-center justify-center bg-black/50 p-3"
       :class="addTestModal ? '' : 'hidden'"
@@ -355,14 +398,14 @@ onMounted(async () => {
         @click="changeModalTest"
         class="text-base px-4 py-2 text-green-100 rounded-md bg-gradient-to-r from-green-500 to-green-700 hover:bg-green-500"
       >
-        Test qo'shish
+        Savol qo'shish
       </button>
     </AddNavbar>
 
     <Loading v-if="store.EL_LOAD" />
     <div v-else class="">
       <div
-        class="w-full flex justify-between gap-5 items-center bg-white border-gray-300 dark:bg-gray-800 border dark:border-gray-600 p-4 px-5 rounded-xl mb-5 shadow-xl"
+        class="w-full flex justify-between gap-5 items-center bg-white border-gray-300 dark:bg-gray-800 border dark:border-gray-600 p-4 px-5 rounded-lg mb-5 shadow-xl"
       >
         <div class="flex items-center gap-2">
           <h4
@@ -373,35 +416,32 @@ onMounted(async () => {
               TEST: {{ store.ELEMENT?.name }} - {{ store.ELEMENT?.subject_id?.name }}
             </span>
             <span
-              class="flex items-center dark:bg-gray-800 bg-white border border-gray-500 shadow-xl dark:text-white text-gray-900 rounded-full px-2 gap-1 text-sm"
+              class="flex items-center dark:bg-gray-700 bg-white border border-gray-500 shadow-xl dark:text-white text-gray-900 rounded-full px-2 gap-1 text-sm"
             >
-              <i class="bx bx-timer text-xl"></i> {{ store.ELEMENT?.test_time }}
+              <i class="bx bx-timer text-lg"></i> {{ store.ELEMENT?.test_time }}
             </span>
           </h4>
+          <TimeBeauty :started="store.ELEMENT?.started" :test_time="store.ELEMENT?.test_time" />
+        </div>
+        <div class="flex items-center gap-2">
           <i
             class="bx bx-pencil text-xl bg-green-500 px-2 p-1 rounded-full text-white cursor-pointer"
             @click="resetFormTests"
           ></i>
+          <i
+            class="bx bx-trash text-xl bg-red-500 px-2 p-1 rounded-full text-white cursor-pointer"
+            @click="changeDeleteModalTest"
+          ></i>
         </div>
-        <h4
-          class="px-2 p-1 rounded-lg flex items-center gap-2"
-          :class="
-            new Date().getTime() < new Date(store.ELEMENT?.started).getTime()
-              ? 'dark:text-green-200 text-green-800 bg-green-600/50'
-              : 'line-through dark:text-red-200 text-red-800 bg-red-600/50'
-          "
-        >
-          {{ moment(store.ELEMENT?.started).format("YYYY.MM.DD / hh:mm") }}
-        </h4>
       </div>
 
       <div
-        class="relative sm:rounded-xl border border-gray-300 dark:border-gray-600 shadow-xl"
+        class="relative rounded-xl border border-gray-300 dark:border-gray-600 shadow-xl"
         :class="!store.LIST.length ? 'overflow-x-hidden' : 'overflow-x-auto'"
       >
         <table class="w-full text-center text-gray-500 dark:text-gray-400 shadow-2xl">
           <thead
-            class="text-xs text-gray-700 uppercase bg-white dark:bg-gray-700 dark:text-gray-300"
+            class="text-xs text-gray-700 uppercase bg-gray-300 dark:bg-gray-700 dark:text-gray-300"
           >
             <tr>
               <th scope="col" class="py-4 px-10 text-sm uppercase">Savol matni</th>
@@ -431,13 +471,13 @@ onMounted(async () => {
               >
                 {{ el?.answer?.filter((i) => i.is_true)?.length }}
               </th>
-              <td class="px-6 py-4 text-right">
-                <router-link
-                  :to="`/tests/${el._id}`"
-                  class="text-white bg-blue-500 rounded-lg text-sm px-3.5 py-2 text-center"
-                >
-                  Kirish
-                </router-link>
+              <td class="px-6 py-4 flex items-center justify-center gap-2 text-right">
+                <i
+                  class="bx bx-trash bg-red-500 text-white px-1.5 rounded-full text-lg cursor-pointer"
+                ></i>
+                <i
+                  class="bx bx-pencil bg-green-500 text-white px-1.5 rounded-full text-lg cursor-pointer"
+                ></i>
               </td>
             </tr>
           </tbody>

@@ -1,47 +1,15 @@
 <script setup>
-import { ref, reactive, onMounted } from 'vue'
-import { toast } from 'vue3-toastify'
-import moment from 'moment'
+import { onMounted } from 'vue'
 
 import Loading from '@/components/Loading.vue'
 import { testStore } from '@/stores/tests/testStore'
 import { subjectStore } from '@/stores/subjects/subjectStore'
 import { questionStore } from '@/stores/questions/questionStore'
+import { fromNow } from '../helpers/fromNow'
 
 const store = testStore()
 const store_subject = subjectStore()
 const store_question = questionStore()
-
-const fromNow = (time, space) => {
-  space = new Date(space * 60000).getTime()
-  const now = new Date()
-  const deadline = new Date(time)
-  const isAgo = new Date().getTime() < new Date(time).getTime()
-  if (!isAgo && new Date().getTime() < new Date(time).getTime() + space) {
-    return {
-      color: 'dark:text-blue-200 text-blue-800 bg-blue-600/50 cursor-pointer p-2',
-      msg: 'BOSHLASH'
-    }
-  }
-
-  const plus = (num) => Math.abs(num).toString().padStart(2, '0')
-  const format = (one, two, min = '') => {
-    return `${min}${plus(one.getDay() - two.getDay())}:${plus(
-      one.getHours() - two.getHours()
-    )}:${plus(one.getMinutes() - two.getMinutes())}`
-  }
-  if (isAgo) {
-    return {
-      color: 'dark:text-green-200 text-green-800 bg-green-600/50',
-      msg: format(deadline, now)
-    }
-  } else {
-    return {
-      color: 'dark:text-red-200 text-red-800 bg-red-600/50',
-      msg: format(now, deadline, '-')
-    }
-  }
-}
 
 onMounted(() => {
   store.SET_LIST()
@@ -55,7 +23,7 @@ onMounted(() => {
     <Loading v-if="store.LOAD" />
     <section
       v-else
-      class="relative sm:rounded-xl border border-gray-300 dark:border-gray-600 shadow-xl"
+      class="relative rounded-lg border border-gray-300 dark:border-gray-600 shadow-xl"
       :class="!store.LIST.length ? 'overflow-x-hidden' : 'overflow-x-auto'"
     >
       <table class="w-full text-center text-gray-500 dark:text-gray-400">
@@ -89,12 +57,13 @@ onMounted(() => {
               </span>
             </th>
             <td class="px-6 py-4 text-center">
-              <span
-                class="relative gap-2 p-1 px-4 rounded-md"
+              <router-link
+                class="relative gap-2 p-2 px-4 text-sm rounded-md"
                 :class="fromNow(el.started, el.test_time).color"
+                :to="fromNow(el.started, el.test_time).msg == 'BOSHLASH' ? `start/${el._id}` : ''"
               >
                 {{ fromNow(el.started, el.test_time).msg }}
-              </span>
+              </router-link>
             </td>
           </tr>
         </tbody>

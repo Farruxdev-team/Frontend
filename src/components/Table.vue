@@ -1,15 +1,15 @@
 <script setup>
-import { staffsStore } from "../stores/teacher/staffStore.js";
-import { studentStore } from "../stores/students/studentStore";
-import { subjectStore } from "../stores/subjects/subjectStore.js";
+import { staffsStore } from '../stores/teacher/staffStore.js'
+import { studentStore } from '../stores/students/studentStore'
+import { subjectStore } from '../stores/subjects/subjectStore.js'
 
-const props = defineProps(["data", "page", "message"]);
+const props = defineProps(['data', 'page', 'message'])
 
-let store;
+let store
 
-if (props.page == "teacher") store = staffsStore();
-else if (props.page == "student") store = studentStore();
-else store = subjectStore();
+if (props.page == 'teacher') store = staffsStore()
+else if (props.page == 'student') store = studentStore()
+else store = subjectStore()
 </script>
 <template>
   <section

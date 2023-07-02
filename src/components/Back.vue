@@ -12,5 +12,3 @@ const router = useRouter()
     BACK
   </button>
 </template>
-
-<style lang="scss" scoped></style>

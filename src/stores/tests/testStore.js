@@ -39,7 +39,15 @@ export const testStore = defineStore('test', () => {
     state.oneLoad = false
   }
 
-  const LIST = computed(() => state.list)
+  const LIST = computed(() =>
+    state.list.sort((a, b) => new Date(b.started).getTime() - new Date(a.started).getTime())
+  )
+
+  const DELETE_TESTS = async (id) => {
+    await useTests.delete(id)
+    await SET_LIST()
+  }
+
   const LOAD = computed(() => state.load)
   const ELEMENT = computed(() => state.oneElement)
   const EL_LOAD = computed(() => state.oneLoad)
@@ -52,6 +60,7 @@ export const testStore = defineStore('test', () => {
     GET_ONE,
     SET_ONE,
     ADD_LIST,
+    DELETE_TESTS,
     EL_LOAD,
     falseLoad,
     trueLoad
