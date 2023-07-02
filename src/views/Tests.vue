@@ -15,47 +15,48 @@ const addTestsModal = ref(false);
 const changeModalTests = () => (addTestsModal.value = !addTestsModal.value);
 
 const newTests = reactive({
-  name: "",
-  subject: "",
-  start_date: "",
-  start_time: "",
-  test_time: "",
-});
+  name: '',
+  subject: '',
+  start_date: '',
+  start_time: '',
+  test_time: ''
+})
 
 const addTests = async () => {
   try {
     for (let i in newTests) {
-      newTests[i] = newTests[i].toString().trim();
+      newTests[i] = newTests[i].toString().trim()
     }
     if (!newTests.name.length || !newTests.test_time.length) {
       toast.error("Forma to'ldirilish shart", {
-        autoClose: 1000,
-      });
-      return;
+        autoClose: 1000
+      })
+      return
     }
     const addTest = {
       subject_id: newTests.subject,
       tests_count: 0,
       name: newTests.name,
       test_time: newTests.test_time,
-      started: `${moment(newTests.start_date + "T" + newTests.start_time).format()}`,
-    };
-    store.ADD_LIST(addTest);
+      started: `${moment(newTests.start_date + 'T' + newTests.start_time).format()}`
+    }
+    store.ADD_LIST(addTest)
+    resetFormTests()
   } catch (error) {
-    console.log(error);
-    toast.error("Xatolik", {
-      autoClose: 1000,
-    });
+    console.log(error)
+    toast.error('Xatolik', {
+      autoClose: 1000
+    })
   }
-};
+}
 const resetFormTests = () => {
-  newTests.name = "";
-  newTests.subject = "";
-  newTests.start_date = "";
-  newTests.start_time = "";
-  newTests.test_time = "";
-  changeModalTests();
-};
+  newTests.name = ''
+  newTests.subject = ''
+  newTests.start_date = ''
+  newTests.start_time = ''
+  newTests.test_time = ''
+  changeModalTests()
+}
 
 onMounted(() => {
   store.SET_LIST();
@@ -211,9 +212,7 @@ onMounted(() => {
       :class="!store.LIST.length ? 'overflow-x-hidden' : 'overflow-x-auto'"
     >
       <table class="w-full text-center text-gray-500 dark:text-gray-400 shadow-2xl">
-        <thead
-          class="text-xs text-gray-700 uppercase bg-white dark:bg-gray-700 dark:text-gray-300"
-        >
+        <thead class="text-xs text-gray-700 uppercase bg-white dark:bg-gray-700 dark:text-gray-300">
           <tr>
             <th scope="col" class="py-4 px-10 text-sm uppercase">Test nomi</th>
             <th scope="col" class="py-4 px-10 text-sm uppercase">Test fani</th>
@@ -227,22 +226,13 @@ onMounted(() => {
             v-for="el in store.LIST"
             class="bg-white border-b border-gray-300 dark:bg-gray-800 dark:border-gray-700"
           >
-            <th
-              scope="row"
-              class="font-medium text-gray-900 whitespace-nowrap dark:text-white"
-            >
+            <th scope="row" class="font-medium text-gray-900 whitespace-nowrap dark:text-white">
               {{ el.name }}
             </th>
-            <th
-              scope="row"
-              class="font-medium text-gray-900 whitespace-nowrap dark:text-white"
-            >
+            <th scope="row" class="font-medium text-gray-900 whitespace-nowrap dark:text-white">
               {{ el.subject_id.name }}
             </th>
-            <th
-              scope="row"
-              class="font-medium text-gray-900 whitespace-nowrap dark:text-white"
-            >
+            <th scope="row" class="font-medium text-gray-900 whitespace-nowrap dark:text-white">
               <span
                 class="relative pl-8 inline-flex items-center justify-center gap-2 p-1 px-3 rounded-md"
                 :class="
@@ -260,14 +250,11 @@ onMounted(() => {
                   "
                 ></i>
                 <span>
-                  {{ moment(el.started).format("YYYY.MM.DD / hh:mm") }}
+                  {{ moment(el.started).format('YYYY.MM.DD / hh:mm') }}
                 </span>
               </span>
             </th>
-            <th
-              scope="row"
-              class="font-medium text-gray-900 whitespace-nowrap dark:text-white"
-            >
+            <th scope="row" class="font-medium text-gray-900 whitespace-nowrap dark:text-white">
               <span
                 class="bg-gray-500/50 gap-2 inline-flex px-3 rounded-md items-center justify-center"
               >
