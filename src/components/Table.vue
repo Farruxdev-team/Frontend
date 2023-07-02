@@ -36,7 +36,7 @@ else store = subjectStore();
       </thead>
       <tbody>
         <tr
-          v-for="el in props.data"
+          v-for="(el, index) in props.data"
           class="bg-white border-b dark:bg-gray-800 dark:border-gray-700"
         >
           <th
@@ -55,8 +55,8 @@ else store = subjectStore();
             <span
               v-if="props.page == 'student'"
               class="bg-indigo-300 py-0.5 dark:bg-indigo-900/50 dark:text-indigo-300 text-indigo-900 font-medium block rounded"
-              >o'quvchining guruhi
-            </span>
+              >{{ store.LIST[index].group_id.name }}</span
+            >
             <span
               v-if="props.page == 'subjects'"
               class="bg-indigo-300 py-0.5 dark:bg-indigo-900/50 dark:text-indigo-300 text-indigo-900 font-medium block rounded"

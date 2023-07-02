@@ -1,11 +1,10 @@
 <script setup>
 // MODULES
-import { useRoute } from 'vue-router'
-import { ref, reactive, onMounted } from 'vue'
-import moment from 'moment'
+import { useRoute } from "vue-router";
+import { ref, reactive, onMounted } from "vue";
+import moment from "moment";
 
-// MY MODULES
-import Loading from '@/components/Loading.vue'
+// MY MODULESimport Loading from '@/components/Loading.vue'
 import Back from '../components/Back.vue'
 import AddNavbar from '../components/AddNavbar.vue'
 import { testStore } from '../stores/tests/testStore'
@@ -24,12 +23,12 @@ const editTestsModal = ref(false)
 const changeModalTest = () => (addTestModal.value = !addTestModal.value)
 const changeModalTests = () => (editTestsModal.value = !editTestsModal.value)
 
-const alphas = 'ABCDEFGHJKLMNOPQRSTUVWXYZ'
+const alphas = "ABCDEFGHJKLMNOPQRSTUVWXYZ";
 
 const newTest = reactive({
-  question: '',
-  answers: [{ text: '', isTrue: true }]
-})
+  question: "",
+  answers: [{ text: "", isTrue: true }],
+});
 
 const newEditTests = reactive({
   name: '',
@@ -40,7 +39,7 @@ const newEditTests = reactive({
 })
 
 const addTest = async () => {
-  const correct_answers = newTest.answers.filter((i) => i.isTrue)
+  const correct_answers = newTest.answers.filter((i) => i.isTrue);
   try {
     console.log(newTest)
     const res = await store_question.ADD_LIST({
@@ -53,19 +52,19 @@ const addTest = async () => {
         const result = await store_answers.ADD_LIST({
           answer: newTest.answers[i].text,
           is_true: newTest.answers[i].isTrue,
-          question_id: res._id
-        })
+          question_id: res._id,
+        });
       }
       await store_question.SET_ANSWER(store_question.LIST.length - 1, result)
       await setAnswers()
       resetFormTest()
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
   } catch (error) {
-    console.log(error)
+    console.log(error);
   }
-}
+};
 
 const editTests = () => {}
 
@@ -86,21 +85,21 @@ const resetFormTests = () => {
 
 const addAnswer = () => {
   if (newTest.answers.length < 25) {
-    newTest.answers.push({ text: '', isTrue: false })
+    newTest.answers.push({ text: "", isTrue: false });
   }
-}
+};
 const removeAnswer = (i) => {
   if (newTest.answers.length > 1) {
-    newTest.answers.splice(i, 1)
+    newTest.answers.splice(i, 1);
   }
-}
+};
 
 const setAnswers = async () => {
   for (let i in store_question.LIST) {
     const res = await store_answers.GET_QUESTIONS(store_question.LIST[i]._id)
     await store_question.SET_ANSWER(i, res)
   }
-}
+};
 
 onMounted(async () => {
   await store.GET_ONE(id)
@@ -370,7 +369,9 @@ onMounted(async () => {
             class="dark:text-blue-100 dark:bg-blue-500/50 text-blue-900 bg-blue-500/50 px-6 rounded-lg flex items-center gap-2 p-1 pl-4"
           >
             <i class="bx bx-notepad text-lg"></i>
-            <span> TEST: {{ store.ELEMENT?.name }} - {{ store.ELEMENT?.subject_id?.name }} </span>
+            <span>
+              TEST: {{ store.ELEMENT?.name }} - {{ store.ELEMENT?.subject_id?.name }}
+            </span>
             <span
               class="flex items-center dark:bg-gray-800 bg-white border border-gray-500 shadow-xl dark:text-white text-gray-900 rounded-full px-2 gap-1 text-sm"
             >
@@ -390,7 +391,7 @@ onMounted(async () => {
               : 'line-through dark:text-red-200 text-red-800 bg-red-600/50'
           "
         >
-          {{ moment(store.ELEMENT?.started).format('YYYY.MM.DD / hh:mm') }}
+          {{ moment(store.ELEMENT?.started).format("YYYY.MM.DD / hh:mm") }}
         </h4>
       </div>
 
@@ -415,13 +416,19 @@ onMounted(async () => {
               class="bg-white border-b border-gray-300 dark:bg-gray-800 dark:border-gray-700"
               v-show="el.test_group_id._id == id"
             >
-              <th scope="row" class="font-medium text-gray-900 whitespace-nowrap dark:text-white">
+              <th
+                scope="row"
+                class="font-medium text-gray-900 whitespace-nowrap dark:text-white"
+              >
                 {{ el?.question }}
               </th>
               <th scope="row" class="font-medium text-gray-900 whitespace-nowrap dark:text-white">
                 {{ el?.answer?.length }}
               </th>
-              <th scope="row" class="font-medium text-gray-900 whitespace-nowrap dark:text-white">
+              <th
+                scope="row"
+                class="font-medium text-gray-900 whitespace-nowrap dark:text-white"
+              >
                 {{ el?.answer?.filter((i) => i.is_true)?.length }}
               </th>
               <td class="px-6 py-4 text-right">
