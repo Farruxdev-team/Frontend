@@ -17,11 +17,10 @@ const changeModalStudents = () => (addStudentsModal.value = !addStudentsModal.va
 
 const newStudents = reactive({
   full_name: "",
-  group_id: "",
   phone: "",
   login: "",
   password: "",
-  is_active: true,
+  group_id: "",
 });
 
 const addStudents = async () => {
@@ -50,7 +49,6 @@ const addStudents = async () => {
       phone: newStudents.phone,
       login: newStudents.login,
       password: newStudents.password,
-      is_active: newStudents.is_active,
     };
     student_store.ADD_LIST(addStudent);
     changeModalStudents();
@@ -65,7 +63,6 @@ const resetFormStudents = () => {
   newStudents.full_name = "";
   newStudents.group_id = "";
   newStudents.phone = "";
-  newStudents.is_active = "";
   newStudents.login = "";
   newStudents.password = "";
   changeModalStudents();

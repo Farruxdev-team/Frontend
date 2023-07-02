@@ -13,6 +13,11 @@ export const staffsStore = defineStore('staffs', () => {
     state.list = (await useStaff.list()).data
     state.load = false
   }
+
+  const ADD_LIST = async (data) => {
+    await useStaff.create(data)
+    SET_LIST()
+  }
   
   const SET_ONE = (el) => {
     state.oneElement = el
