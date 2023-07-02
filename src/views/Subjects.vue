@@ -19,7 +19,7 @@ onMounted(() => {
 
 <template>
   <AddNavbar>
-    <span class="text-lg text-blue-600 font-bold">Fanlar</span>
+    <span class="px-4 py-2 border-b-2 border-blue-600 text-blue-600 font-bold">Fanlar</span>
     <button
       @click="changeModal"
       class="text-base px-4 py-2 text-green-100 rounded-md bg-gradient-to-r from-green-500 to-green-700 hover:bg-green-500"
