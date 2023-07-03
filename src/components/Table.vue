@@ -1,5 +1,5 @@
 <script setup>
-const { data, page, message, keys } = defineProps(["data", "page", "message", "keys"]);
+const { data, page, message, keys } = defineProps(['data', 'page', 'message', 'keys'])
 </script>
 
 <template>
