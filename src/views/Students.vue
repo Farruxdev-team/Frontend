@@ -201,7 +201,7 @@ onMounted(() => {
     </div>
   </div>
   <AddNavbar>
-    <span class="text-lg text-blue-600 font-bold">Talabalar</span>
+    <span class="px-4 py-2 border-b-2 border-blue-600 text-blue-600 font-bold">O'quvchilar</span>
     <button
       @click="changeModalStudents"
       class="text-base px-4 py-2 text-green-100 rounded-md bg-gradient-to-r from-green-500 to-green-700 hover:bg-green-500"

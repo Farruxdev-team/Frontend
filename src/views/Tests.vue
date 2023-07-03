@@ -5,7 +5,7 @@ import moment from 'moment'
 
 import Loading from '@/components/Loading.vue'
 import AddNavbar from '../components/AddNavbar.vue'
-import TimeBeauty from '../components/TimeBeauty.vue'
+import TestTable from '../components/TestTable.vue'
 import { testStore } from '@/stores/tests/testStore'
 import { subjectStore } from '@/stores/subjects/subjectStore'
 
@@ -64,6 +64,8 @@ onMounted(() => {
   store_subject.SET_LIST()
   store.trueLoad()
 })
+
+const heads = ['test nomi', 'test fani', 'boshlanishi', 'vaqti', 'batafsil']
 </script>
 
 <template>
@@ -198,7 +200,7 @@ onMounted(() => {
     </div>
 
     <AddNavbar>
-      <span class="text-lg text-blue-600 font-bold">Testlar</span>
+      <span class="px-4 py-2 border-b-2 border-blue-600 text-blue-600 font-bold">Testlar</span>
       <button
         @click="changeModalTests"
         class="text-base px-4 py-2 text-green-100 rounded-md bg-gradient-to-r from-green-500 to-green-700 hover:bg-green-500"
@@ -208,55 +210,7 @@ onMounted(() => {
     </AddNavbar>
 
     <Loading v-if="store.LOAD" />
-    <section
-      v-else
-      class="relative sm:rounded-xl border border-gray-300 dark:border-gray-600 shadow-xl"
-      :class="!store.LIST.length ? 'overflow-x-hidden' : 'overflow-x-auto'"
-    >
-      <table class="w-full text-center text-gray-500 dark:text-gray-400 shadow-2xl">
-        <thead class="text-xs text-gray-700 uppercase bg-white dark:bg-gray-700 dark:text-gray-300">
-          <tr>
-            <th scope="col" class="py-4 px-10 text-sm uppercase">Test nomi</th>
-            <th scope="col" class="py-4 px-10 text-sm uppercase">Test fani</th>
-            <th scope="col" class="py-4 px-10 text-sm uppercase">Boshlanish sanasi</th>
-            <th scope="col" class="py-4 px-10 text-sm uppercase">Vaqti</th>
-            <th scope="col" class="sr-only">Edit</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr
-            v-for="(el, i) in store.LIST"
-            class="bg-white border-b border-gray-300 dark:bg-gray-800 dark:border-gray-700"
-          >
-            <th class="font-medium text-gray-900 whitespace-nowrap dark:text-white">
-              {{ el.name }}
-            </th>
-            <th class="font-medium text-gray-900 whitespace-nowrap dark:text-white">
-              {{ el.subject_id.name }}
-            </th>
-            <th class="font-medium text-gray-900 whitespace-nowrap dark:text-white">
-              <TimeBeauty :started="el.started" :test_time="el.test_time" />
-            </th>
-            <th class="font-medium text-gray-900 whitespace-nowrap dark:text-white">
-              <span
-                class="bg-gray-500/50 gap-2 inline-flex px-3 rounded-md items-center justify-center"
-              >
-                <i class="bx bx-timer text-2xl"></i>
-                {{ el.test_time }}
-              </span>
-            </th>
-            <td class="px-6 py-4 text-right">
-              <router-link
-                :to="`/tests/${el._id}`"
-                class="px-3 py-2 text-white rounded-md bg-gradient-to-r from-blue-500 to-blue-700 text-sm"
-              >
-                Kirish
-              </router-link>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </section>
+    <TestTable v-else :heads="heads" :data="store.LIST" />
   </div>
 </template>
 
