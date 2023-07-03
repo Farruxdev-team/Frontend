@@ -15,38 +15,58 @@ const router = createRouter({
           component: () => import('@/views/Home.vue')
         },
         {
-          path: '/add-teacher',
-          name: 'add-teacher',
-          component: () => import('@/views/AddTeacher.vue')
+          path: '/teachers',
+          name: 'Teachers',
+          component: () => import('@/views/Teachers.vue')
         },
         {
-          path: '/add-student',
-          name: 'add-student',
-          component: () => import('@/views/AddStudent.vue')
+          path: '/teachers/:id',
+          name: 'Teacher_id',
+          component: () => import('@/views/Teacher.vue')
         },
         {
-          path: '/add-student/:id',
-          name: 'add-student_id',
+          path: '/students',
+          name: 'Student',
+          component: () => import('@/views/Students.vue')
+        },
+        {
+          path: '/students/:id',
+          name: 'Student_id',
           component: () => import('@/views/Student.vue')
         },
         {
+          path: '/groups',
+          name: 'Groups',
+          component: () => import('@/views/Groups.vue')
+        },
+        {
           path: '/subjects',
-          name: 'subjects',
-          component: () => import('@/views/AddSubjects.vue')
+          name: 'Subjects',
+          component: () => import('@/views/Subjects.vue')
+        },
+        {
+          path: '/subjects/:id',
+          name: 'Subject_id',
+          component: () => import('@/views/Subject.vue')
         },
         {
           path: '/tests',
-          name: 'tests',
+          name: 'Tests',
           component: () => import('@/views/Tests.vue')
         },
         {
           path: '/tests/:id',
-          name: 'test',
+          name: 'Test',
           component: () => import('@/views/Test.vue')
         },
         {
+          path: '/tests/:id/:question',
+          name: 'Question',
+          component: () => import('@/views/Question.vue')
+        },
+        {
           path: '/results',
-          name: 'results',
+          name: 'Results',
           component: () => import('@/views/Results.vue')
         },
         {

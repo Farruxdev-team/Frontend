@@ -7,10 +7,7 @@
     <div class="flex gap-5 items-center">
       <slot />
     </div>
-    <label
-      class="mb-2 text-md font-medium text-gray-900 sr-only dark:text-white"
-      >Search</label
-    >
+    <label class="mb-2 text-md font-medium text-gray-900 sr-only dark:text-white">Search</label>
     <div class="relative">
       <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
         <svg

@@ -12,15 +12,18 @@ const student_store = studentStore();
 const group_store = groupStore();
 
 const addStudentsModal = ref(false);
-const heads = ["i.f.o", "guruh talabasi", "tel: raqami"];
+const heads = ["i.f.o", "guruh talabasi", "tel raqami", "holati"];
+const keys = ["full_name", "Bootcamp N7", "phone", "is_active"];
+
 const changeModalStudents = () => (addStudentsModal.value = !addStudentsModal.value);
 
 const newStudents = reactive({
   full_name: "",
+  group_id: "",
   phone: "",
   login: "",
   password: "",
-  group_id: "",
+  is_active: true,
 });
 
 const addStudents = async () => {
@@ -49,6 +52,7 @@ const addStudents = async () => {
       phone: newStudents.phone,
       login: newStudents.login,
       password: newStudents.password,
+      is_active: newStudents.is_active,
     };
     student_store.ADD_LIST(addStudent);
     changeModalStudents();
@@ -63,6 +67,7 @@ const resetFormStudents = () => {
   newStudents.full_name = "";
   newStudents.group_id = "";
   newStudents.phone = "";
+  newStudents.is_active = "";
   newStudents.login = "";
   newStudents.password = "";
   changeModalStudents();
@@ -196,7 +201,9 @@ onMounted(() => {
     </div>
   </div>
   <AddNavbar>
-    <span class="text-lg text-blue-600 font-bold">Talabalar</span>
+    <span class="px-4 py-2 border-b-2 border-blue-600 text-blue-600 font-bold"
+      >O'quvchilar</span
+    >
     <button
       @click="changeModalStudents"
       class="text-base px-4 py-2 text-green-100 rounded-md bg-gradient-to-r from-green-500 to-green-700 hover:bg-green-500"
@@ -205,7 +212,13 @@ onMounted(() => {
     </button>
   </AddNavbar>
   <Loading v-if="student_store.LOAD" />
-  <Table v-else :message="heads" page="student" :data="student_store.LIST" />
+  <Table
+    v-else
+    :message="heads"
+    :keys="keys"
+    page="students"
+    :data="student_store.LIST"
+  />
 </template>
 
 <style lang="scss" scoped></style>

@@ -29,9 +29,10 @@ export const testStore = defineStore('test', () => {
       if (state.list[i]._id == id) {
         state.oneElement = state.list[i]
         state.oneLoad = false
+        return
       }
     }
-    return 'THIS ID NOT FOUND'
+    throw new Error('Not Found!')
   }
 
   const SET_ONE = (el) => {
