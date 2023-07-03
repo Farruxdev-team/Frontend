@@ -21,8 +21,7 @@ const setAnswers = async () => {
 }
 
 onMounted(async () => {
-  const res = await store_question.GET_GROUP(id)
-  questions.value = res
+  questions.value = await store_question.GET_GROUP(id)
   await setAnswers()
 })
 </script>

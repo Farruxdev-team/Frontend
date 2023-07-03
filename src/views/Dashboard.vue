@@ -8,7 +8,7 @@ import Header from '../components/Header.vue'
     <Header />
     <div class="pt-14 h-full">
       <Sidebar />
-      <div class="p-4 lg:ml-64 h-full overflow-y-auto">
+      <div class="p-4 lg:ml-64 h-full">
         <div
           class="p-4 border-2 border-dotted border-gray-300 rounded-lg dark:border-gray-600 min-h-full"
         >
