@@ -46,5 +46,11 @@ export const menu = [
     path: '/results',
     icon: 'bx bx-pie-chart',
     role: ['ADMIN', 'TEACHER', 'STUDENT']
+  },
+  {
+    name: 'Sozlamalar',
+    path: '/settings',
+    icon: 'bx bx-cog',
+    role: ['ADMIN', 'TEACHER', 'STUDENT']
   }
 ]

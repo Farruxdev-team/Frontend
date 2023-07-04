@@ -112,13 +112,6 @@ const removeAnswer = (i) => {
   }
 }
 
-const setQuestionsAnswers = async () => {
-  for (let i in store_question.LIST) {
-    const res = await store_answers.GET_QUESTIONS(store_question.LIST[i]._id)
-    await store_question.SET_ANSWER(i, res)
-  }
-}
-
 onMounted(async () => {
   try {
     await store.GET_ONE(id)
@@ -126,9 +119,7 @@ onMounted(async () => {
     router.push('/tests')
   }
   await store_question.SET_LIST()
-  await store_answers.SET_LIST()
   await store_subject.SET_LIST()
-  await setQuestionsAnswers()
 })
 </script>
 
@@ -303,6 +294,7 @@ onMounted(async () => {
                   class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-600 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                   placeholder="Savolni yozing..."
                   v-model="newTest.question"
+                  required="true"
                 ></textarea>
               </div>
               <div
@@ -326,6 +318,7 @@ onMounted(async () => {
                       class="block p-2 px-2 h-full w-full text-sm text-gray-900 border border-gray-300 outline-none bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-600 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                       :placeholder="`${alphas[i]} - variant`"
                       v-model="el.text"
+                      required="true"
                     />
                     <label
                       class="relative inline-flex items-center cursor-pointer p-1 rounded-r-lg"
@@ -387,7 +380,7 @@ onMounted(async () => {
         Savol qo'shish
       </button>
     </AddNavbar>
-    <Loading v-if="store.EL_LOAD || !store_question.LIST[store_question.LIST.length - 1]?.answer" />
+    <Loading v-if="store.EL_LOAD" />
     <div v-else class="">
       <div
         class="w-full flex justify-between gap-5 items-center bg-white border-gray-300 dark:bg-gray-800 border dark:border-gray-600 p-4 px-5 rounded-lg mb-5 shadow-xl"
@@ -443,10 +436,10 @@ onMounted(async () => {
                 {{ el?.question }}
               </th>
               <th scope="row" class="font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                {{ el?.answer?.length }}
+                {{ el?.answers?.length }}
               </th>
               <th scope="row" class="font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                {{ el?.answer.length ? el?.answer?.filter((i) => i.is_true)?.length : 0 }}
+                {{ el?.answers.length ? el?.answers?.filter((i) => i.is_true)?.length : 0 }}
               </th>
               <td class="px-6 py-4 flex items-center justify-center gap-2 text-right">
                 <router-link

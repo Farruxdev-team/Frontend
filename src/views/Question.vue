@@ -1,5 +1,5 @@
 <script setup>
-import { ref, reactive, onMounted } from 'vue'
+import { ref, onMounted } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { toast } from 'vue3-toastify'
 
@@ -8,20 +8,14 @@ import Loading from '@/components/Loading.vue'
 import DeleteModal from '../components/DeleteModal.vue'
 
 import { questionStore } from '@/stores/questions/questionStore'
-import { answerStore } from '@/stores/answers/answerStore'
 
 const { id, question } = useRoute().params
 const router = useRouter()
 
 const store_question = questionStore()
-const store_answers = answerStore()
 
+const questions = ref([])
 const isDelete = ref(false)
-
-const data = reactive({
-  question: '',
-  answers: []
-})
 
 const deleteQuestion = async () => {
   await store_question.DELETE(question)
@@ -34,8 +28,11 @@ const deleteQuestion = async () => {
 }
 
 onMounted(async () => {
-  data.question = await store_question.GET_ONE(question)
-  data.answers = await store_answers.GET_QUESTIONS(question)
+  try {
+    questions.value = await store_question.GET_ONE(question)
+  } catch (error) {
+    router.push(`/tests/${id}`)
+  }
 })
 </script>
 
@@ -60,19 +57,19 @@ onMounted(async () => {
       </div>
     </nav>
 
-    <Loading v-if="!data.question || !data.answers.length" />
+    <Loading v-if="!questions.answers" />
     <div
       v-else
       class="w-full gap-5 bg-white border-gray-300 dark:bg-gray-800 border dark:border-gray-600 p-5 rounded-lg mb-5 shadow-xl dark:text-white"
     >
       <input
         class="w-full outline-none mb-5 dark:bg-gray-900 bg-gray-200 p-4 rounded-lg border-2 border-gray-400 shadow-xl focus:border-blue-500 dark:focus:border-blue-600"
-        :value="data.question.question"
+        :value="questions.question"
       />
       <div class="grid grid-cols-2 gap-5">
         <div
           class="flex items-center pl-4 border border-gray-300 rounded-lg dark:border-gray-600 dark:bg-gray-900 bg-gray-200 shadow-xl"
-          v-for="el in data.answers"
+          v-for="el in questions.answers"
         >
           <input
             :id="el._id"

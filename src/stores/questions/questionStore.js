@@ -25,7 +25,9 @@ export const questionStore = defineStore('question', () => {
   }
 
   const GET_ONE = async (id) => {
-    return (await useQuestions.get_one(id)).data
+    const res = (await useQuestions.get_one(id)).data
+    console.log(res)
+    return res
   }
 
   const GET_GROUP = async (id) => {
