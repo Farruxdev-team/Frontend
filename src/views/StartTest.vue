@@ -12,17 +12,8 @@ const store_answer = answerStore()
 const { id } = useRoute().params
 const questions = ref([])
 
-const setAnswers = async () => {
-  for (let i in questions) {
-    console.log(questions[i]._id)
-    // const res = store_answer.GET_QUESTIONS(questions[i]._id)
-    // console.log(res)
-  }
-}
-
 onMounted(async () => {
   questions.value = await store_question.GET_GROUP(id)
-  await setAnswers()
 })
 </script>
 
