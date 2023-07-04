@@ -13,7 +13,7 @@ const group_store = groupStore()
 
 const addStudentsModal = ref(false)
 const heads = ['i.f.o', 'guruh talabasi', 'tel raqami', 'holati']
-const keys = ['full_name', 'Bootcamp N7', 'phone', 'is_active']
+const keys = ['full_name', ['group_id', 'name'], 'phone', 'is_active']
 
 const changeModalStudents = () => (addStudentsModal.value = !addStudentsModal.value)
 

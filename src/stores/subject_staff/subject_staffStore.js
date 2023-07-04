@@ -1,8 +1,8 @@
 import { computed, reactive } from 'vue'
 import { defineStore } from 'pinia'
-import { useStaff } from '@/service/staff'
+import { useSubjectStaff } from '@/service/subject_staff'
 
-export const staffsStore = defineStore('staffs', () => {
+export const subject_staffStore = defineStore('subject_staff', () => {
   const state = reactive({
     list: [],
     load: true,
@@ -10,12 +10,12 @@ export const staffsStore = defineStore('staffs', () => {
   })
 
   const SET_LIST = async () => {
-    state.list = (await useStaff.list()).data.filter((i) => i.role_id.name == 'TEACHER')
+    state.list = (await useSubjectStaff.list()).data
     state.load = false
   }
 
   const ADD_LIST = async (data) => {
-    await useStaff.create(data)
+    await useSubjectStaff.create(data)
     SET_LIST()
   }
 
@@ -27,5 +27,5 @@ export const staffsStore = defineStore('staffs', () => {
   const LOAD = computed(() => state.load)
   const ELEMENT = computed(() => state.oneElement)
 
-  return { LIST, LOAD, ELEMENT, SET_LIST, SET_ONE }
+  return { LIST, LOAD, ELEMENT, SET_LIST, ADD_LIST, SET_ONE }
 })
