@@ -1,10 +1,10 @@
 <script setup>
 import { reactive, ref } from 'vue'
-
-const canvaTheme = ref(localStorage.getItem('mode') == 'false' ? 'light2' : 'dark2')
+import { useModeStore } from '@/stores/mode'
+const store = useModeStore()
 
 const options = reactive({
-  theme: canvaTheme.value,
+  theme: store.isDark ? 'dark2' : 'light2',
   animationEnabled: true,
   exportEnabled: true,
   title: {

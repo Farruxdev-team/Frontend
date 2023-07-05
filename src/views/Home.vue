@@ -1,5 +1,6 @@
 <script setup>
 import { onMounted, ref } from 'vue'
+import Chart from '../components/Chart.vue'
 import Chart1 from '../components/Chart1.vue'
 import Chart2 from '../components/Chart2.vue'
 import Chart3 from '../components/Chart3.vue'
