@@ -10,7 +10,7 @@ const addModal = ref(false)
 const changeModal = () => (addModal.value = !addModal.value)
 
 const heads = ['fan nomi', "fan o'qituvchilari soni", "fan o'tiladigan guruhlar soni", 'holati']
-const keys = ['name', '24', '19', 'is_active']
+const keys = ['name', '5', '19', 'is_active']
 
 onMounted(() => {
   store.SET_LIST()
