@@ -50,12 +50,12 @@ const { data, page, message, keys } = defineProps(["data", "page", "message", "k
           <th class="font-medium text-gray-900 whitespace-nowrap dark:text-white">
             <span
               v-if="!el[keys[3]]"
-              class="bg-pink-300 py-0.5 dark:bg-pink-900/50 dark:text-pink-300 text-pink-900 font-medium px-3 rounded"
+              class="bg-pink-300 py-0.5 dark:bg-pink-900/50 dark:text-pink-300 text-pink-900 font-medium px-5 rounded"
               >inactive</span
             >
             <span
               v-else
-              class="bg-green-300 py-0.5 dark:bg-green-900/50 dark:text-green-300 text-green-900 font-medium px-3 rounded"
+              class="bg-green-300 py-0.5 dark:bg-green-900/50 dark:text-green-300 text-green-900 font-medium px-5 rounded"
               >active</span
             >
           </th>
@@ -63,7 +63,7 @@ const { data, page, message, keys } = defineProps(["data", "page", "message", "k
           <td class="px-6 py-4 text-center">
             <router-link
               :to="`${page}/${el._id}`"
-              class="px-3 py-2 text-white rounded-md bg-gradient-to-r from-blue-500 to-blue-700 text-sm"
+              class="px-5 py-2 text-white rounded-md bg-gradient-to-r from-blue-500 to-blue-700 text-sm"
             >
               Kirish
             </router-link>

@@ -1,4 +1,5 @@
 <script setup>
+import LoadingSpinner from './LoadingSpinner.vue'
 import { menu } from '@/constants/menu'
 import { userStore } from '../stores/user/userStore'
 
@@ -12,7 +13,10 @@ const store = userStore()
     aria-label="Sidebar"
   >
     <div class="h-full p-2 py-4 overflow-y-auto bg-gray-100 dark:bg-gray-800">
-      <div class="space-y-2 font-medium">
+      <div v-if="!store.USER.user" class="w-full h-full py-32">
+        <LoadingSpinner />
+      </div>
+      <div v-else class="space-y-2 font-medium">
         <router-link
           v-for="el in menu"
           :to="el.path"
