@@ -1,25 +1,35 @@
 <script setup>
-import AddNavbar from '../components/AddNavbar.vue'
-import Table from '../components/Table.vue'
-import { onMounted, ref } from 'vue'
-import { subjectStore } from '../stores/subjects/subjectStore.js'
-import Loading from '../components/Loading.vue'
+import AddNavbar from "../components/AddNavbar.vue";
+import Table from "../components/Table.vue";
+import Loading from "../components/Loading.vue";
+import { onMounted, ref } from "vue";
+import { subjectStore } from "../stores/subjects/subjectStore.js";
+import { subject_staffStore } from "../stores/subject_staff/subject_staffStore.js";
 
-const store = subjectStore()
-const addModal = ref(false)
-const changeModal = () => (addModal.value = !addModal.value)
+const store = subjectStore();
+const subject_staff_store = subject_staffStore();
+const addModal = ref(false);
+const changeModal = () => (addModal.value = !addModal.value);
 
-const heads = ['fan nomi', "fan o'qituvchilari soni", "fan o'tiladigan guruhlar soni", 'holati']
-const keys = ['name', '24', '19', 'is_active']
+const heads = [
+  "fan nomi",
+  "fan o'qituvchilari soni",
+  "fan o'tiladigan guruhlar soni",
+  "holati",
+];
+const keys = ["name", "staff", "19", "is_active"];
 
 onMounted(() => {
-  store.SET_LIST()
-})
+  store.SET_LIST();
+  // subject_staff_store.SET_LIST_SUBJECT()
+});
 </script>
 
 <template>
   <AddNavbar>
-    <span class="px-4 py-2 border-b-2 border-blue-600 text-blue-600 font-bold">Fanlar</span>
+    <span class="px-4 py-2 border-b-2 border-blue-600 text-blue-600 font-bold"
+      >Fanlar</span
+    >
     <button
       @click="changeModal"
       class="text-base px-4 py-2 text-green-100 rounded-md bg-gradient-to-r from-green-500 to-green-700 hover:bg-green-500"

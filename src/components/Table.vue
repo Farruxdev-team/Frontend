@@ -1,5 +1,5 @@
 <script setup>
-const { data, page, message, keys } = defineProps(['data', 'page', 'message', 'keys'])
+const { data, page, message, keys } = defineProps(["data", "page", "message", "keys"]);
 </script>
 
 <template>
@@ -25,20 +25,26 @@ const { data, page, message, keys } = defineProps(['data', 'page', 'message', 'k
         >
           <th class="font-medium text-gray-900 whitespace-nowrap dark:text-white">
             <span>
-              {{ el[keys[0]] }}
+              {{ el[keys[0]] || keys[0] }}
             </span>
           </th>
           <th class="font-medium text-gray-900 whitespace-nowrap dark:text-white">
             <span
+              v-if="page != 'subjects'"
               class="bg-indigo-300 py-0.5 dark:bg-indigo-900/50 dark:text-indigo-300 text-indigo-900 font-medium px-3 rounded"
             >
-              {{ el[keys[1]] || keys[1] }}
+              {{ el[keys[1][0]][keys[1][1]] || keys[1] }}
             </span>
+            <span
+              v-else
+              class="bg-indigo-300 py-0.5 dark:bg-indigo-900/50 dark:text-indigo-300 text-indigo-900 font-medium px-3 rounded"
+              >{{ el[keys[1]].length }}</span
+            >
           </th>
           <th class="font-medium text-gray-900 whitespace-nowrap dark:text-white">
             <span
               class="bg-red-300 py-0.5 dark:bg-red-900/50 dark:text-red-300 text-red-900 font-medium px-3 rounded"
-              >{{ el[keys[2]] }}</span
+              >{{ el[keys[2]] || keys[2] }}</span
             >
           </th>
           <th class="font-medium text-gray-900 whitespace-nowrap dark:text-white">
