@@ -14,6 +14,11 @@ export const subject_staffStore = defineStore('subject_staff', () => {
     state.load = false
   }
 
+  const SET_LIST_SUBJECT = async (id) => {
+    const res = (await useSubjectStaff.get_one_subject(id)).data
+    return res
+  }
+
   const ADD_LIST = async (data) => {
     await useSubjectStaff.create(data)
     SET_LIST()
@@ -27,5 +32,5 @@ export const subject_staffStore = defineStore('subject_staff', () => {
   const LOAD = computed(() => state.load)
   const ELEMENT = computed(() => state.oneElement)
 
-  return { LIST, LOAD, ELEMENT, SET_LIST, ADD_LIST, SET_ONE }
+  return { LIST, LOAD, ELEMENT, SET_LIST_SUBJECT, SET_LIST, ADD_LIST, SET_ONE }
 })
