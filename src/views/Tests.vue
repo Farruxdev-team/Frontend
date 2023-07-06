@@ -96,7 +96,7 @@ const heads = ['test nomi', 'test fani', 'boshlanishi', 'vaqti', 'batafsil']
                     for="countries"
                     class="block mb-2 text-sm font-medium text-blue-900 dark:text-blue-300 dark:bg-blue-500/50 bg-blue-300 rounded-md text-center p-1"
                   >
-                    Test nomi
+                    Test mavzusi
                   </label>
                   <input
                     type="text"

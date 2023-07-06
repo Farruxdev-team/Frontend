@@ -1,8 +1,8 @@
 import { computed, reactive } from 'vue'
 import { defineStore } from 'pinia'
-import { useAnswers } from '../../service/answers'
+import { useTestResults } from '../../service/test_results'
 
-export const answerStore = defineStore('answer', () => {
+export const testResultsStore = defineStore('test_results', () => {
   const state = reactive({
     list: [],
     load: true,
@@ -11,12 +11,12 @@ export const answerStore = defineStore('answer', () => {
   })
 
   const SET_LIST = async () => {
-    state.list = (await useAnswers.list()).data
+    state.list = (await useTestResults.list()).data
     state.load = false
   }
 
   const ADD_LIST = async (data) => {
-    const res = await useAnswers.create(data)
+    const res = await useTestResults.create(data)
     return res
   }
 
@@ -31,12 +31,18 @@ export const answerStore = defineStore('answer', () => {
   }
 
   const GET_QUESTIONS = async (id) => {
-    const res = (await useAnswers.get_questions(id)).data
+    const res = (await useTestResults.get_questions(id)).data
+    return res
+  }
+
+  const GET_STUDENT = async (id) => {
+    const res = (await useTestResults.get_student(id)).data
+    console.log(res)
     return res
   }
 
   const DELETE = async (id) => {
-    const res = (await useAnswers.delete(id)).data
+    const res = (await useTestResults.delete(id)).data
     return res
   }
 
@@ -52,6 +58,7 @@ export const answerStore = defineStore('answer', () => {
     QUESTIONS,
     SET_LIST,
     GET_ONE,
+    GET_STUDENT,
     ADD_LIST,
     GET_QUESTIONS,
     DELETE

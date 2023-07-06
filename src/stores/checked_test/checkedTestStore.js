@@ -1,8 +1,8 @@
 import { computed, reactive } from 'vue'
 import { defineStore } from 'pinia'
-import { useAnswers } from '../../service/answers'
+import { useChekedTest } from '../../service/checked_test'
 
-export const answerStore = defineStore('answer', () => {
+export const checkedTestStore = defineStore('checked_test', () => {
   const state = reactive({
     list: [],
     load: true,
@@ -11,12 +11,12 @@ export const answerStore = defineStore('answer', () => {
   })
 
   const SET_LIST = async () => {
-    state.list = (await useAnswers.list()).data
+    state.list = (await useChekedTest.list()).data
     state.load = false
   }
 
   const ADD_LIST = async (data) => {
-    const res = await useAnswers.create(data)
+    const res = await useChekedTest.create(data)
     return res
   }
 
@@ -31,12 +31,12 @@ export const answerStore = defineStore('answer', () => {
   }
 
   const GET_QUESTIONS = async (id) => {
-    const res = (await useAnswers.get_questions(id)).data
+    const res = (await useChekedTest.get_questions(id)).data
     return res
   }
 
   const DELETE = async (id) => {
-    const res = (await useAnswers.delete(id)).data
+    const res = (await useChekedTest.delete(id)).data
     return res
   }
 

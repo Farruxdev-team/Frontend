@@ -7,9 +7,7 @@
     <div class="flex gap-5 items-center">
       <slot />
     </div>
-    <label class="mb-2 text-md font-medium text-gray-900 sr-only dark:text-white"
-      >Search</label
-    >
+    <label class="mb-2 text-md font-medium text-gray-900 sr-only dark:text-white">Search</label>
     <div class="relative">
       <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
         <svg
@@ -45,9 +43,7 @@
           <span class="sr-only">Search</span>
         </button>
         <div class="relative hidden md:block">
-          <div
-            class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none"
-          >
+          <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
             <svg
               aria-hidden="true"
               class="w-5 h-5 text-gray-500 dark:text-gray-400"
@@ -78,9 +74,7 @@
         id="navbar-search"
       >
         <div class="relative mt-3 md:hidden">
-          <div
-            class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none"
-          >
+          <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
             <svg
               class="w-5 h-5 text-gray-500"
               aria-hidden="true"

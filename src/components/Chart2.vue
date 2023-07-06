@@ -1,41 +1,81 @@
 <script setup>
-import { reactive, ref } from "vue";
-import { useModeStore } from "@/stores/mode";
-const store = useModeStore();
-console.log(store.isDark);
-const options = reactive({
-  theme: store.isDark ? "dark2" : "light2",
-  animationEnabled: true,
-  exportEnabled: true,
-  title: {
-    text: "O'zbekistonda etnik guruhlar (2021)",
+import { onMounted } from "vue";
+
+import Loading from "@/components/Loading.vue";
+
+import { Chart, initTE } from "tw-elements";
+
+const dataBarCustomOptions = {
+  type: "bar",
+  data: {
+    labels: ["January", "February", "March", "April", "May", "June"],
+    datasets: [
+      {
+        label: "Traffic",
+        data: [30, 15, 62, 65, 61, 6],
+        backgroundColor: [
+          "rgba(255, 99, 132, 0.2)",
+          "rgba(54, 162, 235, 0.2)",
+          "rgba(255, 206, 86, 0.2)",
+          "rgba(75, 192, 192, 0.2)",
+          "rgba(153, 102, 255, 0.2)",
+          "rgba(255, 159, 64, 0.2)",
+        ],
+        borderColor: [
+          "rgba(255,99,132,1)",
+          "rgba(54, 162, 235, 1)",
+          "rgba(255, 206, 86, 1)",
+          "rgba(75, 192, 192, 1)",
+          "rgba(153, 102, 255, 1)",
+          "rgba(255, 159, 64, 1)",
+        ],
+        borderWidth: 1,
+      },
+    ],
   },
-  data: [
-    {
-      type: "pie",
-      indexLabel: "{label} (#percent%)",
-      yValueFormatString: "#,##0",
-      toolTipContent: "<span style='\"'color: {color};'\"'>{label}</span> {y}(#percent%)",
-      dataPoints: [
-        { label: "O'zbeklar", y: 29194071 },
-        { label: "Tojiklar", y: 1657336 },
-        { label: "Qozoqlar", y: 821172 },
-        { label: "Qoraqalpoqlar", y: 752646 },
-        { label: "Ruslar", y: 720324 },
-        { label: "Qirg'izlar", y: 291628 },
-        { label: "Boshqa", y: 1121714 },
-      ],
+};
+
+const optionsBarCustomOptions = {
+  options: {
+    plugins: {
+      legend: {
+        position: "top",
+        labels: {
+          color: "green",
+        },
+      },
     },
-  ],
-});
-const styleOptions = reactive({
-  width: "100%",
-  height: "360px",
+    scales: {
+      x: {
+        ticks: {
+          color: "#4285F4",
+        },
+      },
+      y: {
+        ticks: {
+          color: "#f44242",
+        },
+      },
+    },
+  },
+};
+
+onMounted(() => {
+  initTE({ Chart });
+  new Chart(
+    document.getElementById("bar-chart-custom-options"),
+    dataBarCustomOptions,
+    optionsBarCustomOptions
+  );
 });
 </script>
 
 <template>
-  <CanvasJSChart :options="options" :styles="styleOptions" />
+  <div
+    class="w-full bg-white border border-gray-400 dark:bg-gray-800 dark:border-gray-600 p-4 rounded-xl mb-5 shadow-lg h-full"
+  >
+    <canvas id="bar-chart-custom-options"></canvas>
+  </div>
 </template>
 
 <style lang="scss" scoped></style>
