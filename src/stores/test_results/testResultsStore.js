@@ -35,6 +35,12 @@ export const testResultsStore = defineStore('test_results', () => {
     return res
   }
 
+  const GET_STUDENT = async (id) => {
+    const res = (await useTestResults.get_student(id)).data
+    console.log(res)
+    return res
+  }
+
   const DELETE = async (id) => {
     const res = (await useTestResults.delete(id)).data
     return res
@@ -52,6 +58,7 @@ export const testResultsStore = defineStore('test_results', () => {
     QUESTIONS,
     SET_LIST,
     GET_ONE,
+    GET_STUDENT,
     ADD_LIST,
     GET_QUESTIONS,
     DELETE
