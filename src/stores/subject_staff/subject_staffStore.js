@@ -14,11 +14,6 @@ export const subject_staffStore = defineStore('subject_staff', () => {
     state.load = false
   }
 
-  const SET_LIST_SUBJECT = async (id) => {
-    const res = (await useSubjectStaff.get_one_subject(id)).data
-    return res
-  }
-
   const ADD_LIST = async (data) => {
     await useSubjectStaff.create(data)
     SET_LIST()
