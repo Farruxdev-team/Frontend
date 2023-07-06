@@ -1,3 +1,10 @@
+const format = (one, two, min = '') => {
+  const plus = (num) => Math.abs(num).toString().padStart(2, '0')
+  return `${min}${plus(one.getDay() - two.getDay())}:${plus(
+    one.getHours() - two.getHours()
+  )}:${plus(one.getMinutes() - two.getMinutes())}`
+}
+
 export const fromNow = (time, space) => {
   space = new Date(space * 60000).getTime()
   const now = new Date()
@@ -11,12 +18,6 @@ export const fromNow = (time, space) => {
     }
   }
 
-  const plus = (num) => Math.abs(num).toString().padStart(2, '0')
-  const format = (one, two, min = '') => {
-    return `${min}${plus(one.getDay() - two.getDay())}:${plus(
-      one.getHours() - two.getHours()
-    )}:${plus(one.getMinutes() - two.getMinutes())}`
-  }
   if (isAgo) {
     return {
       color: 'dark:text-green-200 text-green-800 bg-green-700/50',

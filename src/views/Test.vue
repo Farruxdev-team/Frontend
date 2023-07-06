@@ -50,25 +50,20 @@ const newEditTests = reactive({
 const addTest = async () => {
   const correct_answers = newTest.answers.filter((i) => i.isTrue)
   try {
+    changeModalTest()
     const res = await store_question.ADD_LIST({
       test_group_id: id,
       question: newTest.question,
       correct_answers: correct_answers.length
     })
-    try {
-      for (let i in newTest.answers) {
-        let result = await store_answers.ADD_LIST({
-          answer: newTest.answers[i].text,
-          is_true: newTest.answers[i].isTrue,
-          question_id: res._id
-        })
-        await store_question.SET_ANSWER(store_question.LIST.length - 1, result)
-      }
-      await setQuestionsAnswers()
-      resetFormTest()
-    } catch (error) {
-      console.log(error)
+    for (let i in newTest.answers) {
+      await store_answers.ADD_LIST({
+        answer: newTest.answers[i].text,
+        is_true: newTest.answers[i].isTrue,
+        question_id: res._id
+      })
     }
+    resetFormTest(false)
   } catch (error) {
     console.log(error)
   }
@@ -86,10 +81,10 @@ const deleteTests = async () => {
 
 const editTests = () => {}
 
-const resetFormTest = () => {
+const resetFormTest = (a = true) => {
   newTest.question = ''
   newTest.answers = [{ text: '', isTrue: true }]
-  changeModalTest()
+  a && changeModalTest()
 }
 
 const resetFormTests = () => {
@@ -430,7 +425,7 @@ onMounted(async () => {
             <tr
               v-for="el in store_question.LIST"
               class="bg-white border-b border-gray-300 dark:bg-gray-800 dark:border-gray-700"
-              v-show="el.test_group_id._id == id"
+              v-show="el.test_group_id?._id == id"
             >
               <th scope="row" class="font-medium text-gray-900 whitespace-nowrap dark:text-white">
                 {{ el?.question }}
