@@ -27,5 +27,5 @@ export const subject_staffStore = defineStore('subject_staff', () => {
   const LOAD = computed(() => state.load)
   const ELEMENT = computed(() => state.oneElement)
 
-  return { LIST, LOAD, ELEMENT, SET_LIST, ADD_LIST, SET_ONE }
+  return { LIST, LOAD, ELEMENT, SET_LIST_SUBJECT, SET_LIST, ADD_LIST, SET_ONE }
 })

@@ -14,10 +14,6 @@ export const questionStore = defineStore('question', () => {
     state.load = false
   }
 
-  const SET_ANSWER = async (i, data) => {
-    state.list[i]['answer'] = data
-  }
-
   const ADD_LIST = async (data) => {
     const res = (await useQuestions.create(data)).data
     SET_LIST()
@@ -57,7 +53,6 @@ export const questionStore = defineStore('question', () => {
     SET_ONE,
     ADD_LIST,
     GET_GROUP,
-    SET_ANSWER,
     DELETE
   }
 })

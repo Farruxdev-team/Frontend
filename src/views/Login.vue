@@ -2,6 +2,7 @@
 import { reactive, ref } from 'vue'
 import { userStore } from '@/stores/user/userStore'
 import { useRouter } from 'vue-router'
+import { toast } from 'vue3-toastify'
 
 const router = useRouter()
 
@@ -18,7 +19,12 @@ const login_user = async () => {
     if (isStudent.value) {
       try {
         await store.LOGIN_STUDENT(user)
-        router.push('/')
+        toast.success(`Muvaffaqiyatli tizimga kirdingiz`, {
+          autoClose: 1000
+        })
+        setTimeout(() => {
+          router.push('/')
+        }, 1000)
       } catch (error) {
         console.log(error)
         toast.error(`Bunday o'quvchi topilmadi`, {
@@ -28,7 +34,12 @@ const login_user = async () => {
     } else {
       try {
         await store.LOGIN_STAFF(user)
-        router.push('/')
+        toast.success(`Muvaffaqiyatli tizimga kirdingiz`, {
+          autoClose: 1000
+        })
+        setTimeout(() => {
+          router.push('/')
+        }, 1000)
       } catch (error) {
         console.log(error)
         toast.error(`Bunday o'qituvchi topilmadi`, {
