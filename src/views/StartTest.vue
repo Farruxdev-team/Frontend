@@ -1,16 +1,20 @@
 <script setup>
-import { useRoute } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
 import { onMounted, ref } from 'vue'
 
 import Back from '@/components/Back.vue'
 import LoadingSpinner from '@/components/LoadingSpinner.vue'
 import { questionStore } from '@/stores/questions/questionStore'
 import { userStore } from '@/stores/user/userStore'
+import { checkedTestStore } from '@/stores/checked_test/checkedTestStore'
 
 const store_question = questionStore()
-const user_store = userStore()
+const store_user = userStore()
+const store_checked_test = checkedTestStore()
 
 const { id } = useRoute().params
+const router = useRouter()
+
 const questions = ref([])
 const studentAnswers = ref([])
 const time = ref(0)
@@ -31,16 +35,24 @@ const setTime = async () => {
   const test_time = new Date(questions.value[0]?.test_group_id.test_time * 60000).getTime()
   const started_time = questions.value[0].test_group_id.started
   const deadline = new Date(started_time).getTime() + test_time
-  console.log(new Date(deadline))
-  console.log(new Date(deadline - new Date().getTime()).toISOString())
-
   time.value = new Date(deadline - new Date().getTime())
 }
 
-const checkedAnswers = () =>
-{
-  
+const checkedAnswers = async () => {
+  if (confirm('Testni tugatmoqchimisiz ?')) {
+    for (let i in studentAnswers.value) {
+      for (const j in studentAnswers.value[i].answer_id) {
+        const res = await store_checked_test.ADD_LIST({
+          ...studentAnswers.value[i],
+          answer_id: studentAnswers.value[i].answer_id[j]
+        })
+        router.push('/results')
+      }
+    }
+  }
 }
+
+window.onbeforeunload = checkedAnswers()
 
 const changeTime = () => {
   if (time.value > 0) {
@@ -59,7 +71,7 @@ onMounted(async () => {
     studentAnswers.value.push({
       question_id: questions.value[i]._id,
       answer_id: [],
-      student_id: user_store.USER?.user?._id
+      student_id: store_user.USER?.user?._id
     })
   }
 })
@@ -73,6 +85,7 @@ onMounted(async () => {
       <div class="flex items-center gap-5">
         <Back />
         <button
+          @click="checkedAnswers"
           class="text-base px-4 py-2 text-green-100 rounded-md bg-gradient-to-r from-green-500 to-green-700 hover:bg-green-500"
         >
           Testni tugatish

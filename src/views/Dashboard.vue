@@ -6,9 +6,9 @@ import Header from '../components/Header.vue'
 <template>
   <div class="antialiased h-screen bg-gray-100 dark:bg-gray-900">
     <Header />
-    <div class="pt-14 h-full">
+    <div class="pt-16 h-full">
       <Sidebar />
-      <div class="p-4 lg:ml-64 h-full overflow-y-auto">
+      <div class="p-4 lg:ml-64 sm:ml-16 h-full overflow-y-auto">
         <div
           class="p-4 border-2 border-dotted border-gray-300 rounded-lg dark:border-gray-600 min-h-full"
         >
