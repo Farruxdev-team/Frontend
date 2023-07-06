@@ -21,7 +21,6 @@ const newTeachers = reactive({
   phone: "",
   login: "",
   password: "",
-  tg_name: "",
 });
 
 const addStudents = async () => {
@@ -31,13 +30,11 @@ const addStudents = async () => {
     console.log(newTeachers.phone);
     console.log(newTeachers.login);
     console.log(newTeachers.password);
-    console.log(newTeachers.tg_name);
     if (
       !newTeachers.full_name.length ||
       !newTeachers.phone.length ||
       !newTeachers.login.length ||
-      !newTeachers.password.length ||
-      !newTeachers.tg_name.length
+      !newTeachers.password.length
     ) {
       toast.error("Forma to'ldirilish shart", {
         autoClose: 1000,
@@ -49,7 +46,6 @@ const addStudents = async () => {
       phone: newTeachers.phone,
       login: newTeachers.login,
       password: newTeachers.password,
-      tg_name: newTeachers.tg_name,
     };
     staff_store.ADD_LIST(addStudent);
     changeModalTeachers();
@@ -66,7 +62,6 @@ const resetFormStudents = () => {
   newTeachers.phone = "";
   newTeachers.login = "";
   newTeachers.password = "";
-  newTeachers.tg_name = "";
   changeModalTeachers();
 };
 
