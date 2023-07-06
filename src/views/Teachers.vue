@@ -8,7 +8,7 @@ import { subjectStore } from "../stores/subjects/subjectStore";
 import { staffsStore } from "../stores/teacher/staffStore.js";
 
 const heads = ["i.f.o", "fan o'qituvchisi", "tel: raqami"];
-const keys = ["full_name", ["fan"], "phone", "is_active"];
+const keys = ["full_name", ["subject_id", "name"], "phone", "is_active"];
 
 const subject_store = subjectStore();
 const staff_store = staffsStore();
@@ -23,7 +23,7 @@ const newTeachers = reactive({
   password: "",
 });
 
-const addStudents = async () => {
+const addTeachers = async () => {
   try {
     for (let i in newTeachers) newTeachers[i] = newTeachers[i].toString().trim();
     console.log(newTeachers.full_name);
@@ -41,13 +41,13 @@ const addStudents = async () => {
       });
       return;
     }
-    const addStudent = {
+    const addTeacher = {
       full_name: newTeachers.full_name,
       phone: newTeachers.phone,
       login: newTeachers.login,
       password: newTeachers.password,
     };
-    staff_store.ADD_LIST(addStudent);
+    staff_store.ADD_LIST(addTeacher);
     changeModalTeachers();
   } catch (error) {
     console.log(error);
@@ -166,7 +166,7 @@ onMounted(() => {
                 >
                   <option disabled selected>Fanlardan birini tanlang</option>
                   <option v-for="subject in subject_store.LIST" :value="subject._id">
-                    {{ subject.name }}
+                    {{ subject }}
                   </option>
                 </select>
               </div>
@@ -182,7 +182,7 @@ onMounted(() => {
               <button
                 type="submit"
                 class="w-40 text-white bg-blue-700 hover:bg-blue-800 font-medium rounded-lg text-sm px-5 py-2 text-center dark:bg-blue-600 dark:hover:bg-blue-700"
-                @click="addStudents"
+                @click="addTeachers"
               >
                 Qo'shish
               </button>

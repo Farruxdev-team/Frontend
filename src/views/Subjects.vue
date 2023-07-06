@@ -56,9 +56,6 @@ const heads = [
 const keys = ["name", "staff", "19", "is_active"];
 
 onMounted(() => {
-  store.SET_LIST();
-});
-onMounted(() => {
   subject_store.SET_LIST();
 });
 </script>
@@ -131,8 +128,14 @@ onMounted(() => {
       Fan qo'shish
     </button>
   </AddNavbar>
-  <Loading v-if="store.LOAD" />
-  <Table v-else :message="heads" :keys="keys" page="subjects" :data="store.LIST" />
+  <Loading v-if="subject_store.LOAD" />
+  <Table
+    v-else
+    :message="heads"
+    :keys="keys"
+    page="subjects"
+    :data="subject_store.LIST"
+  />
 </template>
 
 <style lang="scss" scoped></style>
