@@ -73,10 +73,10 @@ onMounted(async () => {
         >
           <input
             :id="el._id"
-            type="radio"
+            type="checkbox"
             :value="el.is_true"
             name="answers"
-            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-900 dark:border-gray-600"
+            class="w-4 h-4 rounded text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-900 dark:border-gray-600"
             :checked="el.is_true"
             @change="(e) => console.log(e.target.value)"
           />
