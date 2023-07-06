@@ -1,38 +1,38 @@
 <script setup>
-import { onMounted, ref, reactive } from "vue";
-import { toast } from "vue3-toastify";
-import { studentStore } from "../stores/students/studentStore";
-import { groupStore } from "../stores/groups/groupStore";
+import { onMounted, ref, reactive } from 'vue'
+import { toast } from 'vue3-toastify'
+import { studentStore } from '../stores/students/studentStore'
+import { groupStore } from '../stores/groups/groupStore'
 
-import Table from "../components/Table.vue";
-import Loading from "@/components/Loading.vue";
-import AddNavbar from "../components/AddNavbar.vue";
+import Table from '../components/Table.vue'
+import Loading from '@/components/Loading.vue'
+import AddNavbar from '../components/AddNavbar.vue'
 
-const student_store = studentStore();
-const group_store = groupStore();
+const student_store = studentStore()
+const group_store = groupStore()
 
-const addStudentsModal = ref(false);
-const heads = ["i.f.o", "guruh talabasi", "tel raqami", "holati"];
-const keys = ["full_name", "Bootcamp N7", "phone", "is_active"];
+const addStudentsModal = ref(false)
+const heads = ['i.f.o', 'guruh talabasi', 'tel raqami', 'holati']
+const keys = ['full_name', 'Bootcamp N7', 'phone', 'is_active']
 
-const changeModalStudents = () => (addStudentsModal.value = !addStudentsModal.value);
+const changeModalStudents = () => (addStudentsModal.value = !addStudentsModal.value)
 
 const newStudents = reactive({
-  full_name: "",
-  phone: "",
-  login: "",
-  password: "",
-  group_id: "",
-});
+  full_name: '',
+  phone: '',
+  login: '',
+  password: '',
+  group_id: ''
+})
 
 const addStudents = async () => {
   try {
-    for (let i in newStudents) newStudents[i] = newStudents[i].toString().trim();
-    console.log(newStudents.full_name);
-    console.log(newStudents.group_id);
-    console.log(newStudents.phone);
-    console.log(newStudents.login);
-    console.log(newStudents.password);
+    for (let i in newStudents) newStudents[i] = newStudents[i].toString().trim()
+    console.log(newStudents.full_name)
+    console.log(newStudents.group_id)
+    console.log(newStudents.phone)
+    console.log(newStudents.login)
+    console.log(newStudents.password)
     if (
       !newStudents.full_name.length ||
       !newStudents.group_id.length ||
@@ -41,39 +41,39 @@ const addStudents = async () => {
       !newStudents.password.length
     ) {
       toast.error("Forma to'ldirilish shart", {
-        autoClose: 1000,
-      });
-      return;
+        autoClose: 1000
+      })
+      return
     }
     const addStudent = {
       full_name: newStudents.full_name,
       group_id: newStudents.group_id,
       phone: newStudents.phone,
       login: newStudents.login,
-      password: newStudents.password,
-    };
-    student_store.ADD_LIST(addStudent);
-    changeModalStudents();
+      password: newStudents.password
+    }
+    student_store.ADD_LIST(addStudent)
+    changeModalStudents()
   } catch (error) {
-    console.log(error);
-    toast.error("Xatolik", {
-      autoClose: 1000,
-    });
+    console.log(error)
+    toast.error('Xatolik', {
+      autoClose: 1000
+    })
   }
-};
+}
 const resetFormStudents = () => {
-  newStudents.full_name = "";
-  newStudents.group_id = "";
-  newStudents.phone = "";
-  newStudents.login = "";
-  newStudents.password = "";
-  changeModalStudents();
-};
+  newStudents.full_name = ''
+  newStudents.group_id = ''
+  newStudents.phone = ''
+  newStudents.login = ''
+  newStudents.password = ''
+  changeModalStudents()
+}
 
 onMounted(() => {
-  student_store.SET_LIST();
-  group_store.SET_LIST();
-});
+  student_store.SET_LIST()
+  group_store.SET_LIST()
+})
 </script>
 
 <template>
@@ -198,24 +198,16 @@ onMounted(() => {
     </div>
   </div>
   <AddNavbar>
-    <span class="px-4 py-2 border-b-2 border-blue-600 text-blue-600 font-bold"
-      >Guruhlar</span
-    >
+    <span class="px-4 py-2 border-b-2 border-blue-600 text-blue-600 font-bold">Guruhlar</span>
     <button
       @click="changeModalStudents"
       class="text-base px-4 py-2 text-green-100 rounded-md bg-gradient-to-r from-green-500 to-green-700 hover:bg-green-500"
     >
-      Talaba qo'shish
+      Guruh qo'shish
     </button>
   </AddNavbar>
   <Loading v-if="student_store.LOAD" />
-  <Table
-    v-else
-    :message="heads"
-    :keys="keys"
-    page="students"
-    :data="student_store.LIST"
-  />
+  <Table v-else :message="heads" :keys="keys" page="students" :data="student_store.LIST" />
 </template>
 
 <style lang="scss" scoped></style>

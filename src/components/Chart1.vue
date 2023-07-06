@@ -22,9 +22,9 @@ onMounted(() => {
       <canvas
         data-te-chart="pie"
         data-te-dataset-label="Traffic"
-        data-te-labels="['Correct', 'Incorrect']"
-        data-te-dataset-data="[20, 10]"
-        data-te-dataset-background-color="['rgb(55, 255, 0, 0.7)', 'rgb(255, 17, 0, 0.7)']"
+        data-te-labels="['Xodimlar', 'Talabalar', 'Fanlar', 'Testlar']"
+        data-te-dataset-data="[6, 15, 9, 4]"
+        data-te-dataset-background-color="['rgb(55, 255, 0, 0.7)', 'rgb(255, 17, 0, 0.7)', 'blue', 'purple']"
       >
       </canvas>
     </div>

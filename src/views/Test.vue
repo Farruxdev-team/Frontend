@@ -327,10 +327,10 @@ onMounted(async () => {
                         @change="() => (el.isTrue = !el.isTrue)"
                       />
                       <div
-                        class="w-9 h-5 bg-gray-200 rounded-full dark:bg-gray-600 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-2.5 after:left-[8px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-3.5 after:w-3.5 after:transition-all dark:border-gray-600 peer-checked:bg-green-600"
+                        class="w-9 h-5 bg-gray-200 rounded-full dark:bg-gray-600 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-3 after:left-[8px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-3.5 after:w-3.5 after:transition-all dark:border-gray-600 peer-checked:bg-green-600"
                       ></div>
                       <span
-                        class="w-[70px] text-center ml-2 text-xs font- text-gray-900 dark:text-gray-300 pr-1"
+                        class="w-[60px] text-center ml-2 text-xs font- text-gray-900 dark:text-gray-300 pr-1"
                       >
                         {{ el.isTrue ? "To'g'ri" : "Noto'g'ri" }}
                       </span>

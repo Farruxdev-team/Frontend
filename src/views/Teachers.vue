@@ -1,20 +1,20 @@
 <script setup>
-import { toast } from "vue3-toastify";
-import { onMounted, ref, reactive } from "vue";
-import Table from "../components/Table.vue";
-import AddNavbar from "../components/AddNavbar.vue";
-import Loading from "../components/Loading.vue";
-import { subjectStore } from "../stores/subjects/subjectStore";
-import { staffsStore } from "../stores/teacher/staffStore.js";
+import { toast } from 'vue3-toastify'
+import { onMounted, ref, reactive } from 'vue'
+import Table from '../components/Table.vue'
+import AddNavbar from '../components/AddNavbar.vue'
+import Loading from '../components/Loading.vue'
+import { subjectStore } from '../stores/subjects/subjectStore'
+import { staffsStore } from '../stores/teacher/staffStore.js'
 
-const heads = ["i.f.o", "fan o'qituvchisi", "tel: raqami"];
-const keys = ["full_name", ["fan"], "phone", "is_active"];
+const heads = ['i.f.o', "fan o'qituvchisi", 'tel: raqami', 'holati']
+const keys = ['full_name', '24', 'phone', 'is_active']
 
-const subject_store = subjectStore();
-const staff_store = staffsStore();
+const subject_store = subjectStore()
+const staff_store = staffsStore()
 
-const addTeachersModal = ref(false);
-const changeModalTeachers = () => (addTeachersModal.value = !addTeachersModal.value);
+const addTeachersModal = ref(false)
+const changeModalTeachers = () => (addTeachersModal.value = !addTeachersModal.value)
 
 const newTeachers = reactive({
   full_name: "",
@@ -37,9 +37,9 @@ const addStudents = async () => {
       !newTeachers.password.length
     ) {
       toast.error("Forma to'ldirilish shart", {
-        autoClose: 1000,
-      });
-      return;
+        autoClose: 1000
+      })
+      return
     }
     const addStudent = {
       full_name: newTeachers.full_name,
@@ -50,12 +50,12 @@ const addStudents = async () => {
     staff_store.ADD_LIST(addStudent);
     changeModalTeachers();
   } catch (error) {
-    console.log(error);
-    toast.error("Xatolik", {
-      autoClose: 1000,
-    });
+    console.log(error)
+    toast.error('Xatolik', {
+      autoClose: 1000
+    })
   }
-};
+}
 
 const resetFormStudents = () => {
   newTeachers.full_name = "Teacher";
@@ -66,9 +66,9 @@ const resetFormStudents = () => {
 };
 
 onMounted(() => {
-  subject_store.SET_LIST();
-  staff_store.SET_LIST();
-});
+  subject_store.SET_LIST()
+  staff_store.SET_LIST()
+})
 </script>
 
 <template>
