@@ -17,21 +17,25 @@ const addTeachersModal = ref(false)
 const changeModalTeachers = () => (addTeachersModal.value = !addTeachersModal.value)
 
 const newTeachers = reactive({
-  full_name: '',
-  phone: '',
-  login: '',
-  password: '',
-  tg_name: ''
-})
+  full_name: "",
+  phone: "",
+  login: "",
+  password: "",
+});
 
 const addStudents = async () => {
   try {
-    for (let i in newTeachers) newTeachers[i] = newTeachers[i].toString().trim()
-    console.log(newTeachers.full_name)
-    console.log(newTeachers.phone)
-    console.log(newTeachers.login)
-    console.log(newTeachers.password)
-    if (!newTeachers.full_name.length || !newTeachers.phone.length || !newTeachers.login.length) {
+    for (let i in newTeachers) newTeachers[i] = newTeachers[i].toString().trim();
+    console.log(newTeachers.full_name);
+    console.log(newTeachers.phone);
+    console.log(newTeachers.login);
+    console.log(newTeachers.password);
+    if (
+      !newTeachers.full_name.length ||
+      !newTeachers.phone.length ||
+      !newTeachers.login.length ||
+      !newTeachers.password.length
+    ) {
       toast.error("Forma to'ldirilish shart", {
         autoClose: 1000
       })
@@ -41,10 +45,10 @@ const addStudents = async () => {
       full_name: newTeachers.full_name,
       phone: newTeachers.phone,
       login: newTeachers.login,
-      password: newTeachers.password
-    }
-    staff_store.ADD_LIST(addStudent)
-    changeModalTeachers()
+      password: newTeachers.password,
+    };
+    staff_store.ADD_LIST(addStudent);
+    changeModalTeachers();
   } catch (error) {
     console.log(error)
     toast.error('Xatolik', {
@@ -54,12 +58,12 @@ const addStudents = async () => {
 }
 
 const resetFormStudents = () => {
-  newTeachers.full_name = 'Teacher'
-  newTeachers.phone = ''
-  newTeachers.login = ''
-  newTeachers.password = ''
-  changeModalTeachers()
-}
+  newTeachers.full_name = "Teacher";
+  newTeachers.phone = "";
+  newTeachers.login = "";
+  newTeachers.password = "";
+  changeModalTeachers();
+};
 
 onMounted(() => {
   subject_store.SET_LIST()
