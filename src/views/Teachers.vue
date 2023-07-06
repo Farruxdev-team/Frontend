@@ -1,79 +1,70 @@
 <script setup>
-import { toast } from "vue3-toastify";
-import { onMounted, ref, reactive } from "vue";
-import Table from "../components/Table.vue";
-import AddNavbar from "../components/AddNavbar.vue";
-import Loading from "../components/Loading.vue";
-import { subjectStore } from "../stores/subjects/subjectStore";
-import { staffsStore } from "../stores/teacher/staffStore.js";
+import { toast } from 'vue3-toastify'
+import { onMounted, ref, reactive } from 'vue'
+import Table from '../components/Table.vue'
+import AddNavbar from '../components/AddNavbar.vue'
+import Loading from '../components/Loading.vue'
+import { subjectStore } from '../stores/subjects/subjectStore'
+import { staffsStore } from '../stores/teacher/staffStore.js'
 
-const heads = ["i.f.o", "fan o'qituvchisi", "tel: raqami"];
-const keys = ["full_name", ["fan"], "phone", "is_active"];
+const heads = ['i.f.o', "fan o'qituvchisi", 'tel: raqami', 'holati']
+const keys = ['full_name', '24', 'phone', 'is_active']
 
-const subject_store = subjectStore();
-const staff_store = staffsStore();
+const subject_store = subjectStore()
+const staff_store = staffsStore()
 
-const addTeachersModal = ref(false);
-const changeModalTeachers = () => (addTeachersModal.value = !addTeachersModal.value);
+const addTeachersModal = ref(false)
+const changeModalTeachers = () => (addTeachersModal.value = !addTeachersModal.value)
 
 const newTeachers = reactive({
-  full_name: "",
-  phone: "",
-  login: "",
-  password: "",
-  tg_name: "",
-});
+  full_name: '',
+  phone: '',
+  login: '',
+  password: '',
+  tg_name: ''
+})
 
 const addStudents = async () => {
   try {
-    for (let i in newTeachers) newTeachers[i] = newTeachers[i].toString().trim();
-    console.log(newTeachers.full_name);
-    console.log(newTeachers.phone);
-    console.log(newTeachers.login);
-    console.log(newTeachers.password);
-    console.log(newTeachers.tg_name);
-    if (
-      !newTeachers.full_name.length ||
-      !newTeachers.phone.length ||
-      !newTeachers.login.length ||
-      !newTeachers.password.length ||
-      !newTeachers.tg_name.length
-    ) {
+    for (let i in newTeachers) newTeachers[i] = newTeachers[i].toString().trim()
+    console.log(newTeachers.full_name)
+    console.log(newTeachers.phone)
+    console.log(newTeachers.login)
+    console.log(newTeachers.password)
+    if (!newTeachers.full_name.length || !newTeachers.phone.length || !newTeachers.login.length) {
       toast.error("Forma to'ldirilish shart", {
-        autoClose: 1000,
-      });
-      return;
+        autoClose: 1000
+      })
+      return
     }
     const addStudent = {
       full_name: newTeachers.full_name,
       phone: newTeachers.phone,
       login: newTeachers.login,
-      password: newTeachers.password,
-      tg_name: newTeachers.tg_name,
-    };
-    staff_store.ADD_LIST(addStudent);
-    changeModalTeachers();
+      password: newTeachers.password
+    }
+    staff_store.ADD_LIST(addStudent)
+    changeModalTeachers()
   } catch (error) {
-    console.log(error);
-    toast.error("Xatolik", {
-      autoClose: 1000,
-    });
+    console.log(error)
+    toast.error('Xatolik', {
+      autoClose: 1000
+    })
   }
-};
+}
 
 const resetFormStudents = () => {
-  newTeachers.full_name = "Teacher";
-  newTeachers.phone = "";
-  newTeachers.login = "";
-  newTeachers.password = "";
-  newTeachers.tg_name = "";
-  changeModalTeachers();
-};
+  newTeachers.full_name = 'Teacher'
+  newTeachers.phone = ''
+  newTeachers.login = ''
+  newTeachers.password = ''
+  changeModalTeachers()
+}
 
 onMounted(() => {
-  subject_store.SET_LIST();
-  staff_store.SET_LIST();
-});
+  subject_store.SET_LIST()
+  staff_store.SET_LIST()
+})
 </script>
 
 <template>

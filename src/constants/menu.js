@@ -3,7 +3,7 @@ export const menu = [
     name: 'Dashboard',
     path: '/',
     icon: 'bx bxs-dashboard',
-    role: ['ADMIN', 'TEACHER']
+    role: ['ADMIN', 'TEACHER', 'STUDENT']
   },
   {
     name: "O'qituvchi qo'shish",

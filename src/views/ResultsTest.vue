@@ -19,6 +19,7 @@ const { id } = useRoute().params
 const router = useRouter()
 
 const questions = ref([])
+const load = ref(true)
 const studentAnswers = ref([])
 const time = ref(0)
 
@@ -41,8 +42,8 @@ const setTime = async () => {
   time.value = new Date(deadline - new Date().getTime())
 }
 
-const checkedAnswers = async (a = false) => {
-  if (a || confirm('Testni tugatmoqchimisiz ?')) {
+const checkedAnswers = async () => {
+  if (confirm('Testni tugatmoqchimisiz ?')) {
     for (let i in studentAnswers.value) {
       for (const j in studentAnswers.value[i].answer_id) {
         const res = await store_checked_test.ADD_LIST({
@@ -67,10 +68,7 @@ const checkedAnswers = async (a = false) => {
 
 const changeTime = () => {
   if (time.value > 0) {
-    time.value -= 100000
-  } else {
-    time.value = null
-    return checkedAnswers(true)
+    time.value -= 1000
   }
 }
 
@@ -80,6 +78,7 @@ setInterval(() => {
 
 onMounted(async () => {
   questions.value = await store_question.GET_GROUP(id)
+  load.value = false
   await setTime()
   for (let i in questions.value) {
     studentAnswers.value.push({
@@ -118,7 +117,7 @@ onMounted(async () => {
     <div
       class="w-full bg-white border-gray-400 dark:bg-gray-800 border dark:border-gray-600 p-5 rounded-lg mb-5 shadow-xl dark:text-white"
     >
-      <LoadingSpinner v-if="!questions[0]" />
+      <LoadingSpinner v-if="!load" />
       <div v-else v-for="(el, i) in questions" class="pb-5 rounded-lg">
         <p
           class="mb-5 dark:bg-gray-900 bg-gray-300 p-4 px-5 rounded-lg border border-gray-400 dark:border-gray-600 shadow-xl"

@@ -1,5 +1,5 @@
 <script setup>
-const { data, page, message, keys } = defineProps(["data", "page", "message", "keys"]);
+const { data, page, message, keys } = defineProps(['data', 'page', 'message', 'keys'])
 </script>
 
 <template>
@@ -12,7 +12,7 @@ const { data, page, message, keys } = defineProps(["data", "page", "message", "k
         class="text-xs text-gray-700 uppercase bg-white border-b border-gray-400 dark:bg-gray-700 dark:text-gray-300"
       >
         <tr>
-          <th v-for="msg in message" scope="col" class="py-4 text-sm uppercase">
+          <th v-for="msg in message" scope="col" class="py-4 text-xs uppercase">
             {{ msg }}
           </th>
           <th scope="col" class="py-4 text-sm uppercase">batafsil</th>
@@ -23,9 +23,7 @@ const { data, page, message, keys } = defineProps(["data", "page", "message", "k
           v-for="el in data"
           class="whitespace-nowrap bg-white border-b dark:bg-gray-800 dark:border-gray-700"
         >
-          <th
-            class="px-10 py-6 font-medium text-gray-900 whitespace-nowrap dark:text-white"
-          >
+          <th class="px-10 py-6 font-medium text-gray-900 whitespace-nowrap dark:text-white">
             <span>
               {{ el[keys[0]] || keys[0] }}
             </span>
@@ -35,12 +33,12 @@ const { data, page, message, keys } = defineProps(["data", "page", "message", "k
               v-if="page != 'subjects'"
               class="bg-indigo-300 block dark:bg-indigo-900/50 dark:text-indigo-300 text-indigo-900 font-medium px-3 rounded"
             >
-              {{ el[keys[1][0]][keys[1][1]] || keys[1] }}
+              {{ el[keys[1][0]] ? el[keys[1][0]][keys[1][1]] : keys[1] }}
             </span>
             <span
               v-else
               class="bg-indigo-300 block dark:bg-indigo-900/50 dark:text-indigo-300 text-indigo-900 font-medium rounded"
-              >{{ el[keys[1]].length }}</span
+              >{{ el[keys[1][0]] || 0 }}</span
             >
           </th>
           <th class="px-10 font-medium text-gray-900 whitespace-nowrap dark:text-white">
