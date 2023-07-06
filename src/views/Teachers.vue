@@ -1,54 +1,39 @@
 <script setup>
+import AddNavbar from '../components/AddNavbar.vue'
+import Table from '../components/Table.vue'
+import Loading from '../components/Loading.vue'
 import { toast } from 'vue3-toastify'
 import { onMounted, ref, reactive } from 'vue'
-import Table from '../components/Table.vue'
-import AddNavbar from '../components/AddNavbar.vue'
-import Loading from '../components/Loading.vue'
-import { subjectStore } from '../stores/subjects/subjectStore'
-import { staffsStore } from '../stores/teacher/staffStore.js'
+import { staffStore } from '../stores/staff/staffStore'
 
-const heads = ['i.f.o', "fan o'qituvchisi", 'tel: raqami', 'holati']
-const keys = ['full_name', '24', 'phone', 'is_active']
+const staff_store = staffStore()
 
-const subject_store = subjectStore()
-const staff_store = staffsStore()
+const addSubjectsModal = ref(false)
+const changeModalSubjects = () => (addSubjectsModal.value = !addSubjectsModal.value)
+const page = reactive({
+  currentPage: 1,
+  itemsPerPage: 5
+})
 
-const addTeachersModal = ref(false)
-const changeModalTeachers = () => (addTeachersModal.value = !addTeachersModal.value)
-
-const newTeachers = reactive({
-  full_name: "",
-  phone: "",
-  login: "",
-  password: "",
-});
+const newSubjects = reactive({
+  name: ''
+})
 
 const addStudents = async () => {
   try {
-    for (let i in newTeachers) newTeachers[i] = newTeachers[i].toString().trim();
-    console.log(newTeachers.full_name);
-    console.log(newTeachers.phone);
-    console.log(newTeachers.login);
-    console.log(newTeachers.password);
-    if (
-      !newTeachers.full_name.length ||
-      !newTeachers.phone.length ||
-      !newTeachers.login.length ||
-      !newTeachers.password.length
-    ) {
+    for (let i in newSubjects) newSubjects[i] = newSubjects[i].toString().trim()
+    if (!newSubjects.name.length) {
       toast.error("Forma to'ldirilish shart", {
         autoClose: 1000
       })
       return
     }
     const addStudent = {
-      full_name: newTeachers.full_name,
-      phone: newTeachers.phone,
-      login: newTeachers.login,
-      password: newTeachers.password,
-    };
-    staff_store.ADD_LIST(addStudent);
-    changeModalTeachers();
+      name: newSubjects.name
+    }
+    staff_store.ADD_LIST(addStudent)
+    changeModalSubjects()
+    newSubjects.name = ''
   } catch (error) {
     console.log(error)
     toast.error('Xatolik', {
@@ -58,15 +43,11 @@ const addStudents = async () => {
 }
 
 const resetFormStudents = () => {
-  newTeachers.full_name = "Teacher";
-  newTeachers.phone = "";
-  newTeachers.login = "";
-  newTeachers.password = "";
-  changeModalTeachers();
-};
+  newSubjects.name = ''
+  changeModalSubjects()
+}
 
 onMounted(() => {
-  subject_store.SET_LIST()
   staff_store.SET_LIST()
 })
 </script>
@@ -75,7 +56,7 @@ onMounted(() => {
   <!-- Main modal -->
   <div
     class="fixed top-0 left-0 right-0 z-50 w-full mx-auto overflow-x-hidden overflow-y-auto md:inset-0 h-full max-h-full flex items-center justify-center bg-black/50 p-3"
-    :class="addTeachersModal ? '' : 'hidden'"
+    :class="addSubjectsModal ? '' : 'hidden'"
   >
     <div class="relative w-full max-w-2xl max-h-full">
       <!-- Modal content -->
@@ -92,84 +73,20 @@ onMounted(() => {
             Yangi o'qituvchi qo'shish
           </h3>
           <form @submit.prevent="" class="space-y-6" action="#">
-            <div class="grid grid-cols-2 gap-5">
-              <div>
-                <label
-                  class="block mb-2 text-sm font-medium text-blue-900 dark:text-blue-300 dark:bg-blue-500/50 bg-blue-300 rounded-md text-center p-1"
-                >
-                  To'liq ismi (I.F.O)
-                </label>
-                <input
-                  type="text"
-                  id="full_name"
-                  class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                  placeholder="Kiriting: I.F.O"
-                  required
-                  v-model="newTeachers.full_name"
-                />
-              </div>
-              <div>
-                <label
-                  class="block mb-2 text-sm font-medium text-blue-900 dark:text-blue-300 dark:bg-blue-500/50 bg-blue-300 rounded-md text-center p-1"
-                >
-                  Tel: raqami
-                </label>
-                <input
-                  type="tel"
-                  id="phone"
-                  class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                  placeholder="Kiriting: O'qituvchi telefon raqami"
-                  required
-                  v-model="newTeachers.phone"
-                />
-              </div>
-              <div>
-                <label
-                  class="block mb-2 text-sm font-medium text-blue-900 dark:text-blue-300 dark:bg-blue-500/50 bg-blue-300 rounded-md text-center p-1"
-                >
-                  Login
-                </label>
-                <input
-                  type="text"
-                  id="login"
-                  class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                  placeholder="Kiriting: O'qituvchi logini"
-                  required
-                  v-model="newTeachers.login"
-                />
-              </div>
-              <div>
-                <label
-                  class="block mb-2 text-sm font-medium text-blue-900 dark:text-blue-300 dark:bg-blue-500/50 bg-blue-300 rounded-md text-center p-1"
-                >
-                  Parol
-                </label>
-                <input
-                  type="password"
-                  id="password"
-                  class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                  placeholder="********"
-                  required
-                  v-model="newTeachers.password"
-                />
-              </div>
-              <div>
-                <label
-                  class="block mb-2 text-sm font-medium text-blue-900 dark:text-blue-300 dark:bg-blue-500/50 bg-blue-300 rounded-md text-center p-1"
-                >
-                  O'qituvchi guruh raqami
-                </label>
-                <select
-                  id="subject"
-                  class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                  @change="(e) => (newTeachers.subject_id = e.target.value)"
-                >
-                  <option disabled selected>Fanlardan birini tanlang</option>
-                  <option v-for="subject in subject_store.LIST" :value="subject._id">
-                    {{ subject.name }}
-                  </option>
-                </select>
-              </div>
+            <div>
+              <label
+                class="block mb-2 text-sm font-medium text-blue-900 dark:text-blue-300 dark:bg-blue-500/50 bg-blue-300 rounded-md text-center p-1"
+              >
+                O'qituvchi Nomi
+              </label>
+              <input
+                type="text"
+                id="full_name"
+                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                placeholder="Ona tili"
+                required
+                v-model="newSubjects.name"
+              />
             </div>
             <div class="flex items-center justify-between">
               <button
@@ -193,16 +110,120 @@ onMounted(() => {
     </div>
   </div>
   <AddNavbar>
-    <span class="text-lg text-blue-600 font-bold">O'qituvchilar</span>
+    <span class="px-4 py-2 border-b-2 border-blue-600 text-blue-600 font-bold">O'qituvchilar</span>
     <button
-      @click="changeModalTeachers"
+      @click="changeModalSubjects"
       class="text-base px-4 py-2 text-green-100 rounded-md bg-gradient-to-r from-green-500 to-green-700 hover:bg-green-500"
     >
       O'qituvchi qo'shish
     </button>
   </AddNavbar>
   <Loading v-if="staff_store.LOAD" />
-  <Table v-else :message="heads" :keys="keys" page="teacher" :data="staff_store.LIST" />
+  <section
+    v-else
+    :class="!staff_store.LIST.length ? 'overflow-x-hidden' : 'overflow-x-auto'"
+    class="relative shadow-xl rounded-xl w-full"
+  >
+    <table class="w-full text-center text-gray-500 dark:text-gray-400">
+      <thead
+        class="text-xs text-gray-700 uppercase bg-white border-b border-gray-400 dark:bg-gray-700 dark:text-gray-300"
+      >
+        <tr>
+          <th scope="col" class="py-4 text-sm uppercase">I.F.SH</th>
+          <th scope="col" class="py-4 text-sm uppercase">Guruhi</th>
+          <th scope="col" class="py-4 text-sm uppercase">Tel: raqami</th>
+          <th scope="col" class="py-4 text-sm uppercase">holati</th>
+          <th scope="col" class="py-4 text-sm uppercase">batafsil</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr
+          v-for="el in staff_store.LIST.slice(
+            (page.currentPage - 1) * page.itemsPerPage,
+            (page.currentPage - 1) * page.itemsPerPage + page.itemsPerPage
+          )"
+          class="whitespace-nowrap bg-white border-b dark:bg-gray-800 dark:border-gray-700"
+        >
+          <th class="px-10 py-6 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+            <span>
+              {{ el.full_name }}
+            </span>
+          </th>
+          <th class="px-10 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+            <span
+              class="bg-indigo-300 block dark:bg-indigo-900/50 dark:text-indigo-300 text-indigo-900 font-medium px-3 rounded"
+            >
+              {{ el.group_id || 0 }}
+            </span>
+          </th>
+
+          <th class="px-10 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+            <span
+              class="bg-red-300 block dark:bg-red-900/50 dark:text-red-300 text-red-900 font-medium px-3 rounded"
+              >{{ el.groups || 0 }}</span
+            >
+          </th>
+          <th class="px-10 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+            <span
+              v-if="el.is_active"
+              class="bg-green-300 dark:bg-green-900/50 dark:text-green-300 text-green-900 font-medium px-5 rounded"
+              >active</span
+            >
+            <span
+              v-else
+              class="bg-red-300 dark:bg-red-900/50 dark:text-red-300 text-red-900 font-medium px-5 rounded"
+              >inactive</span
+            >
+          </th>
+
+          <td class="px-6 py-4 text-center">
+            <router-link
+              :to="`teachers/${el._id}`"
+              class="px-5 py-2 text-white rounded-md bg-gradient-to-r from-blue-500 to-blue-700 text-sm"
+            >
+              Kirish
+            </router-link>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="w-full p-3 bg-gray-800">
+      <div class="flex items-center -space-x-px h-10 text-base">
+        <button
+          class="flex items-center justify-center px-2 h-10 ml-0 leading-tight text-gray-500 bg-white border border-gray-300 rounded-l-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
+          @click="
+            () => {
+              page.currentPage > 1 ? page.currentPage-- : 0
+            }
+          "
+        >
+          <span class="sr-only">Previous</span>
+          <i class="bx bx-chevron-left text-2xl"></i>
+        </button>
+        <button
+          v-for="el in Math.ceil(staff_store.LIST.length / page.itemsPerPage)"
+          class="flex items-center justify-center px-4 h-10 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
+          :class="page.currentPage == el ? 'dark:bg-gray-900' : 'dark:bg-gray-800'"
+          @click="() => (page.currentPage = el)"
+        >
+          {{ el }}
+        </button>
+        <button
+          class="flex items-center justify-center px-2 h-10 leading-tight text-gray-500 bg-white border border-gray-300 rounded-r-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
+          @click="
+            () => {
+              page.currentPage < Math.ceil(staff_store.LIST.length / page.itemsPerPage)
+                ? page.currentPage++
+                : 0
+            }
+          "
+        >
+          <span class="sr-only">Next</span>
+          <i class="bx bx-chevron-right text-2xl"></i>
+        </button>
+      </div>
+    </div>
+  </section>
 </template>
 
 <style lang="scss" scoped></style>

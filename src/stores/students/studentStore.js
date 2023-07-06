@@ -18,6 +18,18 @@ export const studentStore = defineStore('student', () => {
     await useStudents.create(data)
     SET_LIST()
   }
+  const GET_ONE = async (id) => {
+    return (await useStudents.get_one(id)).data
+  }
+
+  const EDIT_STUDENT = async (id, data) => {
+    return (await useStudents.update(id, data)).data
+  }
+
+  const DELETE = async (id) => {
+    await useStudents.delete(id)
+    await SET_LIST()
+  }
 
   const SET_ONE = (el) => {
     state.oneElement = el
@@ -27,5 +39,5 @@ export const studentStore = defineStore('student', () => {
   const LOAD = computed(() => state.load)
   const ELEMENT = computed(() => state.oneElement)
 
-  return { LIST, LOAD, ELEMENT, SET_LIST, ADD_LIST, SET_ONE }
+  return { LIST, LOAD, ELEMENT, DELETE, GET_ONE, EDIT_STUDENT, SET_LIST, ADD_LIST, SET_ONE }
 })

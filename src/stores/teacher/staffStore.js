@@ -19,6 +19,16 @@ export const staffsStore = defineStore('staffs', () => {
     SET_LIST()
   }
 
+  const GET_ONE = async (id) => {
+    console.log((await useStaff.get_one(id)).data)
+    return (await useStaff.get_one(id)).data
+  }
+
+  const DELETE = async (id) => {
+    await useStaff.delete(id)
+    await SET_LIST()
+  }
+
   const SET_ONE = (el) => {
     state.oneElement = el
   }
@@ -27,5 +37,5 @@ export const staffsStore = defineStore('staffs', () => {
   const LOAD = computed(() => state.load)
   const ELEMENT = computed(() => state.oneElement)
 
-  return { LIST, LOAD, ELEMENT, ADD_LIST, SET_LIST, SET_ONE }
+  return { LIST, LOAD, ELEMENT, DELETE, GET_ONE, ADD_LIST, SET_LIST, SET_ONE }
 })
