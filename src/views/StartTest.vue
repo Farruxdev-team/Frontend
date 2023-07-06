@@ -1,16 +1,19 @@
 <script setup>
 import { useRoute, useRouter } from 'vue-router'
 import { onMounted, ref } from 'vue'
+import { toast } from 'vue3-toastify'
 
 import Back from '@/components/Back.vue'
 import LoadingSpinner from '@/components/LoadingSpinner.vue'
 import { questionStore } from '@/stores/questions/questionStore'
 import { userStore } from '@/stores/user/userStore'
 import { checkedTestStore } from '@/stores/checked_test/checkedTestStore'
+import { testResultsStore } from '@/stores/test_results/testResultsStore'
 
 const store_question = questionStore()
 const store_user = userStore()
 const store_checked_test = checkedTestStore()
+const store_test_results = testResultsStore()
 
 const { id } = useRoute().params
 const router = useRouter()
@@ -46,13 +49,21 @@ const checkedAnswers = async () => {
           ...studentAnswers.value[i],
           answer_id: studentAnswers.value[i].answer_id[j]
         })
-        router.push('/results')
       }
     }
+    store_test_results.ADD_LIST({
+      test_group_id: questions.value[0].test_group_id._id,
+      student_id: store_user.USER?.user?._id,
+      correct_count: 0
+    })
+    toast.success(`Muvaffaqiyatli testni yakunladingiz`, {
+      autoClose: 1000
+    })
+    setTimeout(() => {
+      router.push('/results')
+    }, 1000)
   }
 }
-
-window.onbeforeunload = checkedAnswers()
 
 const changeTime = () => {
   if (time.value > 0) {
@@ -75,6 +86,7 @@ onMounted(async () => {
     })
   }
 })
+window.onbeforeunload = checkedAnswers()
 </script>
 
 <template>

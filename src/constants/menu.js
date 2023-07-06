@@ -3,7 +3,7 @@ export const menu = [
     name: 'Dashboard',
     path: '/',
     icon: 'bx bxs-dashboard',
-    role: ['ADMIN', 'TEACHER', 'STUDENT']
+    role: ['ADMIN', 'TEACHER']
   },
   {
     name: "O'qituvchi qo'shish",
@@ -21,19 +21,19 @@ export const menu = [
     name: 'Guruhlar',
     path: '/groups',
     icon: 'bx bx-group',
-    role: ['ADMIN', 'TEACHER']
+    role: ['ADMIN']
   },
   {
     name: 'Fanlar',
     path: '/subjects',
     icon: 'bx bx-book-bookmark',
-    role: ['ADMIN', 'TEACHER']
+    role: ['ADMIN']
   },
   {
     name: 'Testlar',
     path: '/tests',
     icon: 'bx bx-test-tube',
-    role: ['ADMIN', 'TEACHER']
+    role: ['ADMIN']
   },
   {
     name: 'Testni boshlash',
