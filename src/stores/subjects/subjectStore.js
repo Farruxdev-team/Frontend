@@ -18,9 +18,13 @@ export const subjectStore = defineStore('subject', () => {
     state.oneElement = el
   }
 
+  const GET_ONE = async (id) => {
+    return (await useSubjects.get_one(id)).data
+  }
+
   const LIST = computed(() => state.list)
   const LOAD = computed(() => state.load)
   const ELEMENT = computed(() => state.oneElement)
 
-  return { LIST, LOAD, ELEMENT, SET_LIST, SET_ONE }
+  return { LIST, LOAD, ELEMENT, GET_ONE, SET_LIST, SET_ONE }
 })
