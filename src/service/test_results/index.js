@@ -6,6 +6,6 @@ export const useTestResults = {
   get_student: async (id) => await axios.get(`/testResults/student/${id}`),
   get_questions: async (id) => await axios.get(`/testResults/question/${id}`),
   create: async (state) => await axios.post('/testResults', state),
-  update: async (id, state) => await axios.put(`/testResults.${id}`, state),
+  update: async (id, state) => await axios.put(`/testResults/${id}`, state),
   delete: async (id) => await axios.delete(`/testResults/${id}`)
 }

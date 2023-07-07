@@ -1,59 +1,70 @@
 <script setup>
-import AddNavbar from "../components/AddNavbar.vue";
-import Table from "../components/Table.vue";
-import Loading from "../components/Loading.vue";
-import { toast } from "vue3-toastify";
-import { onMounted, ref, reactive } from "vue";
-import { subjectStore } from "../stores/subjects/subjectStore";
+import AddNavbar from '../components/AddNavbar.vue'
+import Table from '../components/Table.vue'
+import Loading from '../components/Loading.vue'
+import { toast } from 'vue3-toastify'
+import { onMounted, ref, reactive } from 'vue'
+import { subjectStore } from '../stores/subjects/subjectStore'
 
-const subject_store = subjectStore();
+const subject_store = subjectStore()
 
-const addSubjectsModal = ref(false);
-const changeModalSubjects = () => (addSubjectsModal.value = !addSubjectsModal.value);
+const addSubjectsModal = ref(false)
+const changeModalSubjects = () => (addSubjectsModal.value = !addSubjectsModal.value)
+const page = reactive({
+  currentPage: 1,
+  itemsPerPage: 5
+})
 
 const newSubjects = reactive({
-  name: "",
-});
+  name: ''
+})
 
-const addStudents = async () => {
+const addSubjects = async () => {
   try {
-    for (let i in newSubjects) newSubjects[i] = newSubjects[i].toString().trim();
-    console.log(newSubjects.full_name);
+    for (let i in newSubjects) newSubjects[i] = newSubjects[i].toString().trim()
     if (!newSubjects.name.length) {
       toast.error("Forma to'ldirilish shart", {
-        autoClose: 1000,
-      });
-      return;
+        autoClose: 1000
+      })
+      return
     }
     const addStudent = {
-      full_name: newSubjects.name,
-    };
-    staff_store.ADD_LIST(addStudent);
-    changeModalSubjects();
+      name: newSubjects.name
+    }
+    subject_store.ADD_LIST(addStudent)
+    changeModalSubjects()
+    toast.success("Fan qo'shildi", {
+      autoClose: 1000
+    })
+    newSubjects.name = ''
   } catch (error) {
-    console.log(error);
-    toast.error("Xatolik", {
-      autoClose: 1000,
-    });
+    console.log(error)
+    toast.error('Xatolik', {
+      autoClose: 1000
+    })
   }
-};
+}
 
 const resetFormStudents = () => {
-  newSubjects.full_name = "Teacher";
-  newSubjects.phone = "";
-  newSubjects.login = "";
-  newSubjects.password = "";
-  newSubjects.tg_name = "";
-  changeModalSubjects();
-};
+  newSubjects.name = ''
+  changeModalSubjects()
+}
 
-const heads = ['fan nomi', "fan o'qituvchilari soni", "fan o'tiladigan guruhlar soni", 'holati']
-const keys = ['name', 'staff', '19', 'is_active']
+const searchInput = async (searchWord) => {
+  if (searchWord.trim().length == 0) {
+    await subject_store.SET_LIST()
+  }
+  for (let i in subject_store.LIST) {
+    const key = subject_store.LIST[i].name
+    if (!key.toLowerCase().includes(searchWord.toLowerCase().trim())) {
+      subject_store.LIST.splice(i, 1)
+    }
+  }
+}
 
 onMounted(() => {
-  store.SET_LIST();
-  subject_store.SET_LIST();
-});
+  subject_store.SET_LIST()
+})
 </script>
 
 <template>
@@ -73,9 +84,7 @@ onMounted(() => {
           <span class="sr-only">Close modal</span>
         </button>
         <div class="px-6 py-6 lg:px-8">
-          <h3 class="mb-4 text-xl font-medium text-gray-900 dark:text-white">
-            Yangi o'qituvchi qo'shish
-          </h3>
+          <h3 class="mb-4 text-xl font-medium text-gray-900 dark:text-white">Yangi fan qo'shish</h3>
           <form @submit.prevent="" class="space-y-6" action="#">
             <div>
               <label
@@ -87,9 +96,9 @@ onMounted(() => {
                 type="text"
                 id="full_name"
                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                placeholder="Kiriting: I.F.O"
+                placeholder="Ona tili"
                 required
-                v-model="newSubjects.full_name"
+                v-model="newSubjects.name"
               />
             </div>
             <div class="flex items-center justify-between">
@@ -103,7 +112,7 @@ onMounted(() => {
               <button
                 type="submit"
                 class="w-40 text-white bg-blue-700 hover:bg-blue-800 font-medium rounded-lg text-sm px-5 py-2 text-center dark:bg-blue-600 dark:hover:bg-blue-700"
-                @click="addStudents"
+                @click="addSubjects"
               >
                 Qo'shish
               </button>
@@ -113,17 +122,114 @@ onMounted(() => {
       </div>
     </div>
   </div>
-  <AddNavbar>
+  <AddNavbar :searchFunc="searchInput">
     <span class="px-4 py-2 border-b-2 border-blue-600 text-blue-600 font-bold">Fanlar</span>
     <button
-      @click="changeModal"
+      @click="changeModalSubjects"
       class="text-base px-4 py-2 text-green-100 rounded-md bg-gradient-to-r from-green-500 to-green-700 hover:bg-green-500"
     >
       Fan qo'shish
     </button>
   </AddNavbar>
-  <Loading v-if="store.LOAD" />
-  <Table v-else :message="heads" :keys="keys" page="subjects" :data="store.LIST" />
+  <Loading v-if="subject_store.LOAD" />
+  <section
+    v-else
+    :class="!subject_store.length ? 'overflow-x-hidden' : 'overflow-x-auto'"
+    class="relative shadow-xl rounded-xl"
+  >
+    <table class="w-full text-center text-gray-500 dark:text-gray-400">
+      <thead
+        class="text-xs text-gray-700 uppercase bg-white border-b border-gray-400 dark:bg-gray-700 dark:text-gray-300"
+      >
+        <tr>
+          <th scope="col" class="py-4 text-sm uppercase">Fan nomi</th>
+          <th scope="col" class="py-4 text-sm uppercase">Fan o'qituvchilari</th>
+          <th scope="col" class="py-4 text-sm uppercase">Fan guruhlari</th>
+          <th scope="col" class="py-4 text-sm uppercase">holati</th>
+          <th scope="col" class="py-4 text-sm uppercase">batafsil</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr
+          v-for="el in subject_store.LIST.slice(
+            (page.currentPage - 1) * page.itemsPerPage,
+            (page.currentPage - 1) * page.itemsPerPage + page.itemsPerPage
+          )"
+          class="whitespace-nowrap bg-white border-b dark:bg-gray-800 dark:border-gray-700"
+        >
+          <th class="px-10 py-6 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+            <span>
+              {{ el.name }}
+            </span>
+          </th>
+          <th class="px-10 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+            <span
+              class="bg-indigo-300 block dark:bg-indigo-900/50 dark:text-indigo-300 text-indigo-900 font-medium px-3 rounded"
+            >
+              {{ el.staff.length }}
+            </span>
+          </th>
+          <th class="px-10 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+            <span
+              class="bg-red-300 block dark:bg-red-900/50 dark:text-red-300 text-red-900 font-medium px-3 rounded"
+              >{{ el.groups || 0 }}</span
+            >
+          </th>
+          <th class="px-10 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+            <span
+              class="bg-green-300 dark:bg-green-900/50 dark:text-green-300 text-green-900 font-medium px-5 rounded"
+              >active</span
+            >
+          </th>
+
+          <td class="px-6 py-4 text-center">
+            <router-link
+              :to="`subjects/${el._id}`"
+              class="px-5 py-2 text-white rounded-md bg-gradient-to-r from-blue-500 to-blue-700 text-sm"
+            >
+              Kirish
+            </router-link>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <nav class="w-full p-3 bg-gray-800" aria-label="Page navigation example">
+      <div class="flex items-center -space-x-px h-10 text-base">
+        <button
+          class="flex items-center justify-center px-2 h-10 ml-0 leading-tight text-gray-500 bg-white border border-gray-300 rounded-l-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
+          @click="
+            () => {
+              page.currentPage > 1 ? page.currentPage-- : 0
+            }
+          "
+        >
+          <span class="sr-only">Previous</span>
+          <i class="bx bx-chevron-left text-2xl"></i>
+        </button>
+        <button
+          v-for="el in Math.ceil(subject_store.LIST.length / page.itemsPerPage)"
+          class="flex items-center justify-center px-4 h-10 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
+          :class="page.currentPage == el ? 'dark:bg-gray-900' : 'dark:bg-gray-800'"
+          @click="() => (page.currentPage = el)"
+        >
+          {{ el }}
+        </button>
+        <button
+          class="flex items-center justify-center px-2 h-10 leading-tight text-gray-500 bg-white border border-gray-300 rounded-r-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
+          @click="
+            () => {
+              page.currentPage < Math.ceil(subject_store.LIST.length / page.itemsPerPage)
+                ? page.currentPage++
+                : 0
+            }
+          "
+        >
+          <span class="sr-only">Next</span>
+          <i class="bx bx-chevron-right text-2xl"></i>
+        </button>
+      </div>
+    </nav>
+  </section>
 </template>
 
 <style lang="scss" scoped></style>

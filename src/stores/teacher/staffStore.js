@@ -12,11 +12,25 @@ export const staffsStore = defineStore('staffs', () => {
   const SET_LIST = async () => {
     state.list = (await useStaff.list()).data.filter((i) => i.role_id.name == 'TEACHER')
     state.load = false
+    return state.list
   }
 
   const ADD_LIST = async (data) => {
     await useStaff.create(data)
-    SET_LIST()
+    await SET_LIST()
+  }
+
+  const GET_ONE = async (id) => {
+    return (await useStaff.get_one(id)).data
+  }
+
+  const EDIT_STAFF = async (id, data) => {
+    return (await useStaff.update(id, data)).data
+  }
+
+  const DELETE = async (id) => {
+    await useStaff.delete(id)
+    await SET_LIST()
   }
 
   const SET_ONE = (el) => {
@@ -27,5 +41,5 @@ export const staffsStore = defineStore('staffs', () => {
   const LOAD = computed(() => state.load)
   const ELEMENT = computed(() => state.oneElement)
 
-  return { LIST, LOAD, ELEMENT, ADD_LIST, SET_LIST, SET_ONE }
+  return { LIST, LOAD, ELEMENT, EDIT_STAFF, DELETE, GET_ONE, ADD_LIST, SET_LIST, SET_ONE }
 })

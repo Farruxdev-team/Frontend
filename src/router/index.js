@@ -40,6 +40,11 @@ const router = createRouter({
           component: () => import('@/views/Groups.vue')
         },
         {
+          path: '/groups/:id',
+          name: 'GroupId',
+          component: () => import('@/views/Group.vue')
+        },
+        {
           path: '/subjects',
           name: 'Subjects',
           component: () => import('@/views/Subjects.vue')
@@ -74,6 +79,7 @@ const router = createRouter({
           name: 'ResultsId',
           component: () => import('@/views/ResultsTest.vue')
         },
+
         {
           path: '/start',
           name: 'Start',

@@ -52,7 +52,7 @@ const checkedAnswers = async (a = false) => {
       }
     }
     store_test_results.ADD_LIST({
-      test_group_id: questions.value[0].test_group_id._id,
+      test_group_id: questions.value[0]?.test_group_id._id,
       student_id: store_user.USER?.user?._id,
       correct_count: 0
     })
