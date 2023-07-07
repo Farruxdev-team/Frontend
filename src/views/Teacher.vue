@@ -8,6 +8,7 @@ import DeleteModal from '../components/DeleteModal.vue'
 import { staffsStore } from '../stores/teacher/staffStore'
 import { subjectStore } from '../stores/subjects/subjectStore'
 import { groupStore } from '../stores/groups/groupStore'
+import LoadingSpinner from '@/components/LoadingSpinner.vue'
 
 const { id } = useRoute().params
 const router = useRouter()
@@ -29,6 +30,7 @@ let editedStudent = reactive({
   is_active: true,
   tg_name: ''
 })
+const load = ref(true)
 
 const editStudent = () => {
   try {
@@ -58,8 +60,10 @@ const deleteStaff = async () => {
 
 onMounted(async () => {
   editedStudent = {
-    ...(await store_staff.GET_ONE(id))
+    ...(await store_staff.GET_ONE(id)),
+    password: ''
   }
+  load.value = false
   group_store.SET_LIST()
   subject_store.SET_LIST()
 })
@@ -81,7 +85,10 @@ onMounted(async () => {
       ></i>
     </div>
   </div>
-  <div class="grid lg:grid-cols-4 gap-5">
+  <div v-if="load" class="py-20">
+    <LoadingSpinner />
+  </div>
+  <div v-else class="grid lg:grid-cols-4 gap-5">
     <div
       class="bg-white border border-gray-300 dark:bg-gray-800 dark:border-gray-600 p-4 rounded-xl mb-5 shadow-xl"
     >
