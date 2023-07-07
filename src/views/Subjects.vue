@@ -19,7 +19,7 @@ const newSubjects = reactive({
   name: ''
 })
 
-const addStudents = async () => {
+const addSubjects = async () => {
   try {
     for (let i in newSubjects) newSubjects[i] = newSubjects[i].toString().trim()
     if (!newSubjects.name.length) {
@@ -33,7 +33,7 @@ const addStudents = async () => {
     }
     subject_store.ADD_LIST(addStudent)
     changeModalSubjects()
-    toast.success("O'quvchi qo'shildi", {
+    toast.success("Fan qo'shildi", {
       autoClose: 1000
     })
     newSubjects.name = ''
@@ -48,6 +48,18 @@ const addStudents = async () => {
 const resetFormStudents = () => {
   newSubjects.name = ''
   changeModalSubjects()
+}
+
+const searchInput = async (searchWord) => {
+  if (searchWord.trim().length == 0) {
+    await subject_store.SET_LIST()
+  }
+  for (let i in subject_store.LIST) {
+    const key = subject_store.LIST[i].name
+    if (!key.toLowerCase().includes(searchWord.toLowerCase().trim())) {
+      subject_store.LIST.splice(i, 1)
+    }
+  }
 }
 
 onMounted(() => {
@@ -100,7 +112,7 @@ onMounted(() => {
               <button
                 type="submit"
                 class="w-40 text-white bg-blue-700 hover:bg-blue-800 font-medium rounded-lg text-sm px-5 py-2 text-center dark:bg-blue-600 dark:hover:bg-blue-700"
-                @click="addStudents"
+                @click="addSubjects"
               >
                 Qo'shish
               </button>
@@ -110,7 +122,7 @@ onMounted(() => {
       </div>
     </div>
   </div>
-  <AddNavbar>
+  <AddNavbar :searchFunc="searchInput">
     <span class="px-4 py-2 border-b-2 border-blue-600 text-blue-600 font-bold">Fanlar</span>
     <button
       @click="changeModalSubjects"

@@ -1,22 +1,9 @@
 <script setup>
-import { ref, onMounted } from 'vue'
-const data = defineProps(['data'])
+import { ref, onMounted, reactive } from 'vue'
+const { searchFunc } = defineProps(['searchFunc'])
 const searchData = ref('')
-const copyData = ref({ ...data })
-console.log(copyData)
-const search = () => {
-  for (let i in data.data) {
-    const key = data.data[i].full_name + data.data[i].phone
-    if (!key.toLowerCase().includes(searchData.value.toLowerCase().trim())) {
-      data.data.splice(i, 1)
-    }
-  }
-  if (searchData.value.trim() == '') {
-    console.log(copyData.value.data)
-    data.data = copyData.value.data
-  }
-}
-onMounted(() => {})
+
+onMounted(async () => {})
 </script>
 
 <template>
@@ -86,7 +73,7 @@ onMounted(() => {})
             class="block w-60 p-2 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             placeholder="Izlash uchun yozing..."
             v-model="searchData"
-            @input="search"
+            @input="() => searchFunc(searchData)"
           />
         </div>
       </div>

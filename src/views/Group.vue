@@ -1,28 +1,30 @@
 <script setup>
 import { onMounted, ref, reactive } from 'vue'
-import { useRoute } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
 import { toast } from 'vue3-toastify'
 import Back from '../components/Back.vue'
+import DeleteModal from '../components/DeleteModal.vue'
+
 const { id } = useRoute().params
 import { studentStore } from '../stores/students/studentStore'
 import { groupStore } from '../stores/groups/groupStore'
 
 const store_student = studentStore()
-const group_store = groupStore()
-const currentUser = ref(null)
+const store_group = groupStore()
+const router = useRouter()
 
-let editedStudent = reactive({
-  image: '',
-  full_name: '',
-  phone: '',
-  login: '',
-  password: '',
-  group_id: ''
+const isDelete = ref(false)
+const changeDeleteModal = () => (isDelete.value = !isDelete.value)
+
+let editedGroup = reactive({
+  name: '',
+  description: '',
+  start_year: ''
 })
 
-const editStudent = () => {
+const editGroup = () => {
   try {
-    store_student.EDIT_STUDENT(id, editedStudent)
+    store_student.EDIT_STUDENT(id, editedGroup)
   } catch (error) {
     toast.error('Xatolik', {
       autoClose: 1000
@@ -30,16 +32,29 @@ const editStudent = () => {
   }
 }
 
+const deleteGroup = async () => {
+  store_group.DELETE(id)
+  toast.success("Muvaffaqiyatli o'chirildi", {
+    autoClose: 1000
+  })
+  setTimeout(() => {
+    router.push('/groups')
+  }, 1000)
+  changeDeleteModal()
+}
+
 onMounted(async () => {
-  editedStudent = {
-    ...(await store_student.GET_ONE(id)),
-    password: ''
-  }
-  group_store.SET_LIST()
+  console.log(id)
+  editedGroup = await store_group.GET_ONE(id)
+  console.log(editedGroup)
 })
 </script>
 
 <template>
+  {{ editedGroup }}
+  <!-- DELETE TESTS MODAL -->
+  <DeleteModal :isDelete="isDelete" :changeDelete="changeDeleteModal" :deleteFunc="deleteGroup" />
+
   <div
     class="w-full flex justify justify-between items-center bg-white border border-gray-300 dark:bg-gray-800 dark:border-gray-600 p-4 rounded-xl mb-5 shadow-xl"
   >
@@ -47,113 +62,61 @@ onMounted(async () => {
 
     <div class="flex items-center gap-2">
       <i
-        data-modal-target="popup-modal"
-        data-modal-toggle="popup-modal"
+        @click="changeDeleteModal"
         class="bx bx-trash text-xl bg-red-500 px-2 p-1 rounded-lg text-white cursor-pointer"
       ></i>
     </div>
   </div>
-  <div class="flex justfiy-center gap-5">
-    <div
-      class="w-[30%] bg-white border border-gray-300 dark:bg-gray-800 dark:border-gray-600 p-4 rounded-xl mb-5 shadow-xl"
-    >
-      <div class="w-full text-center">
-        <img
-          :src="
-            editedStudent?.image || 'https://img.freepik.com/free-icon/user_318-563642.jpg?w=360'
-          "
-          alt="avatar"
-          class="h-32 w-32 rounded-full mx-auto dark:bg-white bg-gray-900"
-        />
-      </div>
-      <div class="">
+  <div
+    class="bg-white border border-gray-300 dark:bg-gray-800 dark:border-gray-600 p-4 rounded-xl mb-5 shadow-xl"
+  >
+    <div class="grid lg:grid-cols-3 gap-3">
+      <div>
+        <label for="first_name" class="block mb-1 text-sm font-medium text-gray-900 dark:text-white"
+          >Guruh nomi</label
+        >
         <input
           type="text"
           id="first_name"
-          class="mt-5 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-          placeholder="URL"
+          class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+          placeholder="To'liq ismi"
           required
-          v-model="editedStudent.image"
+          v-model="editedGroup.name"
         />
       </div>
-      <button
-        @click="editStudent"
-        type="submit"
-        class="w-full text-white mt-5 bg-blue-700 hover:bg-blue-800 font-medium rounded-lg text-sm px-5 py-2 text-center dark:bg-blue-600 dark:hover:bg-blue-700"
-      >
-        Saqlash
-      </button>
-    </div>
-    <div
-      class="w-[70%] bg-white border border-gray-300 dark:bg-gray-800 dark:border-gray-600 p-4 rounded-xl mb-5 shadow-xl"
-    >
-      <div class="grid grid-cols-2 gap-3">
-        <div>
-          <label
-            for="first_name"
-            class="block mb-1 text-sm font-medium text-gray-900 dark:text-white"
-            >I.F.SH</label
-          >
-          <input
-            type="text"
-            id="first_name"
-            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-            placeholder="To'liq ismi"
-            required
-            v-model="editedStudent.full_name"
-          />
-        </div>
-        <div>
-          <label
-            for="last_name"
-            class="block mb-1 text-sm font-medium text-gray-900 dark:text-white"
-            >Telefon raqami</label
-          >
-          <input
-            type="text"
-            id="last_name"
-            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-            placeholder="887038006"
-            required
-            v-model="editedStudent.phone"
-          />
-        </div>
-        <div>
-          <label for="email" class="block mb-1 text-sm font-medium text-gray-900 dark:text-white"
-            >Login</label
-          >
-          <input
-            type="text"
-            id="email"
-            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-            placeholder="login"
-            required
-            v-model="editedStudent.login"
-          />
-        </div>
-        <div>
-          <label for="password" class="block mb-1 text-sm font-medium text-gray-900 dark:text-white"
-            >Password</label
-          >
-          <input
-            type="password"
-            id="password"
-            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-            placeholder="•••••••••"
-            required
-            v-model="editedStudent.password"
-          />
-        </div>
-        <div class="col-span-2">
-          <label class="block mb-1 text-sm font-medium text-gray-900 dark:text-white">
-            Guruhini tanlang </label
-          ><select
-            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-            @change="(e) => (editedStudent.group_id = e.target.value)"
-          >
-            <option v-for="el in group_store.LIST" :value="el._id">{{ el.name }}</option>
-          </select>
-        </div>
+      <div>
+        <label for="email" class="block mb-1 text-sm font-medium text-gray-900 dark:text-white"
+          >Guruh ochilgan sana</label
+        >
+        <input
+          type="date"
+          id="email"
+          class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+          placeholder="login"
+          required
+          v-model="editedGroup.start_year"
+        />
+      </div>
+      <div>
+        <label for="last_name" class="block mb-1 text-sm font-medium text-gray-900 dark:text-white"
+          >Guruh haqida</label
+        >
+        <input
+          type="text"
+          id="last_name"
+          class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+          placeholder="887038006"
+          required
+          v-model="editedGroup.description"
+        />
+      </div>
+      <div class="col-span-3">
+        <button
+          @click="editGroup"
+          class="w-full text-white bg-blue-700 hover:bg-blue-800 font-medium rounded-lg text-sm px-5 py-2 text-center dark:bg-blue-600 dark:hover:bg-blue-700"
+        >
+          Saqlash
+        </button>
       </div>
     </div>
   </div>

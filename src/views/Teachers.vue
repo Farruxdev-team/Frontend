@@ -7,9 +7,9 @@ import { onMounted, ref, reactive } from 'vue'
 import { staffsStore } from '../stores/teacher/staffStore'
 
 const staff_store = staffsStore()
-
 const addTeacherModal = ref(false)
 const changeModalTeacher = () => (addTeacherModal.value = !addTeacherModal.value)
+const copyData = ref(null)
 
 const page = reactive({
   currentPage: 1,
@@ -66,8 +66,20 @@ const resetFormStudents = () => {
   changeModalTeacher()
 }
 
-onMounted(() => {
-  staff_store.SET_LIST()
+const searchInput = async (searchWord) => {
+  if (searchWord.trim().length == 0) {
+    await staff_store.SET_LIST()
+  }
+  for (let i in staff_store.LIST) {
+    const key = staff_store.LIST[i].full_name + staff_store.LIST[i].phone
+    if (!key.toLowerCase().includes(searchWord.toLowerCase().trim())) {
+      staff_store.LIST.splice(i, 1)
+    }
+  }
+}
+
+onMounted(async () => {
+  await staff_store.SET_LIST()
 })
 </script>
 
@@ -174,7 +186,7 @@ onMounted(() => {
       </div>
     </div>
   </div>
-  <AddNavbar :data="staff_store.LIST">
+  <AddNavbar :searchFunc="searchInput">
     <span class="px-4 py-2 border-b-2 border-blue-600 text-blue-600 font-bold">O'qituvchilar</span>
     <button
       @click="changeModalTeacher"

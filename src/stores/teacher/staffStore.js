@@ -12,16 +12,15 @@ export const staffsStore = defineStore('staffs', () => {
   const SET_LIST = async () => {
     state.list = (await useStaff.list()).data.filter((i) => i.role_id.name == 'TEACHER')
     state.load = false
+    return state.list
   }
 
   const ADD_LIST = async (data) => {
-    console.log(data)
     await useStaff.create(data)
     await SET_LIST()
   }
 
   const GET_ONE = async (id) => {
-    console.log((await useStaff.get_one(id)).data)
     return (await useStaff.get_one(id)).data
   }
 

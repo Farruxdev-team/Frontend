@@ -5,5 +5,5 @@ export const useSubjects = {
   get_one: async (id) => await axios.get(`/subjects/${id}`),
   create: async (state) => await axios.post('/subjects', state),
   update: async (id, state) => await axios.put(`/subjects/${id}`, state),
-  delete: async (id) => await axios.put(`/subjects/${id}`, { is_active: false })
+  delete: async (id) => await axios.delete(`/subjects/${id}`)
 }

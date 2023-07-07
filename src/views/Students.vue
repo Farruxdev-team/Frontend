@@ -54,6 +54,18 @@ const resetFormStudents = () => {
   changeModalSubjects()
 }
 
+const searchInput = async (searchWord) => {
+  if (searchWord.trim().length == 0) {
+    await student_store.SET_LIST()
+  }
+  for (let i in student_store.LIST) {
+    const key = student_store.LIST[i].full_name + student_store.LIST[i].phone
+    if (!key.toLowerCase().includes(searchWord.toLowerCase().trim())) {
+      student_store.LIST.splice(i, 1)
+    }
+  }
+}
+
 onMounted(() => {
   student_store.SET_LIST()
   group_store.SET_LIST()
@@ -175,7 +187,7 @@ onMounted(() => {
       </div>
     </div>
   </div>
-  <AddNavbar>
+  <AddNavbar :searchFunc="searchInput">
     <span class="px-4 py-2 border-b-2 border-blue-600 text-blue-600 font-bold">O'quvchilar</span>
     <button
       @click="changeModalSubjects"
@@ -219,7 +231,7 @@ onMounted(() => {
             <span
               class="bg-indigo-300 block dark:bg-indigo-900/50 dark:text-indigo-300 text-indigo-900 font-medium px-3 rounded"
             >
-              {{ el.group_id?.name || 0 }}
+              {{ el.group_id?.name }}
             </span>
           </th>
 

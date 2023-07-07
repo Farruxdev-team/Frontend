@@ -1,15 +1,20 @@
 <script setup>
 import { onMounted, ref, reactive } from 'vue'
-import { useRoute } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
 import { toast } from 'vue3-toastify'
-import Back from '../components/Back.vue'
-const { id } = useRoute().params
 import { studentStore } from '../stores/students/studentStore'
 import { groupStore } from '../stores/groups/groupStore'
+import Back from '../components/Back.vue'
+import DeleteModal from '../components/DeleteModal.vue'
+
+const { id } = useRoute().params
+const router = useRouter()
 
 const store_student = studentStore()
 const group_store = groupStore()
-const currentUser = ref(null)
+
+const isDelete = ref(false)
+const changeDeleteModal = () => (isDelete.value = !isDelete.value)
 
 let editedStudent = reactive({
   image: '',
@@ -23,11 +28,26 @@ let editedStudent = reactive({
 const editStudent = () => {
   try {
     store_student.EDIT_STUDENT(id, editedStudent)
+    console.log(editedStudent)
+    toast.success("O'quvchi tahrirlandi", {
+      autoClose: 1000
+    })
   } catch (error) {
     toast.error('Xatolik', {
       autoClose: 1000
     })
   }
+}
+
+const deleteStudent = async () => {
+  store_student.DELETE(id)
+  toast.success("Muvaffaqiyatli o'chirildi", {
+    autoClose: 1000
+  })
+  setTimeout(() => {
+    router.push('/students')
+  }, 1000)
+  changeDeleteModal()
 }
 
 onMounted(async () => {
@@ -40,6 +60,9 @@ onMounted(async () => {
 </script>
 
 <template>
+  <!-- DELETE TESTS MODAL -->
+  <DeleteModal :isDelete="isDelete" :changeDelete="changeDeleteModal" :deleteFunc="deleteStudent" />
+
   <div
     class="w-full flex justify justify-between items-center bg-white border border-gray-300 dark:bg-gray-800 dark:border-gray-600 p-4 rounded-xl mb-5 shadow-xl"
   >
@@ -47,8 +70,7 @@ onMounted(async () => {
 
     <div class="flex items-center gap-2">
       <i
-        data-modal-target="popup-modal"
-        data-modal-toggle="popup-modal"
+        @click="changeDeleteModal"
         class="bx bx-trash text-xl bg-red-500 px-2 p-1 rounded-lg text-white cursor-pointer"
       ></i>
     </div>
@@ -63,7 +85,7 @@ onMounted(async () => {
             editedStudent?.image || 'https://img.freepik.com/free-icon/user_318-563642.jpg?w=360'
           "
           alt="avatar"
-          class="h-44 w-44 rounded-full mx-auto dark:bg-white bg-gray-900"
+          class="h-44 w-44 rounded-full mx-auto p-0.5 dark:bg-white bg-gray-500"
         />
       </div>
       <div class="">
@@ -74,6 +96,7 @@ onMounted(async () => {
           placeholder="URL"
           required
           v-model="editedStudent.image"
+          @input="(e) => (editedStudent.image = e.target.value)"
         />
       </div>
       <button
@@ -151,7 +174,13 @@ onMounted(async () => {
             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             @change="(e) => (editedStudent.group_id = e.target.value)"
           >
-            <option v-for="el in group_store.LIST" :value="el._id">{{ el.name }}</option>
+            <option
+              :selected="editedStudent.group_id == el._id"
+              v-for="el in group_store.LIST"
+              :value="el._id"
+            >
+              {{ el.name }}
+            </option>
           </select>
         </div>
       </div>

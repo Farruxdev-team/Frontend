@@ -5,14 +5,10 @@ import { toast } from 'vue3-toastify'
 
 import Back from '../components/Back.vue'
 import DeleteModal from '../components/DeleteModal.vue'
-import { staffsStore } from '../stores/teacher/staffStore'
 import { subjectStore } from '../stores/subjects/subjectStore'
-import { groupStore } from '../stores/groups/groupStore'
 
 const { id } = useRoute().params
 const router = useRouter()
-const store_staff = staffsStore()
-const group_store = groupStore()
 const subject_store = subjectStore()
 
 const isDelete = ref(false)
@@ -32,7 +28,7 @@ let editedStudent = reactive({
 
 const editStudent = () => {
   try {
-    store_staff.EDIT_STUDENT(id, editedStudent)
+    subject_store.EDIT_STUDENT(id, editedStudent)
   } catch (error) {
     toast.error('Xatolik', {
       autoClose: 1000
@@ -41,22 +37,21 @@ const editStudent = () => {
 }
 
 const deleteStaff = async () => {
-  store_staff.DELETE(id)
+  subject_store.DELETE(id)
   toast.success("Muvaffaqiyatli o'chirildi", {
     autoClose: 1000
   })
   setTimeout(() => {
-    router.push('/teachers')
+    router.push('/subjects')
   }, 1000)
   changeDeleteModal()
 }
 
 onMounted(async () => {
   editedStudent = {
-    ...(await store_staff.GET_ONE(id)),
+    ...(await subject_store.GET_ONE(id)),
     password: ''
   }
-  group_store.SET_LIST()
   subject_store.SET_LIST()
 })
 </script>
@@ -195,26 +190,6 @@ onMounted(async () => {
             required
             v-model="editedStudent.email"
           />
-        </div>
-        <div>
-          <label class="block mb-1 text-sm font-medium text-gray-900 dark:text-white">
-            Guruhini tanlang </label
-          ><select
-            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-            @change="(e) => (editedStudent.group_id = e.target.value)"
-          >
-            <option v-for="el in group_store.LIST" :value="el._id">{{ el.name }}</option>
-          </select>
-        </div>
-        <div>
-          <label class="block mb-1 text-sm font-medium text-gray-900 dark:text-white">
-            Guruhini tanlang </label
-          ><select
-            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-            @change="(e) => (editedStudent = e.target.value)"
-          >
-            <option v-for="el in subject_store.LIST" :value="el._id">{{ el.name }}</option>
-          </select>
         </div>
       </div>
     </div>
