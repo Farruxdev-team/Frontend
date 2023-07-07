@@ -174,8 +174,7 @@ onMounted(() => {
       </div>
     </div>
   </div>
-
-  <AddNavbar>
+  <AddNavbar :data="staff_store.LIST">
     <span class="px-4 py-2 border-b-2 border-blue-600 text-blue-600 font-bold">O'qituvchilar</span>
     <button
       @click="changeModalTeacher"
