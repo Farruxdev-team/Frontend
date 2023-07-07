@@ -5,5 +5,5 @@ export const useStudents = {
   get_one: async (id) => await axios.get(`/students/${id}`),
   create: async (state) => await axios.post('/students', state),
   update: async (id, state) => await axios.put(`/students/${id}`, state),
-  delete: async (id) => await axios.put(`/students/${id}`, { is_active: false })
+  delete: async (id) => await axios.delete(`/students/${id}`)
 }

@@ -39,6 +39,9 @@ const addGroups = async () => {
       return
     }
     group_store.ADD_LIST(newGroup)
+    toast.success("Guruh qo'shildi", {
+      autoClose: 1000
+    })
     changeModalSubjects()
     for (let i in newGroup) newGroup[i] = ''
   } catch (error) {

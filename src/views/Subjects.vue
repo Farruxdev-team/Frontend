@@ -33,6 +33,9 @@ const addStudents = async () => {
     }
     subject_store.ADD_LIST(addStudent)
     changeModalSubjects()
+    toast.success("O'quvchi qo'shildi", {
+      autoClose: 1000
+    })
     newSubjects.name = ''
   } catch (error) {
     console.log(error)

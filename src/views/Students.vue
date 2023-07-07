@@ -29,7 +29,6 @@ const newStudent = reactive({
 const addStudents = async () => {
   try {
     for (let i in newStudent) newStudent[i] = newStudent[i].toString().trim()
-    console.log(newStudent)
     if (!newStudent.full_name.length) {
       toast.error("Forma to'ldirilish shart", {
         autoClose: 1000
@@ -37,6 +36,10 @@ const addStudents = async () => {
       return
     }
     student_store.ADD_LIST(newStudent)
+    toast.success("O'quvchi qo'shildi", {
+      autoClose: 1000
+    })
+
     changeModalSubjects()
   } catch (error) {
     console.log(error)

@@ -63,7 +63,7 @@ onMounted(async () => {
             editedStudent?.image || 'https://img.freepik.com/free-icon/user_318-563642.jpg?w=360'
           "
           alt="avatar"
-          class="h-32 w-32 rounded-full mx-auto dark:bg-white bg-gray-900"
+          class="h-44 w-44 rounded-full mx-auto dark:bg-white bg-gray-900"
         />
       </div>
       <div class="">

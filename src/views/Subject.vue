@@ -26,19 +26,14 @@ let editedStudent = reactive({
   password: '',
   role_id: '649b9cb84c15d387bb7515eb',
   email: '',
-  is_active: true,
+  is_active: '',
   tg_name: ''
 })
 
 const editStudent = () => {
   try {
-    console.log(id, editedStudent)
-    store_staff.EDIT_STAFF(id, editedStudent)
-    toast.success("O'qituvchi tahrirlandi", {
-      autoClose: 1000
-    })
+    store_staff.EDIT_STUDENT(id, editedStudent)
   } catch (error) {
-    console.log(error)
     toast.error('Xatolik', {
       autoClose: 1000
     })
@@ -58,7 +53,8 @@ const deleteStaff = async () => {
 
 onMounted(async () => {
   editedStudent = {
-    ...(await store_staff.GET_ONE(id))
+    ...(await store_staff.GET_ONE(id)),
+    password: ''
   }
   group_store.SET_LIST()
   subject_store.SET_LIST()
@@ -91,7 +87,7 @@ onMounted(async () => {
             editedStudent?.image || 'https://img.freepik.com/free-icon/user_318-563642.jpg?w=360'
           "
           alt="avatar"
-          class="h-44 w-44 rounded-full mx-auto dark:bg-white bg-gray-900"
+          class="h-32 w-32 rounded-full mx-auto dark:bg-white bg-gray-900"
         />
       </div>
       <div class="">
@@ -115,7 +111,7 @@ onMounted(async () => {
     <div
       class="col-span-3 bg-white border border-gray-300 dark:bg-gray-800 dark:border-gray-600 p-4 rounded-xl mb-5 shadow-xl"
     >
-      <form autocomplete="off" class="grid grid-cols-2 gap-3">
+      <div class="grid grid-cols-2 gap-3">
         <div>
           <label
             for="first_name"
@@ -170,7 +166,6 @@ onMounted(async () => {
             placeholder="•••••••••"
             required
             v-model="editedStudent.password"
-            autocomplete="off"
           />
         </div>
 
@@ -221,7 +216,7 @@ onMounted(async () => {
             <option v-for="el in subject_store.LIST" :value="el._id">{{ el.name }}</option>
           </select>
         </div>
-      </form>
+      </div>
     </div>
   </div>
 </template>

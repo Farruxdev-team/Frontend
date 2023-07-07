@@ -4,36 +4,55 @@ import Table from '../components/Table.vue'
 import Loading from '../components/Loading.vue'
 import { toast } from 'vue3-toastify'
 import { onMounted, ref, reactive } from 'vue'
-import { staffStore } from '../stores/staff/staffStore'
+import { staffsStore } from '../stores/teacher/staffStore'
 
-const staff_store = staffStore()
+const staff_store = staffsStore()
 
-const addSubjectsModal = ref(false)
-const changeModalSubjects = () => (addSubjectsModal.value = !addSubjectsModal.value)
+const addTeacherModal = ref(false)
+const changeModalTeacher = () => (addTeacherModal.value = !addTeacherModal.value)
+
 const page = reactive({
   currentPage: 1,
   itemsPerPage: 5
 })
 
-const newSubjects = reactive({
-  name: ''
+const newTeacher = reactive({
+  full_name: '',
+  image: '',
+  phone: '',
+  login: '',
+  password: '',
+  role_id: '649b9cb84c15d387bb7515eb',
+  email: '',
+  is_active: 'true',
+  tg_name: ''
 })
 
-const addStudents = async () => {
+const addTeachers = async () => {
   try {
-    for (let i in newSubjects) newSubjects[i] = newSubjects[i].toString().trim()
-    if (!newSubjects.name.length) {
+    for (let i in newTeacher) newTeacher[i] = newTeacher[i].toString().trim()
+    if (
+      !newTeacher.full_name.length ||
+      !newTeacher.phone.length ||
+      !newTeacher.login.length ||
+      !newTeacher.password.length
+    ) {
       toast.error("Forma to'ldirilish shart", {
         autoClose: 1000
       })
       return
     }
-    const addStudent = {
-      name: newSubjects.name
+    if (newTeacher.phone.length != 9) {
+      toast.warning("Telefon raqam 9 ta belgi bo'lishi kerak", {
+        autoClose: 1000
+      })
+      return
     }
-    staff_store.ADD_LIST(addStudent)
-    changeModalSubjects()
-    newSubjects.name = ''
+    staff_store.ADD_LIST(newTeacher)
+    toast.success("O'qituvch qo'shildi", {
+      autoClose: 1000
+    })
+    changeModalTeacher()
   } catch (error) {
     console.log(error)
     toast.error('Xatolik', {
@@ -43,8 +62,8 @@ const addStudents = async () => {
 }
 
 const resetFormStudents = () => {
-  newSubjects.name = ''
-  changeModalSubjects()
+  for (let i in newTeacher) newTeacher[i] = ''
+  changeModalTeacher()
 }
 
 onMounted(() => {
@@ -56,7 +75,7 @@ onMounted(() => {
   <!-- Main modal -->
   <div
     class="fixed top-0 left-0 right-0 z-50 w-full mx-auto overflow-x-hidden overflow-y-auto md:inset-0 h-full max-h-full flex items-center justify-center bg-black/50 p-3"
-    :class="addSubjectsModal ? '' : 'hidden'"
+    :class="addTeacherModal ? '' : 'hidden'"
   >
     <div class="relative w-full max-w-2xl max-h-full">
       <!-- Modal content -->
@@ -72,23 +91,69 @@ onMounted(() => {
           <h3 class="mb-4 text-xl font-medium text-gray-900 dark:text-white">
             Yangi o'qituvchi qo'shish
           </h3>
-          <form @submit.prevent="" class="space-y-6" action="#">
+          <form @submit.prevent="" class="grid grid-cols-2 gap-5" action="#">
             <div>
               <label
                 class="block mb-2 text-sm font-medium text-blue-900 dark:text-blue-300 dark:bg-blue-500/50 bg-blue-300 rounded-md text-center p-1"
               >
-                O'qituvchi Nomi
+                O'quvchi To'liq ismi
               </label>
               <input
                 type="text"
                 id="full_name"
                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                placeholder="Ona tili"
+                placeholder="Toshmat Eshmatov"
                 required
-                v-model="newSubjects.name"
+                v-model="newTeacher.full_name"
               />
             </div>
-            <div class="flex items-center justify-between">
+            <div>
+              <label
+                class="block mb-2 text-sm font-medium text-blue-900 dark:text-blue-300 dark:bg-blue-500/50 bg-blue-300 rounded-md text-center p-1"
+              >
+                Telefon raqam
+              </label>
+              <input
+                type="text"
+                id="full_name"
+                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                placeholder="887038006"
+                required
+                v-model="newTeacher.phone"
+              />
+            </div>
+            <div>
+              <label
+                class="block mb-2 text-sm font-medium text-blue-900 dark:text-blue-300 dark:bg-blue-500/50 bg-blue-300 rounded-md text-center p-1"
+              >
+                Login
+              </label>
+              <input
+                type="text"
+                id="full_name"
+                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                placeholder="login"
+                required
+                v-model="newTeacher.login"
+              />
+            </div>
+            <div>
+              <label
+                class="block mb-2 text-sm font-medium text-blue-900 dark:text-blue-300 dark:bg-blue-500/50 bg-blue-300 rounded-md text-center p-1"
+              >
+                Parol
+              </label>
+              <input
+                type="password"
+                id="full_name"
+                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                placeholder="**********"
+                required
+                minlength="8"
+                v-model="newTeacher.password"
+              />
+            </div>
+            <div class="col-span-2 flex items-center justify-between">
               <button
                 type="reset"
                 class="w-40 text-white bg-gray-700 hover:bg-gray-800 font-medium rounded-lg text-sm px-5 py-2 text-center dark:bg-gray-600 dark:hover:bg-gray-800"
@@ -99,7 +164,7 @@ onMounted(() => {
               <button
                 type="submit"
                 class="w-40 text-white bg-blue-700 hover:bg-blue-800 font-medium rounded-lg text-sm px-5 py-2 text-center dark:bg-blue-600 dark:hover:bg-blue-700"
-                @click="addStudents"
+                @click="addTeachers"
               >
                 Qo'shish
               </button>
@@ -109,10 +174,11 @@ onMounted(() => {
       </div>
     </div>
   </div>
+
   <AddNavbar>
     <span class="px-4 py-2 border-b-2 border-blue-600 text-blue-600 font-bold">O'qituvchilar</span>
     <button
-      @click="changeModalSubjects"
+      @click="changeModalTeacher"
       class="text-base px-4 py-2 text-green-100 rounded-md bg-gradient-to-r from-green-500 to-green-700 hover:bg-green-500"
     >
       O'qituvchi qo'shish
@@ -160,7 +226,7 @@ onMounted(() => {
           <th class="px-10 font-medium text-gray-900 whitespace-nowrap dark:text-white">
             <span
               class="bg-red-300 block dark:bg-red-900/50 dark:text-red-300 text-red-900 font-medium px-3 rounded"
-              >{{ el.groups || 0 }}</span
+              >{{ el.phone || 0 }}</span
             >
           </th>
           <th class="px-10 font-medium text-gray-900 whitespace-nowrap dark:text-white">
