@@ -19,7 +19,7 @@ const subject_store = subjectStore()
 const isDelete = ref(false)
 const changeDeleteModal = () => (isDelete.value = !isDelete.value)
 
-let editedStudent = reactive({
+let editedTeacher = reactive({
   full_name: '',
   image: '',
   phone: '',
@@ -34,8 +34,8 @@ const load = ref(true)
 
 const editStudent = () => {
   try {
-    console.log(id, editedStudent)
-    store_staff.EDIT_STAFF(id, editedStudent)
+    console.log(id, editedTeacher)
+    store_staff.EDIT_STAFF(id, editedTeacher)
     toast.success("O'qituvchi tahrirlandi", {
       autoClose: 1000
     })
@@ -59,7 +59,7 @@ const deleteStaff = async () => {
 }
 
 onMounted(async () => {
-  editedStudent = {
+  editedTeacher = {
     ...(await store_staff.GET_ONE(id)),
     password: ''
   }
@@ -95,7 +95,7 @@ onMounted(async () => {
       <div class="w-full text-center">
         <img
           :src="
-            editedStudent?.image || 'https://img.freepik.com/free-icon/user_318-563642.jpg?w=360'
+            editedTeacher?.image || 'https://img.freepik.com/free-icon/user_318-563642.jpg?w=360'
           "
           alt="avatar"
           class="h-44 w-44 rounded-full mx-auto dark:bg-white bg-gray-900"
@@ -108,7 +108,7 @@ onMounted(async () => {
           class="mt-5 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
           placeholder="URL"
           required
-          v-model="editedStudent.image"
+          v-model="editedTeacher.image"
         />
       </div>
       <button
@@ -135,7 +135,7 @@ onMounted(async () => {
             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             placeholder="To'liq ismi"
             required
-            v-model="editedStudent.full_name"
+            v-model="editedTeacher.full_name"
           />
         </div>
         <div>
@@ -150,7 +150,7 @@ onMounted(async () => {
             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             placeholder="887038006"
             required
-            v-model="editedStudent.phone"
+            v-model="editedTeacher.phone"
           />
         </div>
         <div>
@@ -163,7 +163,7 @@ onMounted(async () => {
             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             placeholder="login"
             required
-            v-model="editedStudent.login"
+            v-model="editedTeacher.login"
           />
         </div>
         <div>
@@ -176,7 +176,7 @@ onMounted(async () => {
             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             placeholder="•••••••••"
             required
-            v-model="editedStudent.password"
+            v-model="editedTeacher.password"
             autocomplete="off"
           />
         </div>
@@ -191,7 +191,7 @@ onMounted(async () => {
             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             placeholder="@user_01"
             required
-            v-model="editedStudent.tg_name"
+            v-model="editedTeacher.tg_name"
           />
         </div>
 
@@ -205,7 +205,7 @@ onMounted(async () => {
             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             placeholder="•••••••••"
             required
-            v-model="editedStudent.email"
+            v-model="editedTeacher.email"
           />
         </div>
         <div>
@@ -213,7 +213,7 @@ onMounted(async () => {
             Guruhini tanlang </label
           ><select
             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-            @change="(e) => (editedStudent.group_id = e.target.value)"
+            @change="(e) => (editedTeacher.group_id = e.target.value)"
           >
             <option v-for="el in group_store.LIST" :value="el._id">{{ el.name }}</option>
           </select>
@@ -223,7 +223,7 @@ onMounted(async () => {
             Guruhini tanlang </label
           ><select
             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-            @change="(e) => (editedStudent = e.target.value)"
+            @change="(e) => (editedTeacher = e.target.value)"
           >
             <option v-for="el in subject_store.LIST" :value="el._id">{{ el.name }}</option>
           </select>
