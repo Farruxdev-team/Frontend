@@ -66,6 +66,9 @@ const resetFormStudents = () => {
 }
 
 const searchInput = async (searchWord) => {
+  if (searchWord.trim().length == 0) {
+    await group_store.SET_LIST()
+  }
   for (let i in group_store.LIST) {
     const key = group_store.LIST[i].name
     if (!key.toLowerCase().includes(searchWord.toLowerCase().trim())) {

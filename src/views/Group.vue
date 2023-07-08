@@ -1,22 +1,20 @@
 <script setup>
-import { onMounted, ref, reactive } from 'vue'
+import { onMounted, ref } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { toast } from 'vue3-toastify'
 import Back from '../components/Back.vue'
 import DeleteModal from '../components/DeleteModal.vue'
 
 const { id } = useRoute().params
-import { studentStore } from '../stores/students/studentStore'
 import { groupStore } from '../stores/groups/groupStore'
 
-const store_student = studentStore()
 const store_group = groupStore()
 const router = useRouter()
 
 const isDelete = ref(false)
 const changeDeleteModal = () => (isDelete.value = !isDelete.value)
 
-let editedGroup = reactive({
+let editedGroup = ref({
   name: '',
   description: '',
   start_year: ''
@@ -24,8 +22,12 @@ let editedGroup = reactive({
 
 const editGroup = () => {
   try {
-    store_student.EDIT_STUDENT(id, editedGroup)
+    store_group.EDIT(id, editedGroup.value)
+    toast.success('Guruh tahrirlandi', {
+      autoClose: 1000
+    })
   } catch (error) {
+    console.log(error)
     toast.error('Xatolik', {
       autoClose: 1000
     })
@@ -44,14 +46,11 @@ const deleteGroup = async () => {
 }
 
 onMounted(async () => {
-  console.log(id)
-  editedGroup = await store_group.GET_ONE(id)
-  console.log(editedGroup)
+  editedGroup.value = { ...(await store_group.GET_ONE(id)) }
 })
 </script>
 
 <template>
-  {{ editedGroup }}
   <!-- DELETE TESTS MODAL -->
   <DeleteModal :isDelete="isDelete" :changeDelete="changeDeleteModal" :deleteFunc="deleteGroup" />
 

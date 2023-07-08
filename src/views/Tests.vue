@@ -65,6 +65,18 @@ onMounted(() => {
   store.trueLoad()
 })
 
+const searchInput = async (searchWord) => {
+  if (searchWord.trim().length == 0) {
+    await store.SET_LIST()
+  }
+  for (let i in store.LIST) {
+    const key = store.LIST[i].name
+    if (!key.toLowerCase().includes(searchWord.toLowerCase().trim())) {
+      store.LIST.splice(i, 1)
+    }
+  }
+}
+
 const heads = ['test nomi', 'test fani', 'boshlanishi', 'vaqti', 'batafsil']
 </script>
 
@@ -199,7 +211,7 @@ const heads = ['test nomi', 'test fani', 'boshlanishi', 'vaqti', 'batafsil']
       </div>
     </div>
 
-    <AddNavbar>
+    <AddNavbar :searchFunc="searchInput">
       <span class="px-4 py-2 border-b-2 border-blue-600 text-blue-600 font-bold">Testlar</span>
       <button
         @click="changeModalTests"

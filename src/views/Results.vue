@@ -3,18 +3,15 @@ import { onMounted, ref } from 'vue'
 import { Chart, initTE } from 'tw-elements'
 
 import ResultTable from '../components/ResultTable.vue'
-import Loading from '@/components/Loading.vue'
-import { testResultsStore } from '@/stores/test_results/testResultsStore'
+import LoadingSpinner from '@/components/LoadingSpinner.vue'
 import { userStore } from '@/stores/user/userStore'
 import { testStore } from '../stores/tests/testStore'
 
-const store_results = testResultsStore()
 const store_user = userStore()
 const store_test = testStore()
 
-const role = ref(store_user.USER?.user?.role_id.name)
+const role = ref(await store_user.USER?.user?.role_id.name)
 
-const userResults = ref([])
 const load = ref(true)
 
 onMounted(async () => {
@@ -27,9 +24,18 @@ const heads = ['test nomi', 'test fani', 'boshlanishi', 'vaqti', 'batafsil']
 </script>
 
 <template>
-  <div class="">
-    <Loading v-if="load" />
-    <ResultTable v-else :role="role" :heads="heads" :data="store_test.LIST" />
+  <div class="text-white">
+    <LoadingSpinner v-if="load" />
+    <ResultTable
+      v-else
+      :role="role"
+      :heads="heads"
+      :data="
+        store_test.LIST.filter(
+          (i) => new Date(i.started).getTime() + i.test_time * 60000 < new Date().getTime()
+        )
+      "
+    />
   </div>
 </template>
 

@@ -19,6 +19,11 @@ export const groupStore = defineStore('group', () => {
     SET_LIST()
   }
 
+  const EDIT = async (id, data) => {
+    console.log(id, data)
+    return (await useGroups.update(id, data)).data
+  }
+
   const DELETE = async (id) => {
     await useGroups.delete(id)
     await SET_LIST()
@@ -36,5 +41,5 @@ export const groupStore = defineStore('group', () => {
   const LOAD = computed(() => state.load)
   const ELEMENT = computed(() => state.oneElement)
 
-  return { LIST, LOAD, ELEMENT, DELETE, SET_LIST, ADD_LIST, SET_ONE, GET_ONE }
+  return { LIST, LOAD, ELEMENT, EDIT, DELETE, SET_LIST, ADD_LIST, SET_ONE, GET_ONE }
 })
