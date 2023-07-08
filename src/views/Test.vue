@@ -20,7 +20,7 @@ import { subjectStore } from '@/stores/subjects/subjectStore'
 const { id } = useRoute().params
 const router = useRouter()
 
-const store = testStore()
+const store_test = testStore()
 const store_question = questionStore()
 const store_answers = answerStore()
 const store_subject = subjectStore()
@@ -56,13 +56,16 @@ const addTest = async () => {
       question: newTest.question,
       correct_answers: correct_answers.length
     })
+    console.log(res)
     for (let i in newTest.answers) {
-      await store_answers.ADD_LIST({
+      const ans = await store_answers.ADD_LIST({
         answer: newTest.answers[i].text,
         is_true: newTest.answers[i].isTrue,
         question_id: res._id
       })
+      console.log(ans)
     }
+    await store_test.UPDATE(id, { tests_count: store_test.ELEMENT.tests_count + 4 })
     resetFormTest(false)
   } catch (error) {
     console.log(error)
@@ -70,7 +73,7 @@ const addTest = async () => {
 }
 
 const deleteTests = async () => {
-  store.DELETE_TESTS(id)
+  store_test.DELETE_TESTS(id)
   toast.success("Muvaffaqiyatli o'chirildi", {
     autoClose: 1000
   })
@@ -109,7 +112,7 @@ const removeAnswer = (i) => {
 
 onMounted(async () => {
   try {
-    await store.GET_ONE(id)
+    await store_test.GET_ONE(id)
   } catch (error) {
     router.push('/tests')
   }
@@ -328,7 +331,7 @@ onMounted(async () => {
                           @change="() => (el.isTrue = !el.isTrue)"
                         />
                         <div
-                          class="w-9 h-5 bg-gray-200 rounded-full dark:bg-gray-600 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-3 after:left-[8px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-3.5 after:w-3.5 after:transition-all dark:border-gray-600 peer-checked:bg-green-600"
+                          class="w-8 h-5 bg-gray-200 rounded-full dark:bg-gray-600 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-3 after:left-[8px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-3 after:w-3 after:transition-all dark:border-gray-600 peer-checked:bg-green-600"
                         ></div>
                         <span
                           class="w-[60px] text-center ml-2 text-xs font- text-gray-900 dark:text-gray-300 pr-1"
@@ -376,7 +379,7 @@ onMounted(async () => {
           Savol qo'shish
         </button>
       </AddNavbar>
-      <Loading v-if="store.EL_LOAD" />
+      <Loading v-if="store_test.EL_LOAD" />
       <div v-else class="">
         <div
           class="w-full flex justify-between gap-5 items-center bg-white border-gray-300 dark:bg-gray-800 border dark:border-gray-600 p-4 px-5 rounded-lg mb-5 shadow-xl"
@@ -386,14 +389,19 @@ onMounted(async () => {
               class="dark:text-blue-100 dark:bg-blue-500/50 text-blue-900 bg-blue-500/50 px-6 rounded-lg flex items-center gap-2 p-1 pl-4"
             >
               <i class="bx bx-notepad text-lg"></i>
-              <span> TEST: {{ store.ELEMENT?.name }} - {{ store.ELEMENT?.subject_id?.name }} </span>
+              <span>
+                TEST: {{ store_test.ELEMENT?.name }} - {{ store_test.ELEMENT?.subject_id?.name }}
+              </span>
               <span
                 class="flex items-center dark:bg-gray-700 bg-white border border-gray-500 shadow-xl dark:text-white text-gray-900 rounded-full px-2 gap-1 text-sm"
               >
-                <i class="bx bx-timer text-lg"></i> {{ store.ELEMENT?.test_time }}
+                <i class="bx bx-timer text-lg"></i> {{ store_test.ELEMENT?.test_time }}
               </span>
             </h4>
-            <TimeBeauty :started="store.ELEMENT?.started" :test_time="store.ELEMENT?.test_time" />
+            <TimeBeauty
+              :started="store_test.ELEMENT?.started"
+              :test_time="store_test.ELEMENT?.test_time"
+            />
           </div>
           <div class="flex items-center gap-2">
             <i
@@ -409,7 +417,7 @@ onMounted(async () => {
 
         <div
           class="relative rounded-xl border border-gray-300 dark:border-gray-600 shadow-xl"
-          :class="!store.LIST.length ? 'overflow-x-hidden' : 'overflow-x-auto'"
+          :class="!store_test.LIST.length ? 'overflow-x-hidden' : 'overflow-x-auto'"
         >
           <table class="w-full text-center text-gray-500 dark:text-gray-400 shadow-2xl">
             <thead

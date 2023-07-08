@@ -42,19 +42,33 @@ const setTime = async () => {
 }
 
 const checkedAnswers = async (a = false) => {
-  if (a || confirm('Testni tugatmoqchimisiz ?')) {
+  console.log(questions.value)
+  if (confirm('Testni tugatmoqchimisiz ?')) {
+    let correct_count = 0
     for (let i in studentAnswers.value) {
+      if (!studentAnswers.value[i].answer_id.length) {
+        const res = await store_checked_test.ADD_LIST({
+          ...studentAnswers.value[i],
+          answer_id: null
+        })
+        console.log(res)
+      }
       for (const j in studentAnswers.value[i].answer_id) {
         const res = await store_checked_test.ADD_LIST({
           ...studentAnswers.value[i],
           answer_id: studentAnswers.value[i].answer_id[j]
         })
+        console.log(res)
+        if (res.data.answer_id.is_true) {
+          correct_count++
+        }
       }
     }
+    console.log(correct_count)  
     store_test_results.ADD_LIST({
       test_group_id: questions.value[0]?.test_group_id._id,
       student_id: store_user.USER?.user?._id,
-      correct_count: 0
+      correct_count: correct_count
     })
     toast.success(`Muvaffaqiyatli testni yakunladingiz`, {
       autoClose: 1000
@@ -67,10 +81,7 @@ const checkedAnswers = async (a = false) => {
 
 const changeTime = () => {
   if (time.value > 0) {
-    time.value -= 100000
-  } else {
-    time.value = null
-    return checkedAnswers(true)
+    time.value -= 1000
   }
 }
 
@@ -106,7 +117,7 @@ onMounted(async () => {
         </button>
       </div>
       <div
-        class="p-2 px-4 border border-dashed rounded-xl dark:bg-gray-900 dark:text-white text-center w-36"
+        class="p-2 px-2 border border-dashed rounded-xl dark:bg-gray-900 dark:text-white text-center w-32"
       >
         <LoadingSpinner v-if="!time" />
         <span v-else class="text-center w-full">{{

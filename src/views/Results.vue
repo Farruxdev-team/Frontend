@@ -10,7 +10,7 @@ import { testStore } from '../stores/tests/testStore'
 const store_user = userStore()
 const store_test = testStore()
 
-const role = ref(await store_user.USER?.user?.role_id.name)
+const role = ref()
 
 const load = ref(true)
 
@@ -18,6 +18,7 @@ onMounted(async () => {
   await initTE({ Chart })
   await store_user.CHECK_USER()
   store_test.SET_LIST()
+  role.value = await store_user.USER?.user?.role_id.name
   load.value = false
 })
 const heads = ['test nomi', 'test fani', 'boshlanishi', 'vaqti', 'batafsil']
@@ -30,11 +31,7 @@ const heads = ['test nomi', 'test fani', 'boshlanishi', 'vaqti', 'batafsil']
       v-else
       :role="role"
       :heads="heads"
-      :data="
-        store_test.LIST.filter(
-          (i) => new Date(i.started).getTime() + i.test_time * 60000 < new Date().getTime()
-        )
-      "
+      :data="store_test.LIST.filter((i) => new Date(i.started).getTime() < new Date().getTime())"
     />
   </div>
 </template>

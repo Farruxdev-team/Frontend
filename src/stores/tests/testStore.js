@@ -44,6 +44,11 @@ export const testStore = defineStore('test', () => {
     state.list.sort((a, b) => new Date(b.started).getTime() - new Date(a.started).getTime())
   )
 
+  const UPDATE = async (id, data) => {
+    await useTests.update(id, data)
+    await SET_LIST()
+  }
+
   const DELETE_TESTS = async (id) => {
     await useTests.delete(id)
     await SET_LIST()
@@ -57,6 +62,7 @@ export const testStore = defineStore('test', () => {
     LIST,
     LOAD,
     ELEMENT,
+    UPDATE,
     SET_LIST,
     GET_ONE,
     SET_ONE,
