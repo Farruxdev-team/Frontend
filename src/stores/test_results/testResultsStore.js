@@ -13,6 +13,7 @@ export const testResultsStore = defineStore('test_results', () => {
   const SET_LIST = async () => {
     state.list = (await useTestResults.list()).data
     state.load = false
+    return state.list
   }
 
   const ADD_LIST = async (data) => {
