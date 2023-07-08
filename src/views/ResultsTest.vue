@@ -47,12 +47,12 @@ const heads = ['I.F.SH', 'Tel:raqam', "To'gri javoblari", 'batafsil']
             class="bg-white border-b border-gray-300 dark:bg-gray-800 dark:border-gray-700"
           >
             <th class="font-medium text-gray-900 whitespace-nowrap dark:text-white">
-              <span class="bg-green-500/50 px-5 rounded-md">{{ el.student_id.full_name }}</span>
+              <span class="bg-green-500/30 px-5 rounded-md">{{ el.student_id.full_name }}</span>
             </th>
             <th class="font-medium text-gray-900 whitespace-nowrap dark:text-white">
-              <span class="bg-blue-500/50 px-5 rounded-md">{{ el.student_id.phone }}</span>
+              <span class="bg-blue-500/30 px-5 rounded-md">{{ el.student_id.phone }}</span>
             </th>
-            <th class="font-medium text-gray-900 whitespace-nowrap dark:text-white text-sm">
+            <th class="font-medium text-gray-900 whitespace-nowrap dark:text-white text-sm px-5">
               <div class="w-full bg-gray-200 rounded-full dark:bg-gray-700">
                 <div
                   class="text-xs font-medium text-blue-100 text-center p-0.5 leading-none rounded-full"
